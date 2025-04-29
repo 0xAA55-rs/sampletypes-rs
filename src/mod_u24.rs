@@ -3,7 +3,6 @@
 use std::ops::{Add, Sub, Mul, Div, AddAssign, SubAssign, MulAssign, DivAssign};
 use std::ops::{BitAnd, BitOr, BitXor, Shl, Shr, BitAndAssign, BitOrAssign, BitXorAssign, ShlAssign, ShrAssign};
 use std::ops::{Rem, RemAssign};
-use std::ops::{Neg};
 
 /// * The tuple struct is little-endian
 #[derive(Debug, Clone, Copy)]
@@ -243,11 +242,5 @@ impl RemAssign for u24 {
         *self = self.rem(rhs);
     }
 }
-impl Neg for u24 {
-    type Output = Self;
-    #[inline(always)]
-    fn neg(self) -> Self::Output {
-        let ret = Self(!self.0, !self.1, !self.2);
-        ret.add(Self(1, 0, 0))
     }
 }
