@@ -302,6 +302,23 @@ macro_rules! to_longer {
     (f64 , $v:expr) => {$v};
 }
 
+macro_rules! to_shorter {
+    (i8  , $v:expr) => {$v};
+    (i16 , $v:expr) => {($v >> 8) as i8};
+    (i24 , $v:expr) => {i16::from_le_bytes([$v.1, $v.2])};
+    (i32 , $v:expr) => {<i24 as From<i32>>::from($v >> 8)};
+    (i64 , $v:expr) => {($v >> 32) as i32};
+    (i128, $v:expr) => {($v >> 64) as i64};
+    (u8  , $v:expr) => {$v};
+    (u16 , $v:expr) => {($v >> 8) as u8};
+    (u24 , $v:expr) => {u16::from_le_bytes([$v.1, $v.2])};
+    (u32 , $v:expr) => {<u24 as From<u32>>::from($v >> 8)};
+    (u64 , $v:expr) => {($v >> 32) as u32};
+    (u128, $v:expr) => {($v >> 64) as u64};
+    (f32 , $v:expr) => {$v};
+    (f64 , $v:expr) => {$v as f32};
+}
+
     type Longer;
     type Shorter;
     type Signed;
