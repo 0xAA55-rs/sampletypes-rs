@@ -55,6 +55,23 @@ RemAssign {}
 pub trait SampleTypeIntegerSigned: SampleTypeInteger + Neg {}
 impl<T> SampleTypeIntegerSigned for T where T: SampleTypeInteger + Neg {}
 
+macro_rules! mid_number {
+    (i8) => {0i8};
+    (i16) => {0i16};
+    (i24) => {i24(0, 0, 0)};
+    (i32) => {0i32};
+    (i64) => {0i64};
+    (i128) => {0i128};
+    (u8) => {0x80u8};
+    (u16) => {0x8000u16};
+    (u24) => {u24(0, 0, 0x80)};
+    (u32) => {0x80000000u32};
+    (u64) => {0x80000000_00000000u64};
+    (u128) => {0x80000000_00000000_00000000_00000000u128};
+    (f32) => {0.0f32};
+    (f64) => {0.0f64};
+}
+
     type Longer;
     type Shorter;
     type Signed;
