@@ -290,5 +290,9 @@ impl RemAssign for u24 {
         *self = self.rem(rhs);
     }
 }
+
+impl Default for u24 {
+    fn default() -> Self {
+        Self(0, 0, 0)
     }
 }

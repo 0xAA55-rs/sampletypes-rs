@@ -300,3 +300,8 @@ impl Neg for i24 {
     }
 }
 
+impl Default for i24 {
+    fn default() -> Self {
+        Self(0, 0, 0)
+    }
+}
