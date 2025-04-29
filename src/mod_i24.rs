@@ -13,52 +13,68 @@ pub struct i24(pub u8, pub u8, pub u8);
 
 impl i24{
     #[inline(always)]
-    fn from_le_bytes(bytes: &[u8]) -> Self {
+    pub fn from_le_bytes(bytes: [u8; 3]) -> Self {
         Self(bytes[0], bytes[1], bytes[2])
     }
     #[inline(always)]
-    fn from_be_bytes(bytes: &[u8]) -> Self {
+    pub fn from_be_bytes(bytes: [u8; 3]) -> Self {
         Self(bytes[2], bytes[1], bytes[0])
     }
     #[inline(always)]
-    fn to_le_bytes(self) -> [u8; 3] {
+    pub fn to_le_bytes(self) -> [u8; 3] {
         [self.0, self.1, self.2]
     }
     #[inline(always)]
-    fn to_be_bytes(self) -> [u8; 3] {
+    pub fn to_be_bytes(self) -> [u8; 3] {
         [self.2, self.1, self.0]
     }
     #[inline(always)]
-    fn as_i64(&self) -> i64 {
+    pub fn as_i128(&self) -> i128 {
+        i128::from_le_bytes([self.0, self.1, self.2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+    }
+    #[inline(always)]
+    pub fn as_i64(&self) -> i64 {
         i64::from_le_bytes([self.0, self.1, self.2, 0, 0, 0, 0, 0])
     }
     #[inline(always)]
-    fn as_i32(&self) -> i32 {
+    pub fn as_i32(&self) -> i32 {
         i32::from_le_bytes([self.0, self.1, self.2, 0])
     }
     #[inline(always)]
-    fn as_i16(&self) -> i16 {
+    pub fn as_i16(&self) -> i16 {
         i16::from_le_bytes([self.0, self.1])
     }
     #[inline(always)]
-    fn as_i8(&self) -> i8 {
+    pub fn as_i8(&self) -> i8 {
         self.0 as i8
     }
     #[inline(always)]
-    fn as_u64(&self) -> u64 {
+    pub fn as_u128(&self) -> u128 {
+        u128::from_le_bytes([self.0, self.1, self.2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+    }
+    #[inline(always)]
+    pub fn as_u64(&self) -> u64 {
         u64::from_le_bytes([self.0, self.1, self.2, 0, 0, 0, 0, 0])
     }
     #[inline(always)]
-    fn as_u32(&self) -> u32 {
+    pub fn as_u32(&self) -> u32 {
         u32::from_le_bytes([self.0, self.1, self.2, 0])
     }
     #[inline(always)]
-    fn as_u16(&self) -> u16 {
+    pub fn as_u16(&self) -> u16 {
         u16::from_le_bytes([self.0, self.1])
     }
     #[inline(always)]
-    fn as_u8(&self) -> u8 {
+    pub fn as_u8(&self) -> u8 {
         self.0
+    }
+    #[inline(always)]
+    pub fn as_f32(&self) -> f32 {
+        self.as_i32() as f32
+    }
+    #[inline(always)]
+    pub fn as_f64(&self) -> f64 {
+        self.as_i32() as f64
     }
 }
 
