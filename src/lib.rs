@@ -812,6 +812,17 @@ macro_rules! as_f64 {
     (f64 , $v:expr) => {$v as f64};
 }
 
+macro_rules! average_arr {
+    ($tp:tt, $longer:tt, $arr:expr) => {
+        {
+            type Longer = $longer;
+            let mut sum: Longer = Longer::zero();
+            $arr.iter().for_each(|x|{sum += to_longer!($tp, *x);});
+            to_type!($longer, $tp, sum / to_type!(u64, $longer, $arr.len() as u64))
+        }
+    };
+}
+
     type Longer;
     type Shorter;
     type Signed;
