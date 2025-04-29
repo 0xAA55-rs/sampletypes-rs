@@ -12,10 +12,49 @@ use std::ops::{BitAnd, BitOr, BitXor, Shl, Shr, BitAndAssign, BitOrAssign, BitXo
 use std::ops::{Rem, RemAssign};
 use std::ops::{Neg};
 
-pub trait SampleType:
+pub trait Numeric:
 Add<Output = Self> + Sub<Output = Self> + Mul<Output = Self> + Div<Output = Self> +
-AddAssign + SubAssign + MulAssign + DivAssign + Neg +
-Debug + Sized + Clone + Copy + 'static {
+AddAssign + SubAssign + MulAssign + DivAssign +
+Debug + Sized + Clone + Copy + 'static {}
+
+impl<T> Numeric for T where T:
+Add<Output = Self> + Sub<Output = Self> + Mul<Output = Self> + Div<Output = Self> +
+AddAssign + SubAssign + MulAssign + DivAssign +
+Debug + Sized + Clone + Copy + 'static {}
+
+pub trait SampleTypeInteger:
+SampleType +
+BitAnd<Output = Self> +
+BitOr<Output = Self> +
+BitXor<Output = Self> +
+Shl<Output = Self> +
+Shr<Output = Self> +
+BitAndAssign +
+BitOrAssign +
+BitXorAssign +
+ShlAssign +
+ShrAssign +
+Rem<Output = Self> +
+RemAssign {}
+
+impl<T> SampleTypeInteger for T where T:
+SampleType +
+BitAnd<Output = Self> +
+BitOr<Output = Self> +
+BitXor<Output = Self> +
+Shl<Output = Self> +
+Shr<Output = Self> +
+BitAndAssign +
+BitOrAssign +
+BitXorAssign +
+ShlAssign +
+ShrAssign +
+Rem<Output = Self> +
+RemAssign {}
+
+pub trait SampleTypeIntegerSigned: SampleTypeInteger + Neg {}
+impl<T> SampleTypeIntegerSigned for T where T: SampleTypeInteger + Neg {}
+
     type Longer;
     type Shorter;
     type Signed;
