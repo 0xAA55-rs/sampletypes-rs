@@ -106,6 +106,23 @@ macro_rules! sizeof {
     (f64 ) => {8 };
 }
 
+macro_rules! signed_type {
+    (i8  ) => {i8  };
+    (i16 ) => {i16 };
+    (i24 ) => {i24 };
+    (i32 ) => {i32 };
+    (i64 ) => {i64 };
+    (i128) => {i128};
+    (u8  ) => {i8  };
+    (u16 ) => {i16 };
+    (u24 ) => {i24 };
+    (u32 ) => {i32 };
+    (u64 ) => {i64 };
+    (u128) => {i128};
+    (f32 ) => {f32 };
+    (f64 ) => {f64 };
+}
+
     type Longer;
     type Shorter;
     type Signed;
