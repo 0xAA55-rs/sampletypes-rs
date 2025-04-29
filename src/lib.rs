@@ -873,10 +873,10 @@ pub trait SampleType: Numeric {
     fn is_float() -> bool;
     fn to_signed(&self) -> Self::Signed;
     fn to_unsigned(&self) -> Self::Unsigned;
-    fn read_le(r: impl Read) -> Result<Self, Error>;
-    fn read_be(r: impl Read) -> Result<Self, Error>;
-    fn write_le(&self, w: impl Write) -> Result<(), Error>;
-    fn write_be(&self, w: impl Write) -> Result<(), Error>;
+    fn read_le(r: &mut impl Read) -> Result<Self, Error>;
+    fn read_be(r: &mut impl Read) -> Result<Self, Error>;
+    fn write_le(&self, w: &mut impl Write) -> Result<(), Error>;
+    fn write_be(&self, w: &mut impl Write) -> Result<(), Error>;
 }
 
 pub trait SampleFrom: Numeric {
@@ -1033,23 +1033,23 @@ macro_rules! impl_sample_type {
                 to_unsigned!($tp, *self)
             }
             #[inline(always)]
-            fn read_le(mut r: impl Read) -> Result<Self, Error> {
+            fn read_le(r: &mut impl Read) -> Result<Self, Error> {
                 let mut buf = [0u8; sizeof!($tp)];
                 r.read_exact(&mut buf)?;
                 Ok(Self::from_le_bytes(buf))
             }
             #[inline(always)]
-            fn read_be(mut r: impl Read) -> Result<Self, Error> {
+            fn read_be(r: &mut impl Read) -> Result<Self, Error> {
                 let mut buf = [0u8; sizeof!($tp)];
                 r.read_exact(&mut buf)?;
                 Ok(Self::from_be_bytes(buf))
             }
             #[inline(always)]
-            fn write_le(&self, mut w: impl Write) -> Result<(), Error> {
+            fn write_le(&self, w: &mut impl Write) -> Result<(), Error> {
                 w.write_all(&self.to_le_bytes())
             }
             #[inline(always)]
-            fn write_be(&self, mut w: impl Write) -> Result<(), Error> {
+            fn write_be(&self, w: &mut impl Write) -> Result<(), Error> {
                 w.write_all(&self.to_be_bytes())
             }
         }
