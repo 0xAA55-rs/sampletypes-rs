@@ -212,6 +212,10 @@ macro_rules! is_integer {
     (f64 ) => {false};
 }
 
+macro_rules! is_float {
+    ($tp:tt) => {!is_integer!($tp)};
+}
+
     type Longer;
     type Shorter;
     type Signed;
