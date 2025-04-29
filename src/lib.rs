@@ -233,6 +233,23 @@ macro_rules! longer_type {
     (f64 ) => {f64 };
 }
 
+macro_rules! shorter_type {
+    (i8  ) => {i8 };
+    (i16 ) => {i8 };
+    (i24 ) => {i16};
+    (i32 ) => {i24};
+    (i64 ) => {i32};
+    (i128) => {i64};
+    (u8  ) => {u8 };
+    (u16 ) => {u8 };
+    (u24 ) => {u16};
+    (u32 ) => {u24};
+    (u64 ) => {u32};
+    (u128) => {u64};
+    (f32 ) => {f32};
+    (f64 ) => {f32};
+}
+
     type Longer;
     type Shorter;
     type Signed;
