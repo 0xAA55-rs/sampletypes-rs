@@ -823,52 +823,60 @@ macro_rules! average_arr {
     };
 }
 
+pub trait SampleType: Numeric {
     type Longer;
     type Shorter;
     type Signed;
     type Unsigned;
+    const MIDNUM: Self;
     fn new() -> Self;
+    fn zero() -> Self;
     fn from(v: impl SampleType) -> Self;
     fn average(s1: Self, s2: Self) -> Self;
     fn average_arr(arr: &[Self]) -> Self;
-    fn to_i8 (&self) -> i8;
+    fn to<T>(&self) -> T where T: SampleType;
+    fn as_<T>(&self) -> T where T: SampleType;
+    fn to_i8 (&self) -> i8 ;
     fn to_i16(&self) -> i16;
     fn to_i24(&self) -> i24;
     fn to_i32(&self) -> i32;
     fn to_i64(&self) -> i64;
-    fn to_u8 (&self) -> u8;
+    fn to_u8 (&self) -> u8 ;
     fn to_u16(&self) -> u16;
     fn to_u24(&self) -> u24;
     fn to_u32(&self) -> u32;
     fn to_u64(&self) -> u64;
     fn to_f32(&self) -> f32;
     fn to_f64(&self) -> f64;
-    fn as_i8 (&self) -> i8;
+    fn to_i128(&self) -> i128;
+    fn to_u128(&self) -> u128;
+    fn as_i8 (&self) -> i8 ;
     fn as_i16(&self) -> i16;
     fn as_i24(&self) -> i24;
     fn as_i32(&self) -> i32;
     fn as_i64(&self) -> i64;
-    fn as_u8 (&self) -> u8;
+    fn as_u8 (&self) -> u8 ;
     fn as_u16(&self) -> u16;
     fn as_u24(&self) -> u24;
     fn as_u32(&self) -> u32;
     fn as_u64(&self) -> u64;
     fn as_f32(&self) -> f32;
     fn as_f64(&self) -> f64;
+    fn as_i128(&self) -> i128;
+    fn as_u128(&self) -> u128;
+    fn sizeof(&self) -> usize {size_of::<Self>()}
     fn to_longer(&self) -> Self::Longer;
     fn to_shorter(&self) -> Self::Shorter;
-    fn is_signed(&self) -> bool;
-    fn is_unsigned(&self) -> bool;
-    fn is_integer(&self) -> bool;
-    fn is_float(&self) -> bool;
+    fn is_signed() -> bool;
+    fn is_unsigned() -> bool;
+    fn is_integer() -> bool;
+    fn is_float() -> bool;
     fn to_signed(&self) -> Self::Signed;
-    fn to_unsigned(&self) -> Self::Unsigned {
-        panic!("The type `{}` can't be turned to an unsigned type.", type_name::<Self>());
-    }
-    fn read_le<T>(r: &mut T) -> Result<Self, Error> where T: Read + ?Sized;
-    fn read_be<T>(r: &mut T) -> Result<Self, Error> where T: Read + ?Sized;
-    fn write_le<T>(&self, w: &mut T) -> Result<(), Error> where T: Write + ?Sized;
-    fn write_be<T>(&self, w: &mut T) -> Result<(), Error> where T: Write + ?Sized;
+    fn to_unsigned(&self) -> Self::Unsigned;
+    fn read_le(r: impl Read) -> Result<Self, Error>;
+    fn read_be(r: impl Read) -> Result<Self, Error>;
+    fn write_le(&self, w: impl Write) -> Result<(), Error>;
+    fn write_be(&self, w: impl Write) -> Result<(), Error>;
 }
 
 pub trait SampleFrom: Debug + Sized + Clone + Copy + 'static {
