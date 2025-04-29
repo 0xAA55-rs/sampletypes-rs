@@ -4,6 +4,8 @@ use std::ops::{Add, Sub, Mul, Div, AddAssign, SubAssign, MulAssign, DivAssign};
 use std::ops::{BitAnd, BitOr, BitXor, Shl, Shr, BitAndAssign, BitOrAssign, BitXorAssign, ShlAssign, ShrAssign};
 use std::ops::{Rem, RemAssign};
 
+use crate::mod_i24::i24;
+
 /// * The tuple struct is little-endian
 #[derive(Debug, Clone, Copy)]
 #[allow(non_camel_case_types)]
@@ -88,6 +90,12 @@ impl From<i16> for u24 {
 	fn from(v: i16) -> Self {
 		Self::from(v as i32)
 	}
+}
+impl From<i24> for u24 {
+    #[inline(always)]
+    fn from(v: i24) -> Self {
+        Self::from(v.as_i32())
+    }
 }
 impl From<i32> for u24 {
     #[inline(always)]
