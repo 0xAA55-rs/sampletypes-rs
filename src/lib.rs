@@ -140,6 +140,27 @@ macro_rules! unsigned_type {
     (f64 ) => {f64 };
 }
 
+macro_rules! is_signed {
+    (i8  ) => {true };
+    (i16 ) => {true };
+    (i24 ) => {true };
+    (i32 ) => {true };
+    (i64 ) => {true };
+    (i128) => {true };
+    (u8  ) => {false};
+    (u16 ) => {false};
+    (u24 ) => {false};
+    (u32 ) => {false};
+    (u64 ) => {false};
+    (u128) => {false};
+    (f32 ) => {true };
+    (f64 ) => {true };
+}
+
+macro_rules! is_unsigned {
+    ($tp:tt) => {!is_signed!($tp)};
+}
+
     type Longer;
     type Shorter;
     type Signed;
