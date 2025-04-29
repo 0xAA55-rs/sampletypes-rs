@@ -6,7 +6,7 @@ pub mod mod_u24;
 pub use mod_i24::*;
 pub use mod_u24::*;
 
-use std::{any::type_name, io::{Read, Write, Error}, mem::size_of, fmt::Debug, clone::Clone};
+use std::{io::{Read, Write, Error}, mem::size_of, fmt::Debug, clone::Clone};
 use std::ops::{Add, Sub, Mul, Div, AddAssign, SubAssign, MulAssign, DivAssign};
 use std::ops::{BitAnd, BitOr, BitXor, Shl, Shr, BitAndAssign, BitOrAssign, BitXorAssign, ShlAssign, ShrAssign};
 use std::ops::{Rem, RemAssign};
@@ -834,8 +834,6 @@ pub trait SampleType: Numeric {
     fn from(v: impl SampleType) -> Self;
     fn average(s1: Self, s2: Self) -> Self;
     fn average_arr(arr: &[Self]) -> Self;
-    fn to<T>(&self) -> T where T: SampleType;
-    fn as_<T>(&self) -> T where T: SampleType;
     fn to_i8 (&self) -> i8 ;
     fn to_i16(&self) -> i16;
     fn to_i24(&self) -> i24;
@@ -922,7 +920,7 @@ macro_rules! impl_sample_type {
             }
             #[inline(always)]
             fn from(v: impl SampleType) -> Self {
-                v.to::<$tp>()
+                <$tp as SampleFrom>::to(v)
             }
             #[inline(always)]
             fn average(s1: Self, s2: Self) -> Self {
@@ -931,46 +929,6 @@ macro_rules! impl_sample_type {
             #[inline(always)]
             fn average_arr(arr: &[Self]) -> Self {
                 average_arr!($tp, $longer, arr)
-            }
-            #[inline(always)]
-            fn to<T>(&self) -> T where T: SampleType {
-                match type_name::<T>() {
-                    "i8 " => conv(self.to_i8 ()),
-                    "i16" => conv(self.to_i16()),
-                    "i24" => conv(self.to_i24()),
-                    "i32" => conv(self.to_i32()),
-                    "i64" => conv(self.to_i64()),
-                    "u8 " => conv(self.to_u8 ()),
-                    "u16" => conv(self.to_u16()),
-                    "u24" => conv(self.to_u24()),
-                    "u32" => conv(self.to_u32()),
-                    "u64" => conv(self.to_u64()),
-                    "f32" => conv(self.to_f32()),
-                    "f64" => conv(self.to_f64()),
-                    "i128" => conv(self.to_i128()),
-                    "u128" => conv(self.to_u128()),
-                    o => panic!("Unknown type name: {o}"),
-                }
-            }
-            #[inline(always)]
-            fn as_<T>(&self) -> T where T: SampleType {
-                match type_name::<T>() {
-                    "i8 " => conv(self.as_i8 ()),
-                    "i16" => conv(self.as_i16()),
-                    "i24" => conv(self.as_i24()),
-                    "i32" => conv(self.as_i32()),
-                    "i64" => conv(self.as_i64()),
-                    "u8 " => conv(self.as_u8 ()),
-                    "u16" => conv(self.as_u16()),
-                    "u24" => conv(self.as_u24()),
-                    "u32" => conv(self.as_u32()),
-                    "u64" => conv(self.as_u64()),
-                    "f32" => conv(self.as_f32()),
-                    "f64" => conv(self.as_f64()),
-                    "i128" => conv(self.as_i128()),
-                    "u128" => conv(self.as_u128()),
-                    o => panic!("Unknown type name: {o}"),
-                }
             }
             #[inline(always)]fn to_i8 (&self) -> i8  {to_i8! ($tp, *self)}
             #[inline(always)]fn to_i16(&self) -> i16 {to_i16!($tp, *self)}
