@@ -216,6 +216,23 @@ macro_rules! is_float {
     ($tp:tt) => {!is_integer!($tp)};
 }
 
+macro_rules! longer_type {
+    (i8  ) => {i16 };
+    (i16 ) => {i24 };
+    (i24 ) => {i32 };
+    (i32 ) => {i64 };
+    (i64 ) => {i128};
+    (i128) => {i128};
+    (u8  ) => {u16 };
+    (u16 ) => {u24 };
+    (u24 ) => {u32 };
+    (u32 ) => {u64 };
+    (u64 ) => {u128};
+    (u128) => {u128};
+    (f32 ) => {f64 };
+    (f64 ) => {f64 };
+}
+
     type Longer;
     type Shorter;
     type Signed;
