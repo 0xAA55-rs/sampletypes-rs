@@ -879,7 +879,7 @@ pub trait SampleType: Numeric {
     fn write_be(&self, w: impl Write) -> Result<(), Error>;
 }
 
-pub trait SampleFrom: Debug + Sized + Clone + Copy + 'static {
+pub trait SampleFrom: Numeric {
     fn to(s: impl SampleType) -> Self;
 }
 impl SampleFrom for i8  {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_i8()  }}
@@ -887,27 +887,15 @@ impl SampleFrom for i16 {#[inline(always)] fn to(s: impl SampleType) -> Self { s
 impl SampleFrom for i24 {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_i24() }}
 impl SampleFrom for i32 {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_i32() }}
 impl SampleFrom for i64 {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_i64() }}
+impl SampleFrom for i128{#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_i128()}}
 impl SampleFrom for u8  {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_u8()  }}
 impl SampleFrom for u16 {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_u16() }}
 impl SampleFrom for u24 {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_u24() }}
 impl SampleFrom for u32 {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_u32() }}
 impl SampleFrom for u64 {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_u64() }}
+impl SampleFrom for u128{#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_u128()}}
 impl SampleFrom for f32 {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_f32() }}
 impl SampleFrom for f64 {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_f64() }}
 
-pub trait SampleTypeInteger:
-SampleType +
-BitAnd<Output = Self> +
-BitOr<Output = Self> +
-BitXor<Output = Self> +
-Shl<Output = Self> +
-Shr<Output = Self> +
-BitAndAssign +
-BitOrAssign +
-BitXorAssign +
-ShlAssign +
-ShrAssign +
-Rem<Output = Self> +
-RemAssign {}
 
 
