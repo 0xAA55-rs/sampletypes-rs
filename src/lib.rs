@@ -897,7 +897,7 @@ impl SampleFrom for u128{#[inline(always)] fn to(s: impl SampleType) -> Self { s
 impl SampleFrom for f32 {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_f32() }}
 impl SampleFrom for f64 {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_f64() }}
 
-fn to_T<S, T>(v: S) -> T
+fn conv<S, T>(v: S) -> T
 where
     S: SampleType,
     T: SampleType {
@@ -935,40 +935,40 @@ macro_rules! impl_sample_type {
             #[inline(always)]
             fn to<T>(&self) -> T where T: SampleType {
                 match type_name::<T>() {
-                    "i8 " => to_T(self.to_i8 ()),
-                    "i16" => to_T(self.to_i16()),
-                    "i24" => to_T(self.to_i24()),
-                    "i32" => to_T(self.to_i32()),
-                    "i64" => to_T(self.to_i64()),
-                    "u8 " => to_T(self.to_u8 ()),
-                    "u16" => to_T(self.to_u16()),
-                    "u24" => to_T(self.to_u24()),
-                    "u32" => to_T(self.to_u32()),
-                    "u64" => to_T(self.to_u64()),
-                    "f32" => to_T(self.to_f32()),
-                    "f64" => to_T(self.to_f64()),
-                    "i128" => to_T(self.to_i128()),
-                    "u128" => to_T(self.to_u128()),
+                    "i8 " => conv(self.to_i8 ()),
+                    "i16" => conv(self.to_i16()),
+                    "i24" => conv(self.to_i24()),
+                    "i32" => conv(self.to_i32()),
+                    "i64" => conv(self.to_i64()),
+                    "u8 " => conv(self.to_u8 ()),
+                    "u16" => conv(self.to_u16()),
+                    "u24" => conv(self.to_u24()),
+                    "u32" => conv(self.to_u32()),
+                    "u64" => conv(self.to_u64()),
+                    "f32" => conv(self.to_f32()),
+                    "f64" => conv(self.to_f64()),
+                    "i128" => conv(self.to_i128()),
+                    "u128" => conv(self.to_u128()),
                     o => panic!("Unknown type name: {o}"),
                 }
             }
             #[inline(always)]
             fn as_<T>(&self) -> T where T: SampleType {
                 match type_name::<T>() {
-                    "i8 " => to_T(self.as_i8 ()),
-                    "i16" => to_T(self.as_i16()),
-                    "i24" => to_T(self.as_i24()),
-                    "i32" => to_T(self.as_i32()),
-                    "i64" => to_T(self.as_i64()),
-                    "u8 " => to_T(self.as_u8 ()),
-                    "u16" => to_T(self.as_u16()),
-                    "u24" => to_T(self.as_u24()),
-                    "u32" => to_T(self.as_u32()),
-                    "u64" => to_T(self.as_u64()),
-                    "f32" => to_T(self.as_f32()),
-                    "f64" => to_T(self.as_f64()),
-                    "i128" => to_T(self.as_i128()),
-                    "u128" => to_T(self.as_u128()),
+                    "i8 " => conv(self.as_i8 ()),
+                    "i16" => conv(self.as_i16()),
+                    "i24" => conv(self.as_i24()),
+                    "i32" => conv(self.as_i32()),
+                    "i64" => conv(self.as_i64()),
+                    "u8 " => conv(self.as_u8 ()),
+                    "u16" => conv(self.as_u16()),
+                    "u24" => conv(self.as_u24()),
+                    "u32" => conv(self.as_u32()),
+                    "u64" => conv(self.as_u64()),
+                    "f32" => conv(self.as_f32()),
+                    "f64" => conv(self.as_f64()),
+                    "i128" => conv(self.as_i128()),
+                    "u128" => conv(self.as_u128()),
                     o => panic!("Unknown type name: {o}"),
                 }
             }
