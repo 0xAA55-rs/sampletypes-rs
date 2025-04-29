@@ -574,6 +574,244 @@ macro_rules! to_type {
     ($st:tt, f64 , $v:expr) => {to_f64!($st, $v)};
 }
 
+macro_rules! as_i8 {
+    (i8  , $v:expr) => {$v as i8};
+    (i16 , $v:expr) => {$v as i8};
+    (i24 , $v:expr) => {$v.as_i8()};
+    (i32 , $v:expr) => {$v as i8};
+    (i64 , $v:expr) => {$v as i8};
+    (i128, $v:expr) => {$v as i8};
+    (u8  , $v:expr) => {$v as i8};
+    (u16 , $v:expr) => {$v as i8};
+    (u24 , $v:expr) => {$v.as_i8()};
+    (u32 , $v:expr) => {$v as i8};
+    (u64 , $v:expr) => {$v as i8};
+    (u128, $v:expr) => {$v as i8};
+    (f32 , $v:expr) => {$v as i8};
+    (f64 , $v:expr) => {$v as i8};
+}
+
+macro_rules! as_i16 {
+    (i8  , $v:expr) => {$v as i16};
+    (i16 , $v:expr) => {$v as i16};
+    (i24 , $v:expr) => {$v.as_i16()};
+    (i32 , $v:expr) => {$v as i16};
+    (i64 , $v:expr) => {$v as i16};
+    (i128, $v:expr) => {$v as i16};
+    (u8  , $v:expr) => {$v as i16};
+    (u16 , $v:expr) => {$v as i16};
+    (u24 , $v:expr) => {$v.as_i16()};
+    (u32 , $v:expr) => {$v as i16};
+    (u64 , $v:expr) => {$v as i16};
+    (u128, $v:expr) => {$v as i16};
+    (f32 , $v:expr) => {$v as i16};
+    (f64 , $v:expr) => {$v as i16};
+}
+
+macro_rules! as_i24 {
+    (i8  , $v:expr) => {<i24 as From<i8  >>::from($v)};
+    (i16 , $v:expr) => {<i24 as From<i16 >>::from($v)};
+    (i24 , $v:expr) => {<i24 as From<i24 >>::from($v)};
+    (i32 , $v:expr) => {<i24 as From<i32 >>::from($v)};
+    (i64 , $v:expr) => {<i24 as From<i64 >>::from($v)};
+    (i128, $v:expr) => {<i24 as From<i128>>::from($v)};
+    (u8  , $v:expr) => {<i24 as From<u8  >>::from($v)};
+    (u16 , $v:expr) => {<i24 as From<u16 >>::from($v)};
+    (u24 , $v:expr) => {<i24 as From<u24 >>::from($v)};
+    (u32 , $v:expr) => {<i24 as From<u32 >>::from($v)};
+    (u64 , $v:expr) => {<i24 as From<u64 >>::from($v)};
+    (u128, $v:expr) => {<i24 as From<u128>>::from($v)};
+    (f32 , $v:expr) => {<i24 as From<f32 >>::from($v)};
+    (f64 , $v:expr) => {<i24 as From<f64 >>::from($v)};
+}
+
+macro_rules! as_i32 {
+    (i8  , $v:expr) => {$v as i32};
+    (i16 , $v:expr) => {$v as i32};
+    (i24 , $v:expr) => {$v.as_i32()};
+    (i32 , $v:expr) => {$v as i32};
+    (i64 , $v:expr) => {$v as i32};
+    (i128, $v:expr) => {$v as i32};
+    (u8  , $v:expr) => {$v as i32};
+    (u16 , $v:expr) => {$v as i32};
+    (u24 , $v:expr) => {$v.as_i32()};
+    (u32 , $v:expr) => {$v as i32};
+    (u64 , $v:expr) => {$v as i32};
+    (u128, $v:expr) => {$v as i32};
+    (f32 , $v:expr) => {$v as i32};
+    (f64 , $v:expr) => {$v as i32};
+}
+
+macro_rules! as_i64 {
+    (i8  , $v:expr) => {$v as i64};
+    (i16 , $v:expr) => {$v as i64};
+    (i24 , $v:expr) => {$v.as_i64()};
+    (i32 , $v:expr) => {$v as i64};
+    (i64 , $v:expr) => {$v as i64};
+    (i128, $v:expr) => {$v as i64};
+    (u8  , $v:expr) => {$v as i64};
+    (u16 , $v:expr) => {$v as i64};
+    (u24 , $v:expr) => {$v.as_i64()};
+    (u32 , $v:expr) => {$v as i64};
+    (u64 , $v:expr) => {$v as i64};
+    (u128, $v:expr) => {$v as i64};
+    (f32 , $v:expr) => {$v as i64};
+    (f64 , $v:expr) => {$v as i64};
+}
+
+macro_rules! as_i128 {
+    (i8  , $v:expr) => {$v as i128};
+    (i16 , $v:expr) => {$v as i128};
+    (i24 , $v:expr) => {$v.as_i128()};
+    (i32 , $v:expr) => {$v as i128};
+    (i64 , $v:expr) => {$v as i128};
+    (i128, $v:expr) => {$v as i128};
+    (u8  , $v:expr) => {$v as i128};
+    (u16 , $v:expr) => {$v as i128};
+    (u24 , $v:expr) => {$v.as_i128()};
+    (u32 , $v:expr) => {$v as i128};
+    (u64 , $v:expr) => {$v as i128};
+    (u128, $v:expr) => {$v as i128};
+    (f32 , $v:expr) => {$v as i128};
+    (f64 , $v:expr) => {$v as i128};
+}
+
+macro_rules! as_u8 {
+    (i8  , $v:expr) => {$v as u8};
+    (i16 , $v:expr) => {$v as u8};
+    (i24 , $v:expr) => {$v.as_u8()};
+    (i32 , $v:expr) => {$v as u8};
+    (i64 , $v:expr) => {$v as u8};
+    (i128, $v:expr) => {$v as u8};
+    (u8  , $v:expr) => {$v as u8};
+    (u16 , $v:expr) => {$v as u8};
+    (u24 , $v:expr) => {$v.as_u8()};
+    (u32 , $v:expr) => {$v as u8};
+    (u64 , $v:expr) => {$v as u8};
+    (u128, $v:expr) => {$v as u8};
+    (f32 , $v:expr) => {$v as u8};
+    (f64 , $v:expr) => {$v as u8};
+}
+
+macro_rules! as_u16 {
+    (i8  , $v:expr) => {$v as u16};
+    (i16 , $v:expr) => {$v as u16};
+    (i24 , $v:expr) => {$v.as_u16()};
+    (i32 , $v:expr) => {$v as u16};
+    (i64 , $v:expr) => {$v as u16};
+    (i128, $v:expr) => {$v as u16};
+    (u8  , $v:expr) => {$v as u16};
+    (u16 , $v:expr) => {$v as u16};
+    (u24 , $v:expr) => {$v.as_u16()};
+    (u32 , $v:expr) => {$v as u16};
+    (u64 , $v:expr) => {$v as u16};
+    (u128, $v:expr) => {$v as u16};
+    (f32 , $v:expr) => {$v as u16};
+    (f64 , $v:expr) => {$v as u16};
+}
+
+macro_rules! as_u24 {
+    (i8  , $v:expr) => {<u24 as From<i8  >>::from($v)};
+    (i16 , $v:expr) => {<u24 as From<i16 >>::from($v)};
+    (i24 , $v:expr) => {<u24 as From<i24 >>::from($v)};
+    (i32 , $v:expr) => {<u24 as From<i32 >>::from($v)};
+    (i64 , $v:expr) => {<u24 as From<i64 >>::from($v)};
+    (i128, $v:expr) => {<u24 as From<i128>>::from($v)};
+    (u8  , $v:expr) => {<u24 as From<u8  >>::from($v)};
+    (u16 , $v:expr) => {<u24 as From<u16 >>::from($v)};
+    (u24 , $v:expr) => {<u24 as From<u24 >>::from($v)};
+    (u32 , $v:expr) => {<u24 as From<u32 >>::from($v)};
+    (u64 , $v:expr) => {<u24 as From<u64 >>::from($v)};
+    (u128, $v:expr) => {<u24 as From<u128>>::from($v)};
+    (f32 , $v:expr) => {<u24 as From<f32 >>::from($v)};
+    (f64 , $v:expr) => {<u24 as From<f64 >>::from($v)};
+}
+
+macro_rules! as_u32 {
+    (i8  , $v:expr) => {$v as u32};
+    (i16 , $v:expr) => {$v as u32};
+    (i24 , $v:expr) => {$v.as_u32()};
+    (i32 , $v:expr) => {$v as u32};
+    (i64 , $v:expr) => {$v as u32};
+    (i128, $v:expr) => {$v as u32};
+    (u8  , $v:expr) => {$v as u32};
+    (u16 , $v:expr) => {$v as u32};
+    (u24 , $v:expr) => {$v.as_u32()};
+    (u32 , $v:expr) => {$v as u32};
+    (u64 , $v:expr) => {$v as u32};
+    (u128, $v:expr) => {$v as u32};
+    (f32 , $v:expr) => {$v as u32};
+    (f64 , $v:expr) => {$v as u32};
+}
+
+macro_rules! as_u64 {
+    (i8  , $v:expr) => {$v as u64};
+    (i16 , $v:expr) => {$v as u64};
+    (i24 , $v:expr) => {$v.as_u64()};
+    (i32 , $v:expr) => {$v as u64};
+    (i64 , $v:expr) => {$v as u64};
+    (i128, $v:expr) => {$v as u64};
+    (u8  , $v:expr) => {$v as u64};
+    (u16 , $v:expr) => {$v as u64};
+    (u24 , $v:expr) => {$v.as_u64()};
+    (u32 , $v:expr) => {$v as u64};
+    (u64 , $v:expr) => {$v as u64};
+    (u128, $v:expr) => {$v as u64};
+    (f32 , $v:expr) => {$v as u64};
+    (f64 , $v:expr) => {$v as u64};
+}
+
+macro_rules! as_u128 {
+    (i8  , $v:expr) => {$v as u128};
+    (i16 , $v:expr) => {$v as u128};
+    (i24 , $v:expr) => {$v.as_u128()};
+    (i32 , $v:expr) => {$v as u128};
+    (i64 , $v:expr) => {$v as u128};
+    (i128, $v:expr) => {$v as u128};
+    (u8  , $v:expr) => {$v as u128};
+    (u16 , $v:expr) => {$v as u128};
+    (u24 , $v:expr) => {$v.as_u128()};
+    (u32 , $v:expr) => {$v as u128};
+    (u64 , $v:expr) => {$v as u128};
+    (u128, $v:expr) => {$v as u128};
+    (f32 , $v:expr) => {$v as u128};
+    (f64 , $v:expr) => {$v as u128};
+}
+
+macro_rules! as_f32 {
+    (i8  , $v:expr) => {$v as f32};
+    (i16 , $v:expr) => {$v as f32};
+    (i24 , $v:expr) => {$v.as_f32()};
+    (i32 , $v:expr) => {$v as f32};
+    (i64 , $v:expr) => {$v as f32};
+    (i128, $v:expr) => {$v as f32};
+    (u8  , $v:expr) => {$v as f32};
+    (u16 , $v:expr) => {$v as f32};
+    (u24 , $v:expr) => {$v.as_f32()};
+    (u32 , $v:expr) => {$v as f32};
+    (u64 , $v:expr) => {$v as f32};
+    (u128, $v:expr) => {$v as f32};
+    (f32 , $v:expr) => {$v as f32};
+    (f64 , $v:expr) => {$v as f32};
+}
+
+macro_rules! as_f64 {
+    (i8  , $v:expr) => {$v as f64};
+    (i16 , $v:expr) => {$v as f64};
+    (i24 , $v:expr) => {$v.as_f64()};
+    (i32 , $v:expr) => {$v as f64};
+    (i64 , $v:expr) => {$v as f64};
+    (i128, $v:expr) => {$v as f64};
+    (u8  , $v:expr) => {$v as f64};
+    (u16 , $v:expr) => {$v as f64};
+    (u24 , $v:expr) => {$v.as_f64()};
+    (u32 , $v:expr) => {$v as f64};
+    (u64 , $v:expr) => {$v as f64};
+    (u128, $v:expr) => {$v as f64};
+    (f32 , $v:expr) => {$v as f64};
+    (f64 , $v:expr) => {$v as f64};
+}
+
     type Longer;
     type Shorter;
     type Signed;
