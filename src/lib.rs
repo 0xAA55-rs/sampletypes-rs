@@ -123,6 +123,23 @@ macro_rules! signed_type {
     (f64 ) => {f64 };
 }
 
+macro_rules! unsigned_type {
+    (i8  ) => {u8  };
+    (i16 ) => {u16 };
+    (i24 ) => {u24 };
+    (i32 ) => {u32 };
+    (i64 ) => {u64 };
+    (i128) => {u128};
+    (u8  ) => {u8  };
+    (u16 ) => {u16 };
+    (u24 ) => {u24 };
+    (u32 ) => {u32 };
+    (u64 ) => {u64 };
+    (u128) => {u128};
+    (f32 ) => {f32 };
+    (f64 ) => {f64 };
+}
+
     type Longer;
     type Shorter;
     type Signed;
