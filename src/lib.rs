@@ -195,6 +195,23 @@ macro_rules! to_unsigned {
     (f64 , $v:expr) => {$v};
 }
 
+macro_rules! is_integer {
+    (i8  ) => {true };
+    (i16 ) => {true };
+    (i24 ) => {true };
+    (i32 ) => {true };
+    (i64 ) => {true };
+    (i128) => {true };
+    (u8  ) => {true };
+    (u16 ) => {true };
+    (u24 ) => {true };
+    (u32 ) => {true };
+    (u64 ) => {true };
+    (u128) => {true };
+    (f32 ) => {false};
+    (f64 ) => {false};
+}
+
     type Longer;
     type Shorter;
     type Signed;
