@@ -904,5 +904,156 @@ where
     T::from(v)
 }
 
+macro_rules! impl_sample_type {
+    ($tp:tt, $longer:tt) => {
+        impl SampleType for $tp {
+            type Longer = longer_type!($tp);
+            type Shorter = shorter_type!($tp);
+            type Signed = signed_type!($tp);
+            type Unsigned = unsigned_type!($tp);
+            const MIDNUM: $tp = mid_number!($tp);
+            #[inline(always)]
+            fn new() -> Self {
+                mid_number!($tp)
+            }
+            #[inline(always)]
+            fn zero() -> Self {
+                zero_number!($tp)
+            }
+            #[inline(always)]
+            fn from(v: impl SampleType) -> Self {
+                v.to::<$tp>()
+            }
+            #[inline(always)]
+            fn average(s1: Self, s2: Self) -> Self {
+                Self::average_arr(&[s1, s2])
+            }
+            #[inline(always)]
+            fn average_arr(arr: &[Self]) -> Self {
+                average_arr!($tp, $longer, arr)
+            }
+            #[inline(always)]
+            fn to<T>(&self) -> T where T: SampleType {
+                match type_name::<T>() {
+                    "i8 " => to_T(self.to_i8 ()),
+                    "i16" => to_T(self.to_i16()),
+                    "i24" => to_T(self.to_i24()),
+                    "i32" => to_T(self.to_i32()),
+                    "i64" => to_T(self.to_i64()),
+                    "u8 " => to_T(self.to_u8 ()),
+                    "u16" => to_T(self.to_u16()),
+                    "u24" => to_T(self.to_u24()),
+                    "u32" => to_T(self.to_u32()),
+                    "u64" => to_T(self.to_u64()),
+                    "f32" => to_T(self.to_f32()),
+                    "f64" => to_T(self.to_f64()),
+                    "i128" => to_T(self.to_i128()),
+                    "u128" => to_T(self.to_u128()),
+                    o => panic!("Unknown type name: {o}"),
+                }
+            }
+            #[inline(always)]
+            fn as_<T>(&self) -> T where T: SampleType {
+                match type_name::<T>() {
+                    "i8 " => to_T(self.as_i8 ()),
+                    "i16" => to_T(self.as_i16()),
+                    "i24" => to_T(self.as_i24()),
+                    "i32" => to_T(self.as_i32()),
+                    "i64" => to_T(self.as_i64()),
+                    "u8 " => to_T(self.as_u8 ()),
+                    "u16" => to_T(self.as_u16()),
+                    "u24" => to_T(self.as_u24()),
+                    "u32" => to_T(self.as_u32()),
+                    "u64" => to_T(self.as_u64()),
+                    "f32" => to_T(self.as_f32()),
+                    "f64" => to_T(self.as_f64()),
+                    "i128" => to_T(self.as_i128()),
+                    "u128" => to_T(self.as_u128()),
+                    o => panic!("Unknown type name: {o}"),
+                }
+            }
+            #[inline(always)]fn to_i8 (&self) -> i8  {to_i8! ($tp, *self)}
+            #[inline(always)]fn to_i16(&self) -> i16 {to_i16!($tp, *self)}
+            #[inline(always)]fn to_i24(&self) -> i24 {to_i24!($tp, *self)}
+            #[inline(always)]fn to_i32(&self) -> i32 {to_i32!($tp, *self)}
+            #[inline(always)]fn to_i64(&self) -> i64 {to_i64!($tp, *self)}
+            #[inline(always)]fn to_u8 (&self) -> u8  {to_u8! ($tp, *self)}
+            #[inline(always)]fn to_u16(&self) -> u16 {to_u16!($tp, *self)}
+            #[inline(always)]fn to_u24(&self) -> u24 {to_u24!($tp, *self)}
+            #[inline(always)]fn to_u32(&self) -> u32 {to_u32!($tp, *self)}
+            #[inline(always)]fn to_u64(&self) -> u64 {to_u64!($tp, *self)}
+            #[inline(always)]fn to_f32(&self) -> f32 {to_f32!($tp, *self)}
+            #[inline(always)]fn to_f64(&self) -> f64 {to_f64!($tp, *self)}
+            #[inline(always)]fn to_i128(&self) -> i128 {to_i128!($tp, *self)}
+            #[inline(always)]fn to_u128(&self) -> u128 {to_u128!($tp, *self)}
+            #[inline(always)]fn as_i8 (&self) -> i8  {as_i8! ($tp, *self)}
+            #[inline(always)]fn as_i16(&self) -> i16 {as_i16!($tp, *self)}
+            #[inline(always)]fn as_i24(&self) -> i24 {as_i24!($tp, *self)}
+            #[inline(always)]fn as_i32(&self) -> i32 {as_i32!($tp, *self)}
+            #[inline(always)]fn as_i64(&self) -> i64 {as_i64!($tp, *self)}
+            #[inline(always)]fn as_u8 (&self) -> u8  {as_u8! ($tp, *self)}
+            #[inline(always)]fn as_u16(&self) -> u16 {as_u16!($tp, *self)}
+            #[inline(always)]fn as_u24(&self) -> u24 {as_u24!($tp, *self)}
+            #[inline(always)]fn as_u32(&self) -> u32 {as_u32!($tp, *self)}
+            #[inline(always)]fn as_u64(&self) -> u64 {as_u64!($tp, *self)}
+            #[inline(always)]fn as_f32(&self) -> f32 {as_f32!($tp, *self)}
+            #[inline(always)]fn as_f64(&self) -> f64 {as_f64!($tp, *self)}
+            #[inline(always)]fn as_i128(&self) -> i128 {as_i128!($tp, *self)}
+            #[inline(always)]fn as_u128(&self) -> u128 {as_u128!($tp, *self)}
+            #[inline(always)]
+            fn to_longer(&self) -> Self::Longer {
+                to_longer!($tp, *self)
+            }
+            #[inline(always)]
+            fn to_shorter(&self) -> Self::Shorter {
+                to_shorter!($tp, *self)
+            }
+            #[inline(always)]
+            fn is_signed() -> bool {
+                is_signed!($tp)
+            }
+            #[inline(always)]
+            fn is_unsigned() -> bool {
+                is_unsigned!($tp)
+            }
+            #[inline(always)]
+            fn is_integer() -> bool {
+                is_integer!($tp)
+            }
+            #[inline(always)]
+            fn is_float() -> bool {
+                is_float!($tp)
+            }
+            #[inline(always)]
+            fn to_signed(&self) -> Self::Signed {
+                to_signed!($tp, *self)
+            }
+            #[inline(always)]
+            fn to_unsigned(&self) -> Self::Unsigned {
+                to_unsigned!($tp, *self)
+            }
+            #[inline(always)]
+            fn read_le(mut r: impl Read) -> Result<Self, Error> {
+                let mut buf = [0u8; sizeof!($tp)];
+                r.read_exact(&mut buf)?;
+                Ok(Self::from_le_bytes(buf))
+            }
+            #[inline(always)]
+            fn read_be(mut r: impl Read) -> Result<Self, Error> {
+                let mut buf = [0u8; sizeof!($tp)];
+                r.read_exact(&mut buf)?;
+                Ok(Self::from_be_bytes(buf))
+            }
+            #[inline(always)]
+            fn write_le(&self, mut w: impl Write) -> Result<(), Error> {
+                w.write_all(&self.to_le_bytes())
+            }
+            #[inline(always)]
+            fn write_be(&self, mut w: impl Write) -> Result<(), Error> {
+                w.write_all(&self.to_be_bytes())
+            }
+        }
+    }
+}
 
 
