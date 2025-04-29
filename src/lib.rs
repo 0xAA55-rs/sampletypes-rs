@@ -161,6 +161,40 @@ macro_rules! is_unsigned {
     ($tp:tt) => {!is_signed!($tp)};
 }
 
+macro_rules! to_signed {
+    (i8  , $v:expr) => {$v};
+    (i16 , $v:expr) => {$v};
+    (i24 , $v:expr) => {$v};
+    (i32 , $v:expr) => {$v};
+    (i64 , $v:expr) => {$v};
+    (i128, $v:expr) => {$v};
+    (u8  , $v:expr) => {$v.wrapping_sub(mid_number!(u8  )) as i8  };
+    (u16 , $v:expr) => {$v.wrapping_sub(mid_number!(u16 )) as i16 };
+    (u24 , $v:expr) => {i24($v.0, $v.1, to_signed!(u8, $v.2) as u8)};
+    (u32 , $v:expr) => {$v.wrapping_sub(mid_number!(u32 )) as i32 };
+    (u64 , $v:expr) => {$v.wrapping_sub(mid_number!(u64 )) as i64 };
+    (u128, $v:expr) => {$v.wrapping_sub(mid_number!(u128)) as i128};
+    (f32 , $v:expr) => {$v};
+    (f64 , $v:expr) => {$v};
+}
+
+macro_rules! to_unsigned {
+    (i8  , $v:expr) => {($v as u8  ).wrapping_add(mid_number!(u8  ))};
+    (i16 , $v:expr) => {($v as u16 ).wrapping_add(mid_number!(u16 ))};
+    (i24 , $v:expr) => {u24($v.0, $v.1, to_unsigned!(i8, $v.2 as i8))};
+    (i32 , $v:expr) => {($v as u32 ).wrapping_add(mid_number!(u32 ))};
+    (i64 , $v:expr) => {($v as u64 ).wrapping_add(mid_number!(u64 ))};
+    (i128, $v:expr) => {($v as u128).wrapping_add(mid_number!(u128))};
+    (u8  , $v:expr) => {$v};
+    (u16 , $v:expr) => {$v};
+    (u24 , $v:expr) => {$v};
+    (u32 , $v:expr) => {$v};
+    (u64 , $v:expr) => {$v};
+    (u128, $v:expr) => {$v};
+    (f32 , $v:expr) => {$v};
+    (f64 , $v:expr) => {$v};
+}
+
     type Longer;
     type Shorter;
     type Signed;
