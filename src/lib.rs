@@ -396,7 +396,7 @@ macro_rules! to_i64 {
     (i128, $v:expr) => {to_shorter!(i128, $v)};
     (u8  , $v:expr) => {to_i64!(i8  , to_signed!(u8  , $v))};
     (u16 , $v:expr) => {to_i64!(i16 , to_signed!(u16 , $v))};
-    (u24 , $v:expr) => {i64::from_le_bytes([$v.1, $v.2, $v.0, $v.1, $v.2, $v.0, $v.1, to_signed!(u8, $v.2)])};
+    (u24 , $v:expr) => {i64::from_le_bytes([$v.1, $v.2, $v.0, $v.1, $v.2, $v.0, $v.1, to_signed!(u8, $v.2) as u8])};
     (u32 , $v:expr) => {to_i64!(i32 , to_signed!(u32 , $v))};
     (u64 , $v:expr) => {to_i64!(i64 , to_signed!(u64 , $v))};
     (u128, $v:expr) => {to_i64!(i128, to_signed!(u128, $v))};
@@ -413,7 +413,7 @@ macro_rules! to_i128 {
     (i128, $v:expr) => {$v};
     (u8  , $v:expr) => {to_i128!(i8  , to_signed!(u8  , $v))};
     (u16 , $v:expr) => {to_i128!(i16 , to_signed!(u16 , $v))};
-    (u24 , $v:expr) => {i128::from_le_bytes([$v.2, $v.0, $v.1, $v.2, $v.0, $v.1, $v.2, $v.0, $v.1, $v.2, $v.0, $v.1, $v.2, $v.0, $v.1, to_signed!(u8, $v.2)])};
+    (u24 , $v:expr) => {i128::from_le_bytes([$v.2, $v.0, $v.1, $v.2, $v.0, $v.1, $v.2, $v.0, $v.1, $v.2, $v.0, $v.1, $v.2, $v.0, $v.1, to_signed!(u8, $v.2) as u8])};
     (u32 , $v:expr) => {to_i128!(i32 , to_signed!(u32 , $v))};
     (u64 , $v:expr) => {to_i128!(i64 , to_signed!(u64 , $v))};
     (u128, $v:expr) => {to_i128!(i128, to_signed!(u128, $v))};
