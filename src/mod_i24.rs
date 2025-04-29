@@ -103,6 +103,12 @@ impl From<i64> for i24 {
 		Self::from(v as i32)
 	}
 }
+impl From<i128> for i24 {
+    #[inline(always)]
+    fn from(v: i128) -> Self {
+        Self::from(v as i32)
+    }
+}
 impl From<u8> for i24 {
     #[inline(always)]
 	fn from(v: u8) -> Self {
@@ -124,9 +130,27 @@ impl From<u32> for i24 {
 }
 impl From<u64> for i24 {
     #[inline(always)]
-	fn from(v: u64) -> Self {
-		Self::from(v as u32)
-	}
+    fn from(v: u64) -> Self {
+        Self::from(v as u32)
+    }
+}
+impl From<u128> for i24 {
+    #[inline(always)]
+    fn from(v: u128) -> Self {
+        Self::from(v as u32)
+    }
+}
+impl From<f32> for i24 {
+    #[inline(always)]
+    fn from(v: f32) -> Self {
+        Self::from(v as i32)
+    }
+}
+impl From<f64> for i24 {
+    #[inline(always)]
+    fn from(v: f64) -> Self {
+        Self::from(v as i32)
+    }
 }
 
 impl Add for i24 {
