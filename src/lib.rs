@@ -267,6 +267,24 @@ macro_rules! as_longer {
     (f64 , $v:expr) => {$v as f64};
 }
 
+#[allow(unused_macros)]
+macro_rules! as_shorter {
+    (i8  , $v:expr) => {$v as i8};
+    (i16 , $v:expr) => {$v as i8};
+    (i24 , $v:expr) => {$v.as_i16()};
+    (i32 , $v:expr) => {<i24 as From>::from($v)};
+    (i64 , $v:expr) => {$v as i32};
+    (i128, $v:expr) => {$v as i64};
+    (u8  , $v:expr) => {$v as u8};
+    (u16 , $v:expr) => {$v as u8};
+    (u24 , $v:expr) => {$v.as_u16()};
+    (u32 , $v:expr) => {u24::from($v)};
+    (u64 , $v:expr) => {$v as u32};
+    (u128, $v:expr) => {$v as u64};
+    (f32 , $v:expr) => {$v as f32};
+    (f64 , $v:expr) => {$v as f32};
+}
+
     type Longer;
     type Shorter;
     type Signed;
