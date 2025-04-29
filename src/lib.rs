@@ -285,6 +285,23 @@ macro_rules! as_shorter {
     (f64 , $v:expr) => {$v as f32};
 }
 
+macro_rules! to_longer {
+    (i8  , $v:expr) => {(as_longer!(i8, $v) << 8) | (as_longer!(u8, to_unsigned!(i8, $v)) as i16)};
+    (i16 , $v:expr) => {{let b = $v.to_le_bytes(); i24(to_unsigned!(i8, b[1] as i8), b[0], b[1])}};
+    (i24 , $v:expr) => {($v.as_i32() << 8) | (to_unsigned!(i8, $v.2 as i8) as i32)};
+    (i32 , $v:expr) => {(as_longer!(i32, $v) << 32) | (as_longer!(u32, to_unsigned!(i32, $v)) as i64)};
+    (i64 , $v:expr) => {(as_longer!(i64, $v) << 64) | (as_longer!(u64, to_unsigned!(i64, $v)) as i128)};
+    (i128, $v:expr) => {$v};
+    (u8  , $v:expr) => {(as_longer!(u8, $v) << 8) | (as_longer!(u8, $v) as u16)};
+    (u16 , $v:expr) => {{let b = $v.to_le_bytes(); u24(b[1], b[0], b[1])}};
+    (u24 , $v:expr) => {($v.as_u32() << 8) | ($v.2 as u32)};
+    (u32 , $v:expr) => {(as_longer!(u32, $v) << 32) | (as_longer!(u32, $v) as u64)};
+    (u64 , $v:expr) => {(as_longer!(u64, $v) << 64) | (as_longer!(u64, $v) as u128)};
+    (u128, $v:expr) => {$v};
+    (f32 , $v:expr) => {$v as f64};
+    (f64 , $v:expr) => {$v};
+}
+
     type Longer;
     type Shorter;
     type Signed;
