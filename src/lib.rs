@@ -1056,4 +1056,18 @@ macro_rules! impl_sample_type {
     }
 }
 
+impl_sample_type!(i8  , i16 );
+impl_sample_type!(i16 , i24 );
+impl_sample_type!(i24 , i32 );
+impl_sample_type!(i32 , i64 );
+impl_sample_type!(i64 , i128);
+impl_sample_type!(i128, i128);
+impl_sample_type!(u8  , u16 );
+impl_sample_type!(u16 , u24 );
+impl_sample_type!(u24 , u32 );
+impl_sample_type!(u32 , u64 );
+impl_sample_type!(u64 , u128);
+impl_sample_type!(u128, u128);
+impl_sample_type!(f32 , f64 );
+impl_sample_type!(f64 , f64 );
 
