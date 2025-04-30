@@ -8,7 +8,7 @@ pub use mod_u24::*;
 
 use std::{io::{Read, Write, Error}, mem::size_of, fmt::Debug, clone::Clone};
 use std::ops::{Add, Sub, Mul, Div, AddAssign, SubAssign, MulAssign, DivAssign};
-use std::ops::{BitAnd, BitOr, BitXor, Shl, Shr, BitAndAssign, BitOrAssign, BitXorAssign, ShlAssign, ShrAssign};
+use std::ops::{BitAnd, BitOr, BitXor, Shl, Shr, BitAndAssign, BitOrAssign, BitXorAssign, ShlAssign, ShrAssign, Not};
 use std::ops::{Rem, RemAssign};
 use std::ops::{Neg};
 
@@ -35,7 +35,8 @@ BitXorAssign +
 ShlAssign +
 ShrAssign +
 Rem<Output = Self> +
-RemAssign {}
+RemAssign +
+Not<Output = Self> {}
 
 impl<T> SampleTypeInteger for T where T:
 SampleType +
@@ -50,7 +51,8 @@ BitXorAssign +
 ShlAssign +
 ShrAssign +
 Rem<Output = Self> +
-RemAssign {}
+RemAssign +
+Not<Output = Self> {}
 
 pub trait SampleTypeIntegerSigned: SampleTypeInteger + Neg {}
 impl<T> SampleTypeIntegerSigned for T where T: SampleTypeInteger + Neg {}

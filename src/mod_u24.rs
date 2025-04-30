@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 
 use std::ops::{Add, Sub, Mul, Div, AddAssign, SubAssign, MulAssign, DivAssign};
-use std::ops::{BitAnd, BitOr, BitXor, Shl, Shr, BitAndAssign, BitOrAssign, BitXorAssign, ShlAssign, ShrAssign};
+use std::ops::{BitAnd, BitOr, BitXor, Shl, Shr, BitAndAssign, BitOrAssign, BitXorAssign, ShlAssign, ShrAssign, Not};
 use std::ops::{Rem, RemAssign};
 
 use crate::mod_i24::i24;
@@ -288,6 +288,13 @@ impl RemAssign for u24 {
     #[inline(always)]
     fn rem_assign(&mut self, rhs: Self) {
         *self = self.rem(rhs);
+    }
+}
+impl Not for u24 {
+    type Output = Self;
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0, !self.1, !self.2)
     }
 }
 
