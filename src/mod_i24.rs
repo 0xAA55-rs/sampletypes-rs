@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 
 use std::ops::{Add, Sub, Mul, Div, AddAssign, SubAssign, MulAssign, DivAssign};
-use std::ops::{BitAnd, BitOr, BitXor, Shl, Shr, BitAndAssign, BitOrAssign, BitXorAssign, ShlAssign, ShrAssign};
+use std::ops::{BitAnd, BitOr, BitXor, Shl, Shr, BitAndAssign, BitOrAssign, BitXorAssign, ShlAssign, ShrAssign, Not};
 use std::ops::{Rem, RemAssign};
 use std::ops::{Neg};
 
@@ -291,12 +291,18 @@ impl RemAssign for i24 {
         *self = self.rem(rhs);
     }
 }
+impl Not for i24 {
+    type Output = Self;
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0, !self.1, !self.2)
+    }
+}
 impl Neg for i24 {
     type Output = Self;
     #[inline(always)]
     fn neg(self) -> Self::Output {
-        let ret = Self(!self.0, !self.1, !self.2);
-        ret.add(Self(1, 0, 0))
+        (!self).add(Self(1, 0, 0))
     }
 }
 
