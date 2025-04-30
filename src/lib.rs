@@ -946,6 +946,26 @@ macro_rules! get_suitable_float {
     (f64 ) => {$v};
 }
 
+/// Scale to `[-1.0, 1.0]` range
+/// * Scale to the suitable float type for the source type to perform losslessly conversion
+#[macro_export]
+macro_rules! to_suitable_float {
+    (i8  , $v:expr) => {to_f32!(i8  , $v)};
+    (i16 , $v:expr) => {to_f32!(i16 , $v)};
+    (i24 , $v:expr) => {to_f32!(i24 , $v)};
+    (i32 , $v:expr) => {to_f64!(i32 , $v)};
+    (i64 , $v:expr) => {to_f64!(i64 , $v)};
+    (i128, $v:expr) => {to_f64!(i128, $v)};
+    (u8  , $v:expr) => {to_f32!(u8  , $v)};
+    (u16 , $v:expr) => {to_f32!(u16 , $v)};
+    (u24 , $v:expr) => {to_f32!(u24 , $v)};
+    (u32 , $v:expr) => {to_f64!(u32 , $v)};
+    (u64 , $v:expr) => {to_f64!(u64 , $v)};
+    (u128, $v:expr) => {to_f64!(u128, $v)};
+    (f32 , $v:expr) => {$v};
+    (f64 , $v:expr) => {$v};
+}
+
 /// Get the average value from a sample array.
 #[macro_export]
 macro_rules! average_arr {
