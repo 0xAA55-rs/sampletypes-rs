@@ -1071,7 +1071,10 @@ pub trait SampleType: Numeric {
     fn zero() -> Self;
 
     /// Scale a sample to this specified format.
-    fn from(v: impl SampleType) -> Self;
+    fn scale_from<T>(v: T) -> Self where T: SampleType;
+
+    /// Cast a sample to this specified format.
+    fn cast_from<T>(v: T) -> Self where T: SampleType;
 
     /// Get the average value of two samples.
     fn average(s1: Self, s2: Self) -> Self;
@@ -1241,8 +1244,12 @@ macro_rules! impl_sample_type {
                 zero_number!($tp)
             }
             #[inline(always)]
-            fn from(v: impl SampleType) -> Self {
+            fn scale_from<T>(v: T) -> Self where T: SampleType {
                 <$tp as SampleFrom>::to(v)
+            }
+            #[inline(always)]
+            fn cast_from<T>(v: T) -> Self where T: SampleType {
+                <$tp as SampleFrom>::as_(v)
             }
             #[inline(always)]
             fn average(s1: Self, s2: Self) -> Self {
