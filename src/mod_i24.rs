@@ -5,6 +5,8 @@ use std::ops::{BitAnd, BitOr, BitXor, Shl, Shr, BitAndAssign, BitOrAssign, BitXo
 use std::ops::{Rem, RemAssign};
 use std::ops::{Neg};
 
+use std::fmt::{self, Display, Formatter};
+
 use crate::mod_u24::u24;
 
 /// * The tuple struct is little-endian
@@ -316,5 +318,11 @@ impl Neg for i24 {
 impl Default for i24 {
     fn default() -> Self {
         Self(0, 0, 0)
+    }
+}
+
+impl Display for i24 {
+    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
+        write!(f, "{}", self.as_i32())
     }
 }
