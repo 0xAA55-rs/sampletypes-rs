@@ -12,6 +12,7 @@ use std::ops::{BitAnd, BitOr, BitXor, Shl, Shr, BitAndAssign, BitOrAssign, BitXo
 use std::ops::{Rem, RemAssign};
 use std::ops::{Neg};
 
+/// Basic numeric trait can do `+`, `-`, `*`, `/`, `+=`, `-=`, `*=`, `/=`
 pub trait Numeric:
 Add<Output = Self> + Sub<Output = Self> + Mul<Output = Self> + Div<Output = Self> +
 AddAssign + SubAssign + MulAssign + DivAssign +
@@ -22,6 +23,7 @@ Add<Output = Self> + Sub<Output = Self> + Mul<Output = Self> + Div<Output = Self
 AddAssign + SubAssign + MulAssign + DivAssign +
 Debug + Sized + Clone + Copy + 'static {}
 
+/// Integers can do `&`, `|`, `^`
 pub trait SampleTypeInteger:
 SampleType +
 BitAnd<Output = Self> +
@@ -825,60 +827,156 @@ macro_rules! average_arr {
     };
 }
 
+/// * The `SampleType` for audio processing.
+/// * The `to_*()` methods are for scaling the sample to the another format.
+/// * The `as_*()` methods are for casting the sample to the another format.
 pub trait SampleType: Numeric {
     type Longer;
     type Shorter;
     type Signed;
     type Unsigned;
     const MIDNUM: Self;
+
+    /// Create a new sample, the value is the middle value of the range of the format.
     fn new() -> Self;
+
+    /// Create a new sample, the value is zero.
     fn zero() -> Self;
+
+    /// Scale a sample to this specified format.
     fn from(v: impl SampleType) -> Self;
+
+    /// Get the average value of two samples.
     fn average(s1: Self, s2: Self) -> Self;
+
+    /// Get the average value from a sample array.
     fn average_arr(arr: &[Self]) -> Self;
+
+    /// Scale to `i8` range
     fn to_i8 (&self) -> i8 ;
+
+    /// Scale to `i16` range
     fn to_i16(&self) -> i16;
+
+    /// Scale to `i24` range
     fn to_i24(&self) -> i24;
+
+    /// Scale to `i32` range
     fn to_i32(&self) -> i32;
+
+    /// Scale to `i64` range
     fn to_i64(&self) -> i64;
+
+    /// Scale to `u8` range
     fn to_u8 (&self) -> u8 ;
+
+    /// Scale to `u16` range
     fn to_u16(&self) -> u16;
+
+    /// Scale to `u24` range
     fn to_u24(&self) -> u24;
+
+    /// Scale to `u32` range
     fn to_u32(&self) -> u32;
+
+    /// Scale to `u64` range
     fn to_u64(&self) -> u64;
+
+    /// Scale to `[-1.0, 1.0]` range
     fn to_f32(&self) -> f32;
+
+    /// Scale to `[-1.0, 1.0]` range
     fn to_f64(&self) -> f64;
+
+    /// Scale to `i128` range
     fn to_i128(&self) -> i128;
+
+    /// Scale to `u128` range
     fn to_u128(&self) -> u128;
+
+    /// Cast to `i8`
     fn as_i8 (&self) -> i8 ;
+
+    /// Cast to `i16`
     fn as_i16(&self) -> i16;
+
+    /// Cast to `i24`
     fn as_i24(&self) -> i24;
+
+    /// Cast to `i32`
     fn as_i32(&self) -> i32;
+
+    /// Cast to `i64`
     fn as_i64(&self) -> i64;
+
+    /// Cast to `u8`
     fn as_u8 (&self) -> u8 ;
+
+    /// Cast to `u16`
     fn as_u16(&self) -> u16;
+
+    /// Cast to `u24`
     fn as_u24(&self) -> u24;
+
+    /// Cast to `u32`
     fn as_u32(&self) -> u32;
+
+    /// Cast to `u64`
     fn as_u64(&self) -> u64;
+
+    /// Cast to `f32`
     fn as_f32(&self) -> f32;
+
+    /// Cast to `f64`
     fn as_f64(&self) -> f64;
+
+    /// Cast to `i128`
     fn as_i128(&self) -> i128;
+
+    /// Cast to `u128`
     fn as_u128(&self) -> u128;
+
+    /// Get the size of the sample in bytes
     fn sizeof(&self) -> usize {size_of::<Self>()}
+
+    /// Scale to a longer type, the longest type is `i128` or `u128`
     fn to_longer(&self) -> Self::Longer;
+
+    /// Scale to a shorter type, the shortest type is `i8` or `u8`
     fn to_shorter(&self) -> Self::Shorter;
+
+    /// Is this type a signed type?
     fn is_signed() -> bool;
+
+    /// Is this type an unsigned type?
     fn is_unsigned() -> bool;
+
+    /// Is this type an integer type?
     fn is_integer() -> bool;
+
+    /// Is this type an IEEE 754 floating point number type?
     fn is_float() -> bool;
+
+    /// Convert to a signed number type. No effects to `f32` and `f64`
     fn to_signed(&self) -> Self::Signed;
+
+    /// Convert to an unsigned number type. No effects to `f32` and `f64`
     fn to_unsigned(&self) -> Self::Unsigned;
+
+    /// Read from a reader by little-endian
     fn read_le<T>(r: &mut T) -> Result<Self, Error> where T: Read + ?Sized;
+
+    /// Read from a reader by big-endian
     fn read_be<T>(r: &mut T) -> Result<Self, Error> where T: Read + ?Sized;
+
+    /// Write to a writer by little-endian
     fn write_le<T>(&self, w: &mut T) -> Result<(), Error> where T: Write + ?Sized;
+
+    /// Write to a writer by big-endian
     fn write_be<T>(&self, w: &mut T) -> Result<(), Error> where T: Write + ?Sized;
 }
 
+/// * The `SampleFrom` as a utility for `SampleType` to use the overloading `to()` method.
 pub trait SampleFrom: Numeric {
     fn to(s: impl SampleType) -> Self;
 }
