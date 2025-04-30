@@ -379,9 +379,9 @@ macro_rules! to_i8 {
 /// Scale to `i16` range
 #[macro_export]
 macro_rules! to_i16 {
-    (i8  , $v:expr) => {to_longer!(i8, $v)};
+    (i8  , $v:expr) => {(($v as i16) << 8) | (to_unsigned!(i8, $v) as i16)};
     (i16 , $v:expr) => {$v};
-    (i24 , $v:expr) => {to_shorter!(i24, $v)};
+    (i24 , $v:expr) => {($v.as_i32() >> 8) as i16};
     (i32 , $v:expr) => {($v >> 16) as i16};
     (i64 , $v:expr) => {($v >> 48) as i16};
     (i128, $v:expr) => {($v >> 112) as i16};
@@ -399,9 +399,9 @@ macro_rules! to_i16 {
 #[macro_export]
 macro_rules! to_i24 {
     (i8  , $v:expr) => {{let u = to_unsigned!(i8, $v); i24(u, u, $v as u8)}};
-    (i16 , $v:expr) => {to_longer!(i16, $v)};
+    (i16 , $v:expr) => {i24::from(to_i32!(i16, $v) >> 8)};
     (i24 , $v:expr) => {$v};
-    (i32 , $v:expr) => {to_shorter!(i32, $v)};
+    (i32 , $v:expr) => {i24::from($v >> 8)};
     (i64 , $v:expr) => {i24::from($v >> 40)};
     (i128, $v:expr) => {i24::from($v >> 104)};
     (u8  , $v:expr) => {to_i24!(i8  , to_signed!(u8  , $v))};
@@ -419,7 +419,7 @@ macro_rules! to_i24 {
 macro_rules! to_i32 {
     (i8  , $v:expr) => {{let longer = to_i16!(i8, $v); ((longer as i32) << 16) | (to_unsigned!(i16, longer) as i32)}};
     (i16 , $v:expr) => {(($v as i32) << 16) | (to_unsigned!(i16, $v) as i32)};
-    (i24 , $v:expr) => {to_longer!(i24, $v)};
+    (i24 , $v:expr) => {($v.as_i32() << 8) | (to_unsigned!(i8, $v.2 as i8) as i32)};
     (i32 , $v:expr) => {$v};
     (i64 , $v:expr) => {($v >> 32) as i32};
     (i128, $v:expr) => {($v >> 96) as i32};
@@ -439,9 +439,9 @@ macro_rules! to_i64 {
     (i8  , $v:expr) => {{let longer = to_i32!(i8 , $v); ((longer as i64) << 32) | (to_unsigned!(i32, longer) as i64)}};
     (i16 , $v:expr) => {{let longer = to_i32!(i16, $v); ((longer as i64) << 32) | (to_unsigned!(i32, longer) as i64)}};
     (i24 , $v:expr) => {{let u2 = to_unsigned!(i8, $v.2 as i8); i64::from_le_bytes([$v.1, u2, $v.0, $v.1, u2, $v.0, $v.1, $v.2])}};
-    (i32 , $v:expr) => {to_longer!(i32, $v)};
+    (i32 , $v:expr) => {(($v as i64) << 32) | (to_unsigned!(i32, $v) as i64)};
     (i64 , $v:expr) => {$v};
-    (i128, $v:expr) => {to_shorter!(i128, $v)};
+    (i128, $v:expr) => {($v >> 64) as i64};
     (u8  , $v:expr) => {to_i64!(i8  , to_signed!(u8  , $v))};
     (u16 , $v:expr) => {to_i64!(i16 , to_signed!(u16 , $v))};
     (u24 , $v:expr) => {i64::from_le_bytes([$v.1, $v.2, $v.0, $v.1, $v.2, $v.0, $v.1, to_signed!(u8, $v.2) as u8])};
@@ -459,7 +459,7 @@ macro_rules! to_i128 {
     (i16 , $v:expr) => {{let longer = to_i64!(i16, $v); ((longer as i128) << 64) | (to_unsigned!(i64, longer) as i128)}};
     (i24 , $v:expr) => {{let u2 = to_unsigned!(i8, $v.2 as i8); i128::from_le_bytes([u2, $v.0, $v.1, u2, $v.0, $v.1, u2, $v.0, $v.1, u2, $v.0, $v.1, u2, $v.0, $v.1, $v.2])}};
     (i32 , $v:expr) => {{let longer = to_i64!(i32, $v); ((longer as i128) << 64) | (to_unsigned!(i64, longer) as i128)}};
-    (i64 , $v:expr) => {to_longer!(i64, $v)};
+    (i64 , $v:expr) => {(($v as i128) << 64) | (to_unsigned!(i64, $v) as i128)};
     (i128, $v:expr) => {$v};
     (u8  , $v:expr) => {to_i128!(i8  , to_signed!(u8  , $v))};
     (u16 , $v:expr) => {to_i128!(i16 , to_signed!(u16 , $v))};
