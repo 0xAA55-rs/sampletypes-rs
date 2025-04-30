@@ -1049,6 +1049,9 @@ macro_rules! tan {
 /// * The `to_*()` methods are for scaling the sample to the another format.
 /// * The `as_*()` methods are for casting the sample to the another format.
 pub trait SampleType: Numeric {
+    /// The type we are implementating for
+    type ImplFor;
+
     /// The longer type, e.g. for `i8`, the longer type is `i16`
     type Longer;
 
@@ -1288,6 +1291,7 @@ impl_sample_from!(f64 );
 macro_rules! impl_sample_type {
     ($tp:tt, $longer:tt) => {
         impl SampleType for $tp {
+            type ImplFor = $tp;
             type Longer = longer_type!($tp);
             type Shorter = shorter_type!($tp);
             type Signed = signed_type!($tp);
