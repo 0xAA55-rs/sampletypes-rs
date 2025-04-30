@@ -322,39 +322,39 @@ macro_rules! as_shorter {
 /// Scale the current type number to the longer type number.
 #[macro_export]
 macro_rules! to_longer {
-    (i8  , $v:expr) => {{let longer = as_longer!(i8, $v); (longer << 8) | (to_unsigned!(i16, longer) as i16)}};
-    (i16 , $v:expr) => {{let b = $v.to_le_bytes(); i24(to_unsigned!(i8, b[1] as i8), b[0], b[1])}};
-    (i24 , $v:expr) => {($v.as_i32() << 8) | (to_unsigned!(i8, $v.2 as i8) as i32)};
-    (i32 , $v:expr) => {{let longer = as_longer!(i32, $v); (longer << 32) | (to_unsigned!(i64, longer) as i64)}};
-    (i64 , $v:expr) => {{let longer = as_longer!(i64, $v); (longer << 64) | (to_unsigned!(i128, longer) as i128)}};
-    (i128, $v:expr) => {$v};
-    (u8  , $v:expr) => {{let longer = as_longer!(u8, $v); (longer << 8) | (longer as u16)}};
-    (u16 , $v:expr) => {{let b = $v.to_le_bytes(); u24(b[1], b[0], b[1])}};
-    (u24 , $v:expr) => {($v.as_u32() << 8) | ($v.2 as u32)};
-    (u32 , $v:expr) => {{let longer = as_longer!(u32, $v); (longer << 32) | (longer as u64)}};
-    (u64 , $v:expr) => {{let longer = as_longer!(u64, $v); (longer << 64) | (longer as u128)}};
-    (u128, $v:expr) => {$v};
-    (f32 , $v:expr) => {$v as f64};
-    (f64 , $v:expr) => {$v};
+    (i8  , $v:expr) => {to_type!(i8  , i16 , $v)};
+    (i16 , $v:expr) => {to_type!(i16 , i24 , $v)};
+    (i24 , $v:expr) => {to_type!(i24 , i32 , $v)};
+    (i32 , $v:expr) => {to_type!(i32 , i64 , $v)};
+    (i64 , $v:expr) => {to_type!(i64 , i128, $v)};
+    (i128, $v:expr) => {to_type!(i128, i128, $v)};
+    (u8  , $v:expr) => {to_type!(u8  , u16 , $v)};
+    (u16 , $v:expr) => {to_type!(u16 , u24 , $v)};
+    (u24 , $v:expr) => {to_type!(u24 , u32 , $v)};
+    (u32 , $v:expr) => {to_type!(u32 , u64 , $v)};
+    (u64 , $v:expr) => {to_type!(u64 , u128, $v)};
+    (u128, $v:expr) => {to_type!(u128, u128, $v)};
+    (f32 , $v:expr) => {to_type!(f32 , f64 , $v)};
+    (f64 , $v:expr) => {to_type!(f64 , f64 , $v)};
 }
 
 /// Scale the current type number to the shorter type number.
 #[macro_export]
 macro_rules! to_shorter {
-    (i8  , $v:expr) => {$v};
-    (i16 , $v:expr) => {($v >> 8) as i8};
-    (i24 , $v:expr) => {i16::from_le_bytes([$v.1, $v.2])};
-    (i32 , $v:expr) => {<i24 as From<i32>>::from($v >> 8)};
-    (i64 , $v:expr) => {($v >> 32) as i32};
-    (i128, $v:expr) => {($v >> 64) as i64};
-    (u8  , $v:expr) => {$v};
-    (u16 , $v:expr) => {($v >> 8) as u8};
-    (u24 , $v:expr) => {u16::from_le_bytes([$v.1, $v.2])};
-    (u32 , $v:expr) => {<u24 as From<u32>>::from($v >> 8)};
-    (u64 , $v:expr) => {($v >> 32) as u32};
-    (u128, $v:expr) => {($v >> 64) as u64};
-    (f32 , $v:expr) => {$v};
-    (f64 , $v:expr) => {$v as f32};
+    (i8  , $v:expr) => {to_type!(i8  , i8 , $v)};
+    (i16 , $v:expr) => {to_type!(i16 , i8 , $v)};
+    (i24 , $v:expr) => {to_type!(i24 , i16, $v)};
+    (i32 , $v:expr) => {to_type!(i32 , i24, $v)};
+    (i64 , $v:expr) => {to_type!(i64 , i32, $v)};
+    (i128, $v:expr) => {to_type!(i128, i64, $v)};
+    (u8  , $v:expr) => {to_type!(u8  , u8 , $v)};
+    (u16 , $v:expr) => {to_type!(u16 , u8 , $v)};
+    (u24 , $v:expr) => {to_type!(u24 , u16, $v)};
+    (u32 , $v:expr) => {to_type!(u32 , u24, $v)};
+    (u64 , $v:expr) => {to_type!(u64 , u32, $v)};
+    (u128, $v:expr) => {to_type!(u128, u64, $v)};
+    (f32 , $v:expr) => {to_type!(f32 , f32, $v)};
+    (f64 , $v:expr) => {to_type!(f64 , f32, $v)};
 }
 
 /// Scale to `i8` range
