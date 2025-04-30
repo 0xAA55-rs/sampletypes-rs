@@ -1244,24 +1244,44 @@ macro_rules! call_as_type {
     (f64 , $v:expr) => {$v.as_f64 ()};
 }
 
-/// * The `SampleFrom` as a utility for `SampleType` to use the overloading `to()` method.
+/// * The `SampleFrom` as a utility for `SampleType` to handle function overloading
 pub trait SampleFrom: Numeric {
-    fn to(s: impl SampleType) -> Self;
+    /// The type we are implementating for
+    type ImplFor;
+
+    /// The `to<S>` method, input any type of `SampleType` value, then scale it to `ImplFor` type.
+    fn to<S>(s: S) -> Self where S: SampleType;
+
+    /// The `as_<S>` method, input any type of `SampleType` value, then cast it to `ImplFor` type.
+    fn as_<S>(s: S) -> Self where S: SampleType;
+
 }
-impl SampleFrom for i8  {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_i8()  }}
-impl SampleFrom for i16 {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_i16() }}
-impl SampleFrom for i24 {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_i24() }}
-impl SampleFrom for i32 {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_i32() }}
-impl SampleFrom for i64 {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_i64() }}
-impl SampleFrom for i128{#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_i128()}}
-impl SampleFrom for u8  {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_u8()  }}
-impl SampleFrom for u16 {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_u16() }}
-impl SampleFrom for u24 {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_u24() }}
-impl SampleFrom for u32 {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_u32() }}
-impl SampleFrom for u64 {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_u64() }}
-impl SampleFrom for u128{#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_u128()}}
-impl SampleFrom for f32 {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_f32() }}
-impl SampleFrom for f64 {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_f64() }}
+
+#[macro_export]
+macro_rules! impl_sample_from {
+    ($tp:tt) => {
+        impl SampleFrom for $tp {
+            type ImplFor = $tp;
+            #[inline(always)]fn to<S>(s: S) -> Self where S: SampleType {call_to_type!($tp, s)}
+            #[inline(always)]fn as_<S>(s: S) -> Self where S: SampleType {call_as_type!($tp, s)}
+        }
+    };
+}
+
+impl_sample_from!(i8  );
+impl_sample_from!(i16 );
+impl_sample_from!(i24 );
+impl_sample_from!(i32 );
+impl_sample_from!(i64 );
+impl_sample_from!(i128);
+impl_sample_from!(u8  );
+impl_sample_from!(u16 );
+impl_sample_from!(u24 );
+impl_sample_from!(u32 );
+impl_sample_from!(u64 );
+impl_sample_from!(u128);
+impl_sample_from!(f32 );
+impl_sample_from!(f64 );
 
 /// * Implement `SampleType` for a specific numeric type.
 #[macro_export]
