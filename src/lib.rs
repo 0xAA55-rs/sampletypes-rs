@@ -1225,6 +1225,25 @@ macro_rules! call_to_type {
     (f64 , $v:expr) => {$v.to_f64 ()};
 }
 
+/// * Let known type of `SampleType` instance to call `as_Xxx()`
+#[macro_export]
+macro_rules! call_as_type {
+    (i8  , $v:expr) => {$v.as_i8  ()};
+    (i16 , $v:expr) => {$v.as_i16 ()};
+    (i24 , $v:expr) => {$v.as_i24 ()};
+    (i32 , $v:expr) => {$v.as_i32 ()};
+    (i64 , $v:expr) => {$v.as_i64 ()};
+    (i128, $v:expr) => {$v.as_i128()};
+    (u8  , $v:expr) => {$v.as_u8  ()};
+    (u16 , $v:expr) => {$v.as_u16 ()};
+    (u24 , $v:expr) => {$v.as_u24 ()};
+    (u32 , $v:expr) => {$v.as_u32 ()};
+    (u64 , $v:expr) => {$v.as_u64 ()};
+    (u128, $v:expr) => {$v.as_u128()};
+    (f32 , $v:expr) => {$v.as_f32 ()};
+    (f64 , $v:expr) => {$v.as_f64 ()};
+}
+
 /// * The `SampleFrom` as a utility for `SampleType` to use the overloading `to()` method.
 pub trait SampleFrom: Numeric {
     fn to(s: impl SampleType) -> Self;
