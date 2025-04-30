@@ -6,7 +6,7 @@ pub mod mod_u24;
 pub use mod_i24::*;
 pub use mod_u24::*;
 
-use std::{any::type_name, io::{Read, Write, Error}, mem::size_of, fmt::{Debug, Display}, clone::Clone};
+use std::{io::{Read, Write, Error}, mem::size_of, fmt::{Debug, Display}, clone::Clone};
 use std::ops::{Add, Sub, Mul, Div, AddAssign, SubAssign, MulAssign, DivAssign};
 use std::ops::{BitAnd, BitOr, BitXor, Shl, Shr, BitAndAssign, BitOrAssign, BitXorAssign, ShlAssign, ShrAssign, Not};
 use std::ops::{Rem, RemAssign};
@@ -1067,6 +1067,9 @@ pub trait SampleType: SampleFrom {
     /// The middle number, e.g. for `u16`, the middle number is `32768`.
     const MIDNUM: Self;
 
+    /// The type name, to avoid using `std::any::type_name`
+    const TYPE_NAME: &'static str;
+
     /// Create a new sample, the value is the middle value of the range of the format.
     fn new() -> Self;
 
@@ -1304,7 +1307,7 @@ macro_rules! impl_sample_from {
             #[inline(always)]fn as_<S>(s: S) -> Self where S: SampleType {call_as_type!($tp, s)}
 
             fn sin<S>(s: S) -> Self where S: SampleType {
-                match type_name::<S>() {
+                match S::TYPE_NAME {
                     "i8"   => sin!(i8  , s.as_i8  (), $tp),
                     "i16"  => sin!(i16 , s.as_i16 (), $tp),
                     "i24"  => sin!(i24 , s.as_i24 (), $tp),
@@ -1324,7 +1327,7 @@ macro_rules! impl_sample_from {
             }
 
             fn cos<S>(s: S) -> Self where S: SampleType {
-                match type_name::<S>() {
+                match S::TYPE_NAME {
                     "i8"   => cos!(i8  , s.as_i8  (), $tp),
                     "i16"  => cos!(i16 , s.as_i16 (), $tp),
                     "i24"  => cos!(i24 , s.as_i24 (), $tp),
@@ -1392,6 +1395,7 @@ macro_rules! impl_sample_type {
             type Signed = signed_type!($tp);
             type Unsigned = unsigned_type!($tp);
             const MIDNUM: $tp = mid_number!($tp);
+            const TYPE_NAME: &str = stringify!($tp);
             #[inline(always)]
             fn new() -> Self {
                 mid_number!($tp)
