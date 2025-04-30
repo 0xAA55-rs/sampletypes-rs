@@ -1206,6 +1206,25 @@ pub trait SampleType: Numeric {
     fn write_be<T>(self, w: &mut T) -> Result<(), Error> where T: Write + ?Sized;
 }
 
+/// * Let known type of `SampleType` instance to call `to_Xxx()`
+#[macro_export]
+macro_rules! call_to_type {
+    (i8  , $v:expr) => {$v.to_i8  ()};
+    (i16 , $v:expr) => {$v.to_i16 ()};
+    (i24 , $v:expr) => {$v.to_i24 ()};
+    (i32 , $v:expr) => {$v.to_i32 ()};
+    (i64 , $v:expr) => {$v.to_i64 ()};
+    (i128, $v:expr) => {$v.to_i128()};
+    (u8  , $v:expr) => {$v.to_u8  ()};
+    (u16 , $v:expr) => {$v.to_u16 ()};
+    (u24 , $v:expr) => {$v.to_u24 ()};
+    (u32 , $v:expr) => {$v.to_u32 ()};
+    (u64 , $v:expr) => {$v.to_u64 ()};
+    (u128, $v:expr) => {$v.to_u128()};
+    (f32 , $v:expr) => {$v.to_f32 ()};
+    (f64 , $v:expr) => {$v.to_f64 ()};
+}
+
 /// * The `SampleFrom` as a utility for `SampleType` to use the overloading `to()` method.
 pub trait SampleFrom: Numeric {
     fn to(s: impl SampleType) -> Self;
