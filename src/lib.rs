@@ -1196,24 +1196,23 @@ pub trait SampleType: Numeric {
     /// Convert to an unsigned number type. No effects to `f32` and `f64`
     fn to_unsigned(self) -> Self::Unsigned;
 
-
     /// Sine wave generator
     /// * The input `x` doesn't need to be related to PI.
     /// * e.g. The type is `i8`, the value is -128, then you will get sin(-PI).
     /// * e.g. The type is `u8`, the value is 0, then you will get sin(-PI) too.
-    fn sin<S>(self) -> S where S: SampleType;
+    fn sin<S>(self) -> S where S: SampleType + SampleFrom;
 
     /// Cosine wave generator
     /// * The input `x` doesn't need to be related to PI.
     /// * e.g. The type is `i8`, the value is -128, then you will get cos(-PI).
     /// * e.g. The type is `u8`, the value is 0, then you will get cos(-PI) too.
-    fn cos<S>(self) -> S where S: SampleType;
+    fn cos<S>(self) -> S where S: SampleType + SampleFrom;
 
     /// Tangent wave generator
     /// * The input `x` doesn't need to be related to PI.
     /// * e.g. The type is `i8`, the value is -128, then you will get tan(-PI * 0.5).
     /// * e.g. The type is `u8`, the value is 0, then you will get tan(-PI * 0.5) too.
-    fn tan<S>(self) -> S where S: SampleType;
+    fn tan<S>(self) -> S where S: SampleType + SampleFrom;
 
     /// Read from a reader by little-endian
     fn read_le<T>(r: &mut T) -> Result<Self, Error> where T: Read + ?Sized;
@@ -1477,7 +1476,6 @@ macro_rules! impl_sample_type {
             fn to_unsigned(self) -> Self::Unsigned {
                 to_unsigned!($tp, self)
             }
-            }
             #[inline(always)]
             fn read_le<T>(r: &mut T) -> Result<Self, Error>
             where T: Read + ?Sized {
@@ -1502,14 +1500,14 @@ macro_rules! impl_sample_type {
             where T: Write + ?Sized {
                 w.write_all(&self.to_be_bytes())
             }
-            fn sin<S>(self) -> S where S: SampleType {
-                <$tp as SampleFrom>::sin(self)
+            fn sin<S>(self) -> S where S: SampleType + SampleFrom {
+                <S as SampleFrom>::sin(self)
             }
-            fn cos<S>(self) -> S where S: SampleType {
-                <$tp as SampleFrom>::cos(self)
+            fn cos<S>(self) -> S where S: SampleType + SampleFrom {
+                <S as SampleFrom>::cos(self)
             }
-            fn tan<S>(self) -> S where S: SampleType {
-                <$tp as SampleFrom>::tan(self)
+            fn tan<S>(self) -> S where S: SampleType + SampleFrom {
+                <S as SampleFrom>::tan(self)
             }
         }
     }
