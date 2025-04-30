@@ -1527,3 +1527,68 @@ impl_sample_type!(u64 , u128);
 impl_sample_type!(u128, u128);
 impl_sample_type!(f32 , f64 );
 impl_sample_type!(f64 , f64 );
+
+#[allow(unused_macros)]
+macro_rules! test_type {
+    ($tp:tt) => {
+        test_to_type!($tp, i8  );
+        test_to_type!($tp, i16 );
+        test_to_type!($tp, i24 );
+        test_to_type!($tp, i32 );
+        test_to_type!($tp, i64 );
+        test_to_type!($tp, i128);
+        test_to_type!($tp, u8  );
+        test_to_type!($tp, u16 );
+        test_to_type!($tp, u24 );
+        test_to_type!($tp, u32 );
+        test_to_type!($tp, u64 );
+        test_to_type!($tp, u128);
+        test_to_type!($tp, f32 );
+        test_to_type!($tp, f64 );
+    }
+}
+
+use std::{fs::File, io::BufWriter};
+
+fn write_test<S, D>(filename: &str, data: &[u8])
+where
+    S: SampleType,
+    D: SampleType {
+    let mut f = BufWriter::new(File::create(filename).unwrap());
+
+    let test1: Vec<S> = data.iter().map(|v|{S::scale_from(*v)}).collect();
+    f.write_all(b"======== TEST1 ========\n").unwrap();
+    test1.iter().for_each(|v|{f.write_all(&format!("{v}\n").into_bytes()).unwrap()});
+
+    let test2: Vec<D> = test1.iter().map(|v|{D::scale_from(*v)}).collect();
+    f.write_all(b"======== TEST2 ========\n").unwrap();
+    test2.iter().for_each(|v|{f.write_all(&format!("{v}\n").into_bytes()).unwrap()});
+}
+
+#[allow(unused_macros)]
+macro_rules! test_to_type {
+    ($tp1:tt, $tp2:tt) => {
+        {
+            let data = vec![0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF];
+            write_test::<$tp1, $tp2>(&format!("test_{}_{}.txt", stringify!($tp1), stringify!($tp2)), &data);
+        }
+    }
+}
+
+#[test]
+fn test() {
+    test_type!(i8  );
+    test_type!(i16 );
+    test_type!(i24 );
+    test_type!(i32 );
+    test_type!(i64 );
+    test_type!(i128);
+    test_type!(u8  );
+    test_type!(u16 );
+    test_type!(u24 );
+    test_type!(u32 );
+    test_type!(u64 );
+    test_type!(u128);
+    test_type!(f32 );
+    test_type!(f64 );
+}
