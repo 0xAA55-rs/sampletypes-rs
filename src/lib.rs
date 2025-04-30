@@ -979,6 +979,72 @@ macro_rules! average_arr {
     };
 }
 
+/// Sine wave generator
+/// * The input `x` doesn't need to be related to PI.
+/// * e.g. The type is `i8`, the value is -128, then you will get sin(-PI).
+/// * e.g. The type is `u8`, the value is 0, then you will get sin(-PI) too.
+#[macro_export]
+macro_rules! sin {
+    (i8  , $v:expr, $nt:tt) => {{let v = (to_f32!(i8  , $v) * std::f32::consts::PI).sin(); to_type!(f32, $nt, v)}};
+    (i16 , $v:expr, $nt:tt) => {{let v = (to_f32!(i16 , $v) * std::f32::consts::PI).sin(); to_type!(f32, $nt, v)}};
+    (i24 , $v:expr, $nt:tt) => {{let v = (to_f32!(i24 , $v) * std::f32::consts::PI).sin(); to_type!(f32, $nt, v)}};
+    (i32 , $v:expr, $nt:tt) => {{let v = (to_f64!(i32 , $v) * std::f64::consts::PI).sin(); to_type!(f64, $nt, v)}};
+    (i64 , $v:expr, $nt:tt) => {{let v = (to_f64!(i64 , $v) * std::f64::consts::PI).sin(); to_type!(f64, $nt, v)}};
+    (i128, $v:expr, $nt:tt) => {{let v = (to_f64!(i128, $v) * std::f64::consts::PI).sin(); to_type!(f64, $nt, v)}};
+    (u8  , $v:expr, $nt:tt) => {{let v = (to_f32!(u8  , $v) * std::f32::consts::PI).sin(); to_type!(f32, $nt, v)}};
+    (u16 , $v:expr, $nt:tt) => {{let v = (to_f32!(u16 , $v) * std::f32::consts::PI).sin(); to_type!(f32, $nt, v)}};
+    (u24 , $v:expr, $nt:tt) => {{let v = (to_f32!(u24 , $v) * std::f32::consts::PI).sin(); to_type!(f32, $nt, v)}};
+    (u32 , $v:expr, $nt:tt) => {{let v = (to_f64!(u32 , $v) * std::f64::consts::PI).sin(); to_type!(f64, $nt, v)}};
+    (u64 , $v:expr, $nt:tt) => {{let v = (to_f64!(u64 , $v) * std::f64::consts::PI).sin(); to_type!(f64, $nt, v)}};
+    (u128, $v:expr, $nt:tt) => {{let v = (to_f64!(u128, $v) * std::f64::consts::PI).sin(); to_type!(f64, $nt, v)}};
+    (f32 , $v:expr, $nt:tt) => {{let v = ($v * std::f32::consts::PI).sin(); to_type!(f32, $nt, v)}};
+    (f64 , $v:expr, $nt:tt) => {{let v = ($v * std::f64::consts::PI).sin(); to_type!(f64, $nt, v)}};
+}
+
+/// Cosine wave generator
+/// * The input `x` doesn't need to be related to PI.
+/// * e.g. The type is `i8`, the value is -128, then you will get cos(-PI).
+/// * e.g. The type is `u8`, the value is 0, then you will get cos(-PI) too.
+#[macro_export]
+macro_rules! cos {
+    (i8  , $v:expr, $nt:tt) => {{let v = (to_f32!(i8  , $v) * std::f32::consts::PI).cos();to_type!(f32, $nt, v)}};
+    (i16 , $v:expr, $nt:tt) => {{let v = (to_f32!(i16 , $v) * std::f32::consts::PI).cos();to_type!(f32, $nt, v)}};
+    (i24 , $v:expr, $nt:tt) => {{let v = (to_f32!(i24 , $v) * std::f32::consts::PI).cos();to_type!(f32, $nt, v)}};
+    (i32 , $v:expr, $nt:tt) => {{let v = (to_f64!(i32 , $v) * std::f64::consts::PI).cos();to_type!(f64, $nt, v)}};
+    (i64 , $v:expr, $nt:tt) => {{let v = (to_f64!(i64 , $v) * std::f64::consts::PI).cos();to_type!(f64, $nt, v)}};
+    (i128, $v:expr, $nt:tt) => {{let v = (to_f64!(i128, $v) * std::f64::consts::PI).cos();to_type!(f64, $nt, v)}};
+    (u8  , $v:expr, $nt:tt) => {{let v = (to_f32!(u8  , $v) * std::f32::consts::PI).cos();to_type!(f32, $nt, v)}};
+    (u16 , $v:expr, $nt:tt) => {{let v = (to_f32!(u16 , $v) * std::f32::consts::PI).cos();to_type!(f32, $nt, v)}};
+    (u24 , $v:expr, $nt:tt) => {{let v = (to_f32!(u24 , $v) * std::f32::consts::PI).cos();to_type!(f32, $nt, v)}};
+    (u32 , $v:expr, $nt:tt) => {{let v = (to_f64!(u32 , $v) * std::f64::consts::PI).cos();to_type!(f64, $nt, v)}};
+    (u64 , $v:expr, $nt:tt) => {{let v = (to_f64!(u64 , $v) * std::f64::consts::PI).cos();to_type!(f64, $nt, v)}};
+    (u128, $v:expr, $nt:tt) => {{let v = (to_f64!(u128, $v) * std::f64::consts::PI).cos();to_type!(f64, $nt, v)}};
+    (f32 , $v:expr, $nt:tt) => {{let v = ($v * std::f32::consts::PI).cos(); to_type!(f32, $nt, v)}};
+    (f64 , $v:expr, $nt:tt) => {{let v = ($v * std::f64::consts::PI).cos(); to_type!(f64, $nt, v)}};
+}
+
+/// Tangent wave generator
+/// * The input `x` doesn't need to be related to PI.
+/// * e.g. The type is `i8`, the value is -128, then you will get tan(-PI * 0.5).
+/// * e.g. The type is `u8`, the value is 0, then you will get tan(-PI * 0.5) too.
+#[macro_export]
+macro_rules! tan {
+    (i8  , $v:expr, $nt:tt) => {{let v = (to_f32!(i8  , $v) * std::f32::consts::PI * 0.5).tan(); to_type!(f32, $nt, v)}};
+    (i16 , $v:expr, $nt:tt) => {{let v = (to_f32!(i16 , $v) * std::f32::consts::PI * 0.5).tan(); to_type!(f32, $nt, v)}};
+    (i24 , $v:expr, $nt:tt) => {{let v = (to_f32!(i24 , $v) * std::f32::consts::PI * 0.5).tan(); to_type!(f32, $nt, v)}};
+    (i32 , $v:expr, $nt:tt) => {{let v = (to_f64!(i32 , $v) * std::f64::consts::PI * 0.5).tan(); to_type!(f64, $nt, v)}};
+    (i64 , $v:expr, $nt:tt) => {{let v = (to_f64!(i64 , $v) * std::f64::consts::PI * 0.5).tan(); to_type!(f64, $nt, v)}};
+    (i128, $v:expr, $nt:tt) => {{let v = (to_f64!(i128, $v) * std::f64::consts::PI * 0.5).tan(); to_type!(f64, $nt, v)}};
+    (u8  , $v:expr, $nt:tt) => {{let v = (to_f32!(u8  , $v) * std::f32::consts::PI * 0.5).tan(); to_type!(f32, $nt, v)}};
+    (u16 , $v:expr, $nt:tt) => {{let v = (to_f32!(u16 , $v) * std::f32::consts::PI * 0.5).tan(); to_type!(f32, $nt, v)}};
+    (u24 , $v:expr, $nt:tt) => {{let v = (to_f32!(u24 , $v) * std::f32::consts::PI * 0.5).tan(); to_type!(f32, $nt, v)}};
+    (u32 , $v:expr, $nt:tt) => {{let v = (to_f64!(u32 , $v) * std::f64::consts::PI * 0.5).tan(); to_type!(f64, $nt, v)}};
+    (u64 , $v:expr, $nt:tt) => {{let v = (to_f64!(u64 , $v) * std::f64::consts::PI * 0.5).tan(); to_type!(f64, $nt, v)}};
+    (u128, $v:expr, $nt:tt) => {{let v = (to_f64!(u128, $v) * std::f64::consts::PI * 0.5).tan(); to_type!(f64, $nt, v)}};
+    (f32 , $v:expr, $nt:tt) => {{let v = ($v * std::f32::consts::PI * 0.5).tan(); to_type!(f32, $nt, v)}};
+    (f64 , $v:expr, $nt:tt) => {{let v = ($v * std::f64::consts::PI * 0.5).tan(); to_type!(f64, $nt, v)}};
+}
+
 /// * The `SampleType` for audio processing.
 /// * The `to_*()` methods are for scaling the sample to the another format.
 /// * The `as_*()` methods are for casting the sample to the another format.
