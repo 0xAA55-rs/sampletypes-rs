@@ -590,13 +590,13 @@ macro_rules! to_u128 {
 macro_rules! to_f32 {
     (i8  , $v:expr) => {($v as f32) / (i8  ::MAX) as f32};
     (i16 , $v:expr) => {($v as f32) / (i16 ::MAX) as f32};
-    (i24 , $v:expr) => {($v.as_i32() as f32) / (0x7FFFFF) as f32};
+    (i24 , $v:expr) => {($v.as_i32() as f32) / (0x7FFFFF as f32)};
     (i32 , $v:expr) => {($v as f32) / (i32 ::MAX) as f32};
     (i64 , $v:expr) => {($v as f32) / (i64 ::MAX) as f32};
     (i128, $v:expr) => {($v as f32) / (i128::MAX) as f32};
     (u8  , $v:expr) => {(to_signed!(u8  , $v) as f32) / (i8  ::MAX) as f32};
     (u16 , $v:expr) => {(to_signed!(u16 , $v) as f32) / (i16 ::MAX) as f32};
-    (u24 , $v:expr) => {(to_signed!(u24 , $v).as_i32() as f32) / (0x7FFFFF) as f32};
+    (u24 , $v:expr) => {(to_signed!(u24 , $v).as_i32() as f32) / (0x7FFFFF as f32)};
     (u32 , $v:expr) => {(to_signed!(u32 , $v) as f32) / (i32 ::MAX) as f32};
     (u64 , $v:expr) => {(to_signed!(u64 , $v) as f32) / (i64 ::MAX) as f32};
     (u128, $v:expr) => {(to_signed!(u128, $v) as f32) / (i128::MAX) as f32};
