@@ -285,7 +285,7 @@ macro_rules! shorter_type {
 #[macro_export]
 macro_rules! as_longer {
     (i8  , $v:expr) => {$v as i16};
-    (i16 , $v:expr) => {<i24 as From>::from($v)};
+    (i16 , $v:expr) => {i24::from($v)};
     (i24 , $v:expr) => {$v.as_i32()};
     (i32 , $v:expr) => {$v as i64};
     (i64 , $v:expr) => {$v as i128};
@@ -306,7 +306,7 @@ macro_rules! as_shorter {
     (i8  , $v:expr) => {$v as i8};
     (i16 , $v:expr) => {$v as i8};
     (i24 , $v:expr) => {$v.as_i16()};
-    (i32 , $v:expr) => {<i24 as From>::from($v)};
+    (i32 , $v:expr) => {i24::from($v)};
     (i64 , $v:expr) => {$v as i32};
     (i128, $v:expr) => {$v as i64};
     (u8  , $v:expr) => {$v as u8};
@@ -402,8 +402,8 @@ macro_rules! to_i24 {
     (i16 , $v:expr) => {to_longer!(i16, $v)};
     (i24 , $v:expr) => {$v};
     (i32 , $v:expr) => {to_shorter!(i32, $v)};
-    (i64 , $v:expr) => {<i24 as From<i64>>::from($v >> 40)};
-    (i128, $v:expr) => {<i24 as From<i128>>::from($v >> 104)};
+    (i64 , $v:expr) => {i24::from($v >> 40)};
+    (i128, $v:expr) => {i24::from($v >> 104)};
     (u8  , $v:expr) => {to_i24!(i8  , to_signed!(u8  , $v))};
     (u16 , $v:expr) => {to_i24!(i16 , to_signed!(u16 , $v))};
     (u24 , $v:expr) => {to_i24!(i24 , to_signed!(u24 , $v))};
