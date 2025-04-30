@@ -1023,28 +1023,6 @@ macro_rules! cos {
     (f64 , $v:expr, $nt:tt) => {{let v = ($v * std::f64::consts::PI).cos(); to_type!(f64, $nt, v)}};
 }
 
-/// Tangent wave generator
-/// * The input `x` doesn't need to be related to PI.
-/// * e.g. The type is `i8`, the value is -128, then you will get tan(-PI * 0.5).
-/// * e.g. The type is `u8`, the value is 0, then you will get tan(-PI * 0.5) too.
-#[macro_export]
-macro_rules! tan {
-    (i8  , $v:expr, $nt:tt) => {{let v = (to_f32!(i8  , $v) * std::f32::consts::PI * 0.5).tan(); to_type!(f32, $nt, v)}};
-    (i16 , $v:expr, $nt:tt) => {{let v = (to_f32!(i16 , $v) * std::f32::consts::PI * 0.5).tan(); to_type!(f32, $nt, v)}};
-    (i24 , $v:expr, $nt:tt) => {{let v = (to_f32!(i24 , $v) * std::f32::consts::PI * 0.5).tan(); to_type!(f32, $nt, v)}};
-    (i32 , $v:expr, $nt:tt) => {{let v = (to_f64!(i32 , $v) * std::f64::consts::PI * 0.5).tan(); to_type!(f64, $nt, v)}};
-    (i64 , $v:expr, $nt:tt) => {{let v = (to_f64!(i64 , $v) * std::f64::consts::PI * 0.5).tan(); to_type!(f64, $nt, v)}};
-    (i128, $v:expr, $nt:tt) => {{let v = (to_f64!(i128, $v) * std::f64::consts::PI * 0.5).tan(); to_type!(f64, $nt, v)}};
-    (u8  , $v:expr, $nt:tt) => {{let v = (to_f32!(u8  , $v) * std::f32::consts::PI * 0.5).tan(); to_type!(f32, $nt, v)}};
-    (u16 , $v:expr, $nt:tt) => {{let v = (to_f32!(u16 , $v) * std::f32::consts::PI * 0.5).tan(); to_type!(f32, $nt, v)}};
-    (u24 , $v:expr, $nt:tt) => {{let v = (to_f32!(u24 , $v) * std::f32::consts::PI * 0.5).tan(); to_type!(f32, $nt, v)}};
-    (u32 , $v:expr, $nt:tt) => {{let v = (to_f64!(u32 , $v) * std::f64::consts::PI * 0.5).tan(); to_type!(f64, $nt, v)}};
-    (u64 , $v:expr, $nt:tt) => {{let v = (to_f64!(u64 , $v) * std::f64::consts::PI * 0.5).tan(); to_type!(f64, $nt, v)}};
-    (u128, $v:expr, $nt:tt) => {{let v = (to_f64!(u128, $v) * std::f64::consts::PI * 0.5).tan(); to_type!(f64, $nt, v)}};
-    (f32 , $v:expr, $nt:tt) => {{let v = ($v * std::f32::consts::PI * 0.5).tan(); to_type!(f32, $nt, v)}};
-    (f64 , $v:expr, $nt:tt) => {{let v = ($v * std::f64::consts::PI * 0.5).tan(); to_type!(f64, $nt, v)}};
-}
-
 /// * The `SampleType` for audio processing.
 /// * The `to_*()` methods are for scaling the sample to the another format.
 /// * The `as_*()` methods are for casting the sample to the another format.
@@ -1211,12 +1189,6 @@ pub trait SampleType: SampleFrom {
     /// * e.g. The type is `u8`, the value is 0, then you will get cos(-PI) too.
     fn cos<S>(self) -> S where S: SampleType;
 
-    /// Tangent wave generator
-    /// * The input `x` doesn't need to be related to PI.
-    /// * e.g. The type is `i8`, the value is -128, then you will get tan(-PI * 0.5).
-    /// * e.g. The type is `u8`, the value is 0, then you will get tan(-PI * 0.5) too.
-    fn tan<S>(self) -> S where S: SampleType;
-
     /// Read from a reader by little-endian
     fn read_le<T>(r: &mut T) -> Result<Self, Error> where T: Read + ?Sized;
 
@@ -1290,12 +1262,6 @@ pub trait SampleFrom: Numeric {
     /// * e.g. The type is `i8`, the value is -128, then you will get cos(-PI).
     /// * e.g. The type is `u8`, the value is 0, then you will get cos(-PI) too.
     fn cos<S>(s: S) -> Self where S: SampleType;
-
-    /// Tangent wave generator
-    /// * The input `x` doesn't need to be related to PI.
-    /// * e.g. The type is `i8`, the value is -128, then you will get tan(-PI * 0.5).
-    /// * e.g. The type is `u8`, the value is 0, then you will get tan(-PI * 0.5) too.
-    fn tan<S>(s: S) -> Self where S: SampleType;
 }
 
 #[macro_export]
@@ -1342,26 +1308,6 @@ macro_rules! impl_sample_from {
                     "u128" => cos!(u128, s.as_u128(), $tp),
                     "f32"  => cos!(f32 , s.as_f32 (), $tp),
                     "f64"  => cos!(f64 , s.as_f64 (), $tp),
-                    o => panic!("Unknown type {o}"),
-                }
-            }
-
-            fn tan<S>(s: S) -> Self where S: SampleType {
-                match type_name::<S>() {
-                    "i8"   => tan!(i8  , s.as_i8  (), $tp),
-                    "i16"  => tan!(i16 , s.as_i16 (), $tp),
-                    "i24"  => tan!(i24 , s.as_i24 (), $tp),
-                    "i32"  => tan!(i32 , s.as_i32 (), $tp),
-                    "i64"  => tan!(i64 , s.as_i64 (), $tp),
-                    "i128" => tan!(i128, s.as_i128(), $tp),
-                    "u8"   => tan!(u8  , s.as_u8  (), $tp),
-                    "u16"  => tan!(u16 , s.as_u16 (), $tp),
-                    "u24"  => tan!(u24 , s.as_u24 (), $tp),
-                    "u32"  => tan!(u32 , s.as_u32 (), $tp),
-                    "u64"  => tan!(u64 , s.as_u64 (), $tp),
-                    "u128" => tan!(u128, s.as_u128(), $tp),
-                    "f32"  => tan!(f32 , s.as_f32 (), $tp),
-                    "f64"  => tan!(f64 , s.as_f64 (), $tp),
                     o => panic!("Unknown type {o}"),
                 }
             }
@@ -1510,9 +1456,6 @@ macro_rules! impl_sample_type {
             fn cos<S>(self) -> S where S: SampleType {
                 <S as SampleFrom>::cos(self)
             }
-            fn tan<S>(self) -> S where S: SampleType {
-                <S as SampleFrom>::tan(self)
-            }
         }
     }
 }
@@ -1573,12 +1516,8 @@ where
     test3.iter().for_each(|v|{f.write_all(&format!("{v}\n").into_bytes()).unwrap()});
 
     let test4: Vec<D> = test1.iter().map(|v|{v.cos::<D>()}).collect();
-    f.write_all(b"======== TEST3 ========\n").unwrap();
+    f.write_all(b"======== TEST4 ========\n").unwrap();
     test4.iter().for_each(|v|{f.write_all(&format!("{v}\n").into_bytes()).unwrap()});
-
-    let test5: Vec<D> = test1.iter().map(|v|{v.tan::<D>()}).collect();
-    f.write_all(b"======== TEST3 ========\n").unwrap();
-    test5.iter().for_each(|v|{f.write_all(&format!("{v}\n").into_bytes()).unwrap()});
 }
 
 #[allow(unused_macros)]
