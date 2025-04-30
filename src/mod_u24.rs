@@ -4,6 +4,8 @@ use std::ops::{Add, Sub, Mul, Div, AddAssign, SubAssign, MulAssign, DivAssign};
 use std::ops::{BitAnd, BitOr, BitXor, Shl, Shr, BitAndAssign, BitOrAssign, BitXorAssign, ShlAssign, ShrAssign, Not};
 use std::ops::{Rem, RemAssign};
 
+use std::fmt::{self, Display, Formatter};
+
 use crate::mod_i24::i24;
 
 /// * The tuple struct is little-endian
@@ -301,5 +303,11 @@ impl Not for u24 {
 impl Default for u24 {
     fn default() -> Self {
         Self(0, 0, 0)
+    }
+}
+
+impl Display for u24 {
+    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
+        write!(f, "{}", self.as_u32())
     }
 }
