@@ -6,7 +6,7 @@ pub mod mod_u24;
 pub use mod_i24::*;
 pub use mod_u24::*;
 
-use std::{any::type_name, io::{Read, Write, Error}, mem::size_of, fmt::Debug, clone::Clone};
+use std::{any::type_name, io::{Read, Write, Error}, mem::size_of, fmt::{Debug, Display}, clone::Clone};
 use std::ops::{Add, Sub, Mul, Div, AddAssign, SubAssign, MulAssign, DivAssign};
 use std::ops::{BitAnd, BitOr, BitXor, Shl, Shr, BitAndAssign, BitOrAssign, BitXorAssign, ShlAssign, ShrAssign, Not};
 use std::ops::{Rem, RemAssign};
@@ -16,12 +16,12 @@ use std::ops::{Neg};
 pub trait Numeric:
 Add<Output = Self> + Sub<Output = Self> + Mul<Output = Self> + Div<Output = Self> +
 AddAssign + SubAssign + MulAssign + DivAssign +
-Debug + Sized + Clone + Copy + 'static {}
+Debug + Display + Sized + Clone + Copy + 'static {}
 
 impl<T> Numeric for T where T:
 Add<Output = Self> + Sub<Output = Self> + Mul<Output = Self> + Div<Output = Self> +
 AddAssign + SubAssign + MulAssign + DivAssign +
-Debug + Sized + Clone + Copy + 'static {}
+Debug + Display + Sized + Clone + Copy + 'static {}
 
 /// Integers can do `&`, `|`, `^`
 pub trait SampleTypeInteger:
