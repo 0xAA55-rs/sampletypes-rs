@@ -683,20 +683,20 @@ macro_rules! as_i16 {
 /// Cast to `i24`
 #[macro_export]
 macro_rules! as_i24 {
-    (i8  , $v:expr) => {<i24 as From<i8  >>::from($v)};
-    (i16 , $v:expr) => {<i24 as From<i16 >>::from($v)};
-    (i24 , $v:expr) => {<i24 as From<i24 >>::from($v)};
-    (i32 , $v:expr) => {<i24 as From<i32 >>::from($v)};
-    (i64 , $v:expr) => {<i24 as From<i64 >>::from($v)};
-    (i128, $v:expr) => {<i24 as From<i128>>::from($v)};
-    (u8  , $v:expr) => {<i24 as From<u8  >>::from($v)};
-    (u16 , $v:expr) => {<i24 as From<u16 >>::from($v)};
-    (u24 , $v:expr) => {<i24 as From<u24 >>::from($v)};
-    (u32 , $v:expr) => {<i24 as From<u32 >>::from($v)};
-    (u64 , $v:expr) => {<i24 as From<u64 >>::from($v)};
-    (u128, $v:expr) => {<i24 as From<u128>>::from($v)};
-    (f32 , $v:expr) => {<i24 as From<f32 >>::from($v)};
-    (f64 , $v:expr) => {<i24 as From<f64 >>::from($v)};
+    (i8  , $v:expr) => {i24::from($v)};
+    (i16 , $v:expr) => {i24::from($v)};
+    (i24 , $v:expr) => {i24::from($v)};
+    (i32 , $v:expr) => {i24::from($v)};
+    (i64 , $v:expr) => {i24::from($v)};
+    (i128, $v:expr) => {i24::from($v)};
+    (u8  , $v:expr) => {i24::from($v)};
+    (u16 , $v:expr) => {i24::from($v)};
+    (u24 , $v:expr) => {i24::from($v)};
+    (u32 , $v:expr) => {i24::from($v)};
+    (u64 , $v:expr) => {i24::from($v)};
+    (u128, $v:expr) => {i24::from($v)};
+    (f32 , $v:expr) => {i24::from($v)};
+    (f64 , $v:expr) => {i24::from($v)};
 }
 
 /// Cast to `i32`
@@ -797,20 +797,20 @@ macro_rules! as_u16 {
 /// Cast to `u24`
 #[macro_export]
 macro_rules! as_u24 {
-    (i8  , $v:expr) => {<u24 as From<i8  >>::from($v)};
-    (i16 , $v:expr) => {<u24 as From<i16 >>::from($v)};
-    (i24 , $v:expr) => {<u24 as From<i24 >>::from($v)};
-    (i32 , $v:expr) => {<u24 as From<i32 >>::from($v)};
-    (i64 , $v:expr) => {<u24 as From<i64 >>::from($v)};
-    (i128, $v:expr) => {<u24 as From<i128>>::from($v)};
-    (u8  , $v:expr) => {<u24 as From<u8  >>::from($v)};
-    (u16 , $v:expr) => {<u24 as From<u16 >>::from($v)};
-    (u24 , $v:expr) => {<u24 as From<u24 >>::from($v)};
-    (u32 , $v:expr) => {<u24 as From<u32 >>::from($v)};
-    (u64 , $v:expr) => {<u24 as From<u64 >>::from($v)};
-    (u128, $v:expr) => {<u24 as From<u128>>::from($v)};
-    (f32 , $v:expr) => {<u24 as From<f32 >>::from($v)};
-    (f64 , $v:expr) => {<u24 as From<f64 >>::from($v)};
+    (i8  , $v:expr) => {u24::from($v)};
+    (i16 , $v:expr) => {u24::from($v)};
+    (i24 , $v:expr) => {u24::from($v)};
+    (i32 , $v:expr) => {u24::from($v)};
+    (i64 , $v:expr) => {u24::from($v)};
+    (i128, $v:expr) => {u24::from($v)};
+    (u8  , $v:expr) => {u24::from($v)};
+    (u16 , $v:expr) => {u24::from($v)};
+    (u24 , $v:expr) => {u24::from($v)};
+    (u32 , $v:expr) => {u24::from($v)};
+    (u64 , $v:expr) => {u24::from($v)};
+    (u128, $v:expr) => {u24::from($v)};
+    (f32 , $v:expr) => {u24::from($v)};
+    (f64 , $v:expr) => {u24::from($v)};
 }
 
 /// Cast to `u32`
