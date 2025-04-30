@@ -1563,6 +1563,18 @@ where
     let test2: Vec<D> = test1.iter().map(|v|{D::scale_from(*v)}).collect();
     f.write_all(b"======== TEST2 ========\n").unwrap();
     test2.iter().for_each(|v|{f.write_all(&format!("{v}\n").into_bytes()).unwrap()});
+
+    let test3: Vec<D> = test1.iter().map(|v|{v.sin::<D>()}).collect();
+    f.write_all(b"======== TEST3 ========\n").unwrap();
+    test3.iter().for_each(|v|{f.write_all(&format!("{v}\n").into_bytes()).unwrap()});
+
+    let test4: Vec<D> = test1.iter().map(|v|{v.cos::<D>()}).collect();
+    f.write_all(b"======== TEST3 ========\n").unwrap();
+    test4.iter().for_each(|v|{f.write_all(&format!("{v}\n").into_bytes()).unwrap()});
+
+    let test5: Vec<D> = test1.iter().map(|v|{v.tan::<D>()}).collect();
+    f.write_all(b"======== TEST3 ========\n").unwrap();
+    test5.iter().for_each(|v|{f.write_all(&format!("{v}\n").into_bytes()).unwrap()});
 }
 
 #[allow(unused_macros)]
