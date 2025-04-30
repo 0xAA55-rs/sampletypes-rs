@@ -6,7 +6,7 @@ pub mod mod_u24;
 pub use mod_i24::*;
 pub use mod_u24::*;
 
-use std::{io::{Read, Write, Error}, mem::size_of, fmt::Debug, clone::Clone};
+use std::{any::type_name, io::{Read, Write, Error}, mem::size_of, fmt::Debug, clone::Clone};
 use std::ops::{Add, Sub, Mul, Div, AddAssign, SubAssign, MulAssign, DivAssign};
 use std::ops::{BitAnd, BitOr, BitXor, Shl, Shr, BitAndAssign, BitOrAssign, BitXorAssign, ShlAssign, ShrAssign, Not};
 use std::ops::{Rem, RemAssign};
@@ -1196,6 +1196,25 @@ pub trait SampleType: Numeric {
     /// Convert to an unsigned number type. No effects to `f32` and `f64`
     fn to_unsigned(self) -> Self::Unsigned;
 
+
+    /// Sine wave generator
+    /// * The input `x` doesn't need to be related to PI.
+    /// * e.g. The type is `i8`, the value is -128, then you will get sin(-PI).
+    /// * e.g. The type is `u8`, the value is 0, then you will get sin(-PI) too.
+    fn sin<S>(self) -> S where S: SampleType;
+
+    /// Cosine wave generator
+    /// * The input `x` doesn't need to be related to PI.
+    /// * e.g. The type is `i8`, the value is -128, then you will get cos(-PI).
+    /// * e.g. The type is `u8`, the value is 0, then you will get cos(-PI) too.
+    fn cos<S>(self) -> S where S: SampleType;
+
+    /// Tangent wave generator
+    /// * The input `x` doesn't need to be related to PI.
+    /// * e.g. The type is `i8`, the value is -128, then you will get tan(-PI * 0.5).
+    /// * e.g. The type is `u8`, the value is 0, then you will get tan(-PI * 0.5) too.
+    fn tan<S>(self) -> S where S: SampleType;
+
     /// Read from a reader by little-endian
     fn read_le<T>(r: &mut T) -> Result<Self, Error> where T: Read + ?Sized;
 
@@ -1258,6 +1277,23 @@ pub trait SampleFrom: Numeric {
     /// The `as_<S>` method, input any type of `SampleType` value, then cast it to `ImplFor` type.
     fn as_<S>(s: S) -> Self where S: SampleType;
 
+    /// Sine wave generator
+    /// * The input `x` doesn't need to be related to PI.
+    /// * e.g. The type is `i8`, the value is -128, then you will get sin(-PI).
+    /// * e.g. The type is `u8`, the value is 0, then you will get sin(-PI) too.
+    fn sin<S>(s: S) -> Self where S: SampleType;
+
+    /// Cosine wave generator
+    /// * The input `x` doesn't need to be related to PI.
+    /// * e.g. The type is `i8`, the value is -128, then you will get cos(-PI).
+    /// * e.g. The type is `u8`, the value is 0, then you will get cos(-PI) too.
+    fn cos<S>(s: S) -> Self where S: SampleType;
+
+    /// Tangent wave generator
+    /// * The input `x` doesn't need to be related to PI.
+    /// * e.g. The type is `i8`, the value is -128, then you will get tan(-PI * 0.5).
+    /// * e.g. The type is `u8`, the value is 0, then you will get tan(-PI * 0.5) too.
+    fn tan<S>(s: S) -> Self where S: SampleType;
 }
 
 #[macro_export]
@@ -1267,6 +1303,66 @@ macro_rules! impl_sample_from {
             type ImplFor = $tp;
             #[inline(always)]fn to<S>(s: S) -> Self where S: SampleType {call_to_type!($tp, s)}
             #[inline(always)]fn as_<S>(s: S) -> Self where S: SampleType {call_as_type!($tp, s)}
+
+            fn sin<S>(s: S) -> Self where S: SampleType {
+                match type_name::<S>() {
+                    "i8"   => sin!(i8  , s.as_i8  (), $tp),
+                    "i16"  => sin!(i16 , s.as_i16 (), $tp),
+                    "i24"  => sin!(i24 , s.as_i24 (), $tp),
+                    "i32"  => sin!(i32 , s.as_i32 (), $tp),
+                    "i64"  => sin!(i64 , s.as_i64 (), $tp),
+                    "i128" => sin!(i128, s.as_i128(), $tp),
+                    "u8"   => sin!(u8  , s.as_u8  (), $tp),
+                    "u16"  => sin!(u16 , s.as_u16 (), $tp),
+                    "u24"  => sin!(u24 , s.as_u24 (), $tp),
+                    "u32"  => sin!(u32 , s.as_u32 (), $tp),
+                    "u64"  => sin!(u64 , s.as_u64 (), $tp),
+                    "u128" => sin!(u128, s.as_u128(), $tp),
+                    "f32"  => sin!(f32 , s.as_f32 (), $tp),
+                    "f64"  => sin!(f64 , s.as_f64 (), $tp),
+                    o => panic!("Unknown type {o}"),
+                }
+            }
+
+            fn cos<S>(s: S) -> Self where S: SampleType {
+                match type_name::<S>() {
+                    "i8"   => cos!(i8  , s.as_i8  (), $tp),
+                    "i16"  => cos!(i16 , s.as_i16 (), $tp),
+                    "i24"  => cos!(i24 , s.as_i24 (), $tp),
+                    "i32"  => cos!(i32 , s.as_i32 (), $tp),
+                    "i64"  => cos!(i64 , s.as_i64 (), $tp),
+                    "i128" => cos!(i128, s.as_i128(), $tp),
+                    "u8"   => cos!(u8  , s.as_u8  (), $tp),
+                    "u16"  => cos!(u16 , s.as_u16 (), $tp),
+                    "u24"  => cos!(u24 , s.as_u24 (), $tp),
+                    "u32"  => cos!(u32 , s.as_u32 (), $tp),
+                    "u64"  => cos!(u64 , s.as_u64 (), $tp),
+                    "u128" => cos!(u128, s.as_u128(), $tp),
+                    "f32"  => cos!(f32 , s.as_f32 (), $tp),
+                    "f64"  => cos!(f64 , s.as_f64 (), $tp),
+                    o => panic!("Unknown type {o}"),
+                }
+            }
+
+            fn tan<S>(s: S) -> Self where S: SampleType {
+                match type_name::<S>() {
+                    "i8"   => tan!(i8  , s.as_i8  (), $tp),
+                    "i16"  => tan!(i16 , s.as_i16 (), $tp),
+                    "i24"  => tan!(i24 , s.as_i24 (), $tp),
+                    "i32"  => tan!(i32 , s.as_i32 (), $tp),
+                    "i64"  => tan!(i64 , s.as_i64 (), $tp),
+                    "i128" => tan!(i128, s.as_i128(), $tp),
+                    "u8"   => tan!(u8  , s.as_u8  (), $tp),
+                    "u16"  => tan!(u16 , s.as_u16 (), $tp),
+                    "u24"  => tan!(u24 , s.as_u24 (), $tp),
+                    "u32"  => tan!(u32 , s.as_u32 (), $tp),
+                    "u64"  => tan!(u64 , s.as_u64 (), $tp),
+                    "u128" => tan!(u128, s.as_u128(), $tp),
+                    "f32"  => tan!(f32 , s.as_f32 (), $tp),
+                    "f64"  => tan!(f64 , s.as_f64 (), $tp),
+                    o => panic!("Unknown type {o}"),
+                }
+            }
         }
     };
 }
@@ -1405,6 +1501,15 @@ macro_rules! impl_sample_type {
             fn write_be<T>(self, w: &mut T) -> Result<(), Error>
             where T: Write + ?Sized {
                 w.write_all(&self.to_be_bytes())
+            }
+            fn sin<S>(self) -> S where S: SampleType {
+                <$tp as SampleFrom>::sin(self)
+            }
+            fn cos<S>(self) -> S where S: SampleType {
+                <$tp as SampleFrom>::cos(self)
+            }
+            fn tan<S>(self) -> S where S: SampleType {
+                <$tp as SampleFrom>::tan(self)
             }
         }
     }
