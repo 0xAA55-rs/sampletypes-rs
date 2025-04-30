@@ -60,6 +60,8 @@ Not<Output = Self> {}
 pub trait SampleTypeIntegerSigned: SampleTypeInteger + Neg {}
 impl<T> SampleTypeIntegerSigned for T where T: SampleTypeInteger + Neg {}
 
+/// Get the middle number of a specific type
+#[macro_export]
 macro_rules! mid_number {
     (i8) => {0i8};
     (i16) => {0i16};
@@ -77,6 +79,8 @@ macro_rules! mid_number {
     (f64) => {0.0f64};
 }
 
+/// Get the zero number of a specific type
+#[macro_export]
 macro_rules! zero_number {
     (i8) => {0i8};
     (i16) => {0i16};
@@ -94,6 +98,8 @@ macro_rules! zero_number {
     (f64) => {0.0f64};
 }
 
+/// Get the size of as specific type in bytes
+#[macro_export]
 macro_rules! sizeof {
     (i8  ) => {1 };
     (i16 ) => {2 };
@@ -111,6 +117,8 @@ macro_rules! sizeof {
     (f64 ) => {8 };
 }
 
+/// Get the signed type of a specific type, no effect to `f32` and `f64`
+#[macro_export]
 macro_rules! signed_type {
     (i8  ) => {i8  };
     (i16 ) => {i16 };
@@ -128,6 +136,8 @@ macro_rules! signed_type {
     (f64 ) => {f64 };
 }
 
+/// Get the unsigned type of a specific type, no effect to `f32` and `f64`
+#[macro_export]
 macro_rules! unsigned_type {
     (i8  ) => {u8  };
     (i16 ) => {u16 };
@@ -145,6 +155,8 @@ macro_rules! unsigned_type {
     (f64 ) => {f64 };
 }
 
+/// Is this type a signed number?
+#[macro_export]
 macro_rules! is_signed {
     (i8  ) => {true };
     (i16 ) => {true };
@@ -162,10 +174,14 @@ macro_rules! is_signed {
     (f64 ) => {true };
 }
 
+/// Is this type an unsigned number?
+#[macro_export]
 macro_rules! is_unsigned {
     ($tp:tt) => {!is_signed!($tp)};
 }
 
+/// Scale the type to the corresponding signed type number
+#[macro_export]
 macro_rules! to_signed {
     (i8  , $v:expr) => {$v};
     (i16 , $v:expr) => {$v};
@@ -183,6 +199,8 @@ macro_rules! to_signed {
     (f64 , $v:expr) => {$v};
 }
 
+/// Scale the type to the corresponding unsigned type number
+#[macro_export]
 macro_rules! to_unsigned {
     (i8  , $v:expr) => {($v as u8  ).wrapping_add(mid_number!(u8  ))};
     (i16 , $v:expr) => {($v as u16 ).wrapping_add(mid_number!(u16 ))};
@@ -200,6 +218,8 @@ macro_rules! to_unsigned {
     (f64 , $v:expr) => {$v};
 }
 
+/// Is this type an integer?
+#[macro_export]
 macro_rules! is_integer {
     (i8  ) => {true };
     (i16 ) => {true };
@@ -217,10 +237,14 @@ macro_rules! is_integer {
     (f64 ) => {false};
 }
 
+/// Is this type an IEEE 754 floating point number?
+#[macro_export]
 macro_rules! is_float {
     ($tp:tt) => {!is_integer!($tp)};
 }
 
+/// Get the longer type of the current type.
+#[macro_export]
 macro_rules! longer_type {
     (i8  ) => {i16 };
     (i16 ) => {i24 };
@@ -238,6 +262,8 @@ macro_rules! longer_type {
     (f64 ) => {f64 };
 }
 
+/// Get the shorter type of the current type.
+#[macro_export]
 macro_rules! shorter_type {
     (i8  ) => {i8 };
     (i16 ) => {i8 };
@@ -255,6 +281,8 @@ macro_rules! shorter_type {
     (f64 ) => {f32};
 }
 
+/// Cast the current type to the longer type.
+#[macro_export]
 macro_rules! as_longer {
     (i8  , $v:expr) => {$v as i16};
     (i16 , $v:expr) => {<i24 as From>::from($v)};
@@ -272,7 +300,8 @@ macro_rules! as_longer {
     (f64 , $v:expr) => {$v as f64};
 }
 
-#[allow(unused_macros)]
+/// Cast the current type to the shorter type.
+#[macro_export]
 macro_rules! as_shorter {
     (i8  , $v:expr) => {$v as i8};
     (i16 , $v:expr) => {$v as i8};
@@ -290,6 +319,8 @@ macro_rules! as_shorter {
     (f64 , $v:expr) => {$v as f32};
 }
 
+/// Scale the current type number to the longer type number.
+#[macro_export]
 macro_rules! to_longer {
     (i8  , $v:expr) => {{let longer = as_longer!(i8, $v); (longer << 8) | (to_unsigned!(i16, longer) as i16)}};
     (i16 , $v:expr) => {{let b = $v.to_le_bytes(); i24(to_unsigned!(i8, b[1] as i8), b[0], b[1])}};
@@ -307,6 +338,8 @@ macro_rules! to_longer {
     (f64 , $v:expr) => {$v};
 }
 
+/// Scale the current type number to the shorter type number.
+#[macro_export]
 macro_rules! to_shorter {
     (i8  , $v:expr) => {$v};
     (i16 , $v:expr) => {($v >> 8) as i8};
@@ -324,6 +357,8 @@ macro_rules! to_shorter {
     (f64 , $v:expr) => {$v as f32};
 }
 
+/// Scale to `i8` range
+#[macro_export]
 macro_rules! to_i8 {
     (i8  , $v:expr) => {$v};
     (i16 , $v:expr) => {($v >> 8) as i8};
@@ -341,6 +376,8 @@ macro_rules! to_i8 {
     (f64 , $v:expr) => {($v * i8::MAX as f64) as i8};
 }
 
+/// Scale to `i16` range
+#[macro_export]
 macro_rules! to_i16 {
     (i8  , $v:expr) => {to_longer!(i8, $v)};
     (i16 , $v:expr) => {$v};
@@ -358,6 +395,8 @@ macro_rules! to_i16 {
     (f64 , $v:expr) => {($v * i16::MAX as f64) as i16};
 }
 
+/// Scale to `i24` range
+#[macro_export]
 macro_rules! to_i24 {
     (i8  , $v:expr) => {{let u = to_unsigned!(i8, $v); i24(u, u, $v as u8)}};
     (i16 , $v:expr) => {to_longer!(i16, $v)};
@@ -375,6 +414,8 @@ macro_rules! to_i24 {
     (f64 , $v:expr) => {<i24 as From<i32>>::from(($v * 0x7FFFFF as f64) as i32)};
 }
 
+/// Scale to `i32` range
+#[macro_export]
 macro_rules! to_i32 {
     (i8  , $v:expr) => {{let longer = to_i16!(i8, $v); ((longer as i32) << 16) | (to_unsigned!(i16, longer) as i32)}};
     (i16 , $v:expr) => {(($v as i32) << 16) | (to_unsigned!(i16, $v) as i32)};
@@ -392,6 +433,8 @@ macro_rules! to_i32 {
     (f64 , $v:expr) => {($v * i32::MAX as f64) as i32};
 }
 
+/// Scale to `i64` range
+#[macro_export]
 macro_rules! to_i64 {
     (i8  , $v:expr) => {{let longer = to_i32!(i8 , $v); ((longer as i64) << 32) | (to_unsigned!(i32, longer) as i64)}};
     (i16 , $v:expr) => {{let longer = to_i32!(i16, $v); ((longer as i64) << 32) | (to_unsigned!(i32, longer) as i64)}};
@@ -409,6 +452,8 @@ macro_rules! to_i64 {
     (f64 , $v:expr) => {($v * i64::MAX as f64) as i64};
 }
 
+/// Scale to `i128` range
+#[macro_export]
 macro_rules! to_i128 {
     (i8  , $v:expr) => {{let longer = to_i64!(i8 , $v); ((longer as i128) << 64) | (to_unsigned!(i64, longer) as i128)}};
     (i16 , $v:expr) => {{let longer = to_i64!(i16, $v); ((longer as i128) << 64) | (to_unsigned!(i64, longer) as i128)}};
@@ -426,6 +471,8 @@ macro_rules! to_i128 {
     (f64 , $v:expr) => {($v * i128::MAX as f64) as i128};
 }
 
+/// Scale to `u8` range
+#[macro_export]
 macro_rules! to_u8 {
     (i8  , $v:expr) => {to_unsigned!(i8, to_i8!(i8  , $v))};
     (i16 , $v:expr) => {to_unsigned!(i8, to_i8!(i16 , $v))};
@@ -443,6 +490,8 @@ macro_rules! to_u8 {
     (f64 , $v:expr) => {to_unsigned!(i8, to_i8!(f64 , $v))};
 }
 
+/// Scale to `u16` range
+#[macro_export]
 macro_rules! to_u16 {
     (i8  , $v:expr) => {to_unsigned!(i16, to_i16!(i8  , $v))};
     (i16 , $v:expr) => {to_unsigned!(i16, to_i16!(i16 , $v))};
@@ -460,6 +509,8 @@ macro_rules! to_u16 {
     (f64 , $v:expr) => {to_unsigned!(i16, to_i16!(f64 , $v))};
 }
 
+/// Scale to `u24` range
+#[macro_export]
 macro_rules! to_u24 {
     (i8  , $v:expr) => {to_unsigned!(i24, to_i24!(i8  , $v))};
     (i16 , $v:expr) => {to_unsigned!(i24, to_i24!(i16 , $v))};
@@ -477,6 +528,8 @@ macro_rules! to_u24 {
     (f64 , $v:expr) => {to_unsigned!(i24, to_i24!(f64 , $v))};
 }
 
+/// Scale to `u32` range
+#[macro_export]
 macro_rules! to_u32 {
     (i8  , $v:expr) => {to_unsigned!(i32, to_i32!(i8  , $v))};
     (i16 , $v:expr) => {to_unsigned!(i32, to_i32!(i16 , $v))};
@@ -494,6 +547,8 @@ macro_rules! to_u32 {
     (f64 , $v:expr) => {to_unsigned!(i32, to_i32!(f64 , $v))};
 }
 
+/// Scale to `u64` range
+#[macro_export]
 macro_rules! to_u64 {
     (i8  , $v:expr) => {to_unsigned!(i64, to_i64!(i8  , $v))};
     (i16 , $v:expr) => {to_unsigned!(i64, to_i64!(i16 , $v))};
@@ -511,6 +566,8 @@ macro_rules! to_u64 {
     (f64 , $v:expr) => {to_unsigned!(i64, to_i64!(f64 , $v))};
 }
 
+/// Scale to `u128` range
+#[macro_export]
 macro_rules! to_u128 {
     (i8  , $v:expr) => {to_unsigned!(i128, to_i128!(i8  , $v))};
     (i16 , $v:expr) => {to_unsigned!(i128, to_i128!(i16 , $v))};
@@ -528,6 +585,8 @@ macro_rules! to_u128 {
     (f64 , $v:expr) => {to_unsigned!(i128, to_i128!(f64 , $v))};
 }
 
+/// Scale to `[-1.0, 1.0]` range
+#[macro_export]
 macro_rules! to_f32 {
     (i8  , $v:expr) => {($v as f32) / (i8  ::MAX) as f32};
     (i16 , $v:expr) => {($v as f32) / (i16 ::MAX) as f32};
@@ -545,6 +604,8 @@ macro_rules! to_f32 {
     (f64 , $v:expr) => {$v as f32};
 }
 
+/// Scale to `[-1.0, 1.0]` range
+#[macro_export]
 macro_rules! to_f64 {
     (i8  , $v:expr) => {($v as f64) / (i8  ::MAX as f64)};
     (i16 , $v:expr) => {($v as f64) / (i16 ::MAX as f64)};
@@ -562,6 +623,8 @@ macro_rules! to_f64 {
     (f64 , $v:expr) => {$v};
 }
 
+/// Scale to a specific type number
+#[macro_export]
 macro_rules! to_type {
     ($st:tt, i8  , $v:expr) => {to_i8!($st, $v)};
     ($st:tt, i16 , $v:expr) => {to_i16!($st, $v)};
@@ -579,6 +642,8 @@ macro_rules! to_type {
     ($st:tt, f64 , $v:expr) => {to_f64!($st, $v)};
 }
 
+/// Cast to `i8`
+#[macro_export]
 macro_rules! as_i8 {
     (i8  , $v:expr) => {$v as i8};
     (i16 , $v:expr) => {$v as i8};
@@ -596,6 +661,8 @@ macro_rules! as_i8 {
     (f64 , $v:expr) => {$v as i8};
 }
 
+/// Cast to `i16`
+#[macro_export]
 macro_rules! as_i16 {
     (i8  , $v:expr) => {$v as i16};
     (i16 , $v:expr) => {$v as i16};
@@ -613,6 +680,8 @@ macro_rules! as_i16 {
     (f64 , $v:expr) => {$v as i16};
 }
 
+/// Cast to `i24`
+#[macro_export]
 macro_rules! as_i24 {
     (i8  , $v:expr) => {<i24 as From<i8  >>::from($v)};
     (i16 , $v:expr) => {<i24 as From<i16 >>::from($v)};
@@ -630,6 +699,8 @@ macro_rules! as_i24 {
     (f64 , $v:expr) => {<i24 as From<f64 >>::from($v)};
 }
 
+/// Cast to `i32`
+#[macro_export]
 macro_rules! as_i32 {
     (i8  , $v:expr) => {$v as i32};
     (i16 , $v:expr) => {$v as i32};
@@ -647,6 +718,8 @@ macro_rules! as_i32 {
     (f64 , $v:expr) => {$v as i32};
 }
 
+/// Cast to `i64`
+#[macro_export]
 macro_rules! as_i64 {
     (i8  , $v:expr) => {$v as i64};
     (i16 , $v:expr) => {$v as i64};
@@ -664,6 +737,8 @@ macro_rules! as_i64 {
     (f64 , $v:expr) => {$v as i64};
 }
 
+/// Cast to `i128`
+#[macro_export]
 macro_rules! as_i128 {
     (i8  , $v:expr) => {$v as i128};
     (i16 , $v:expr) => {$v as i128};
@@ -681,6 +756,8 @@ macro_rules! as_i128 {
     (f64 , $v:expr) => {$v as i128};
 }
 
+/// Cast to `u8`
+#[macro_export]
 macro_rules! as_u8 {
     (i8  , $v:expr) => {$v as u8};
     (i16 , $v:expr) => {$v as u8};
@@ -698,6 +775,8 @@ macro_rules! as_u8 {
     (f64 , $v:expr) => {$v as u8};
 }
 
+/// Cast to `u16`
+#[macro_export]
 macro_rules! as_u16 {
     (i8  , $v:expr) => {$v as u16};
     (i16 , $v:expr) => {$v as u16};
@@ -715,6 +794,8 @@ macro_rules! as_u16 {
     (f64 , $v:expr) => {$v as u16};
 }
 
+/// Cast to `u24`
+#[macro_export]
 macro_rules! as_u24 {
     (i8  , $v:expr) => {<u24 as From<i8  >>::from($v)};
     (i16 , $v:expr) => {<u24 as From<i16 >>::from($v)};
@@ -732,6 +813,8 @@ macro_rules! as_u24 {
     (f64 , $v:expr) => {<u24 as From<f64 >>::from($v)};
 }
 
+/// Cast to `u32`
+#[macro_export]
 macro_rules! as_u32 {
     (i8  , $v:expr) => {$v as u32};
     (i16 , $v:expr) => {$v as u32};
@@ -749,6 +832,8 @@ macro_rules! as_u32 {
     (f64 , $v:expr) => {$v as u32};
 }
 
+/// Cast to `u64`
+#[macro_export]
 macro_rules! as_u64 {
     (i8  , $v:expr) => {$v as u64};
     (i16 , $v:expr) => {$v as u64};
@@ -766,6 +851,8 @@ macro_rules! as_u64 {
     (f64 , $v:expr) => {$v as u64};
 }
 
+/// Cast to `u128`
+#[macro_export]
 macro_rules! as_u128 {
     (i8  , $v:expr) => {$v as u128};
     (i16 , $v:expr) => {$v as u128};
@@ -783,6 +870,8 @@ macro_rules! as_u128 {
     (f64 , $v:expr) => {$v as u128};
 }
 
+/// Cast to `f32`
+#[macro_export]
 macro_rules! as_f32 {
     (i8  , $v:expr) => {$v as f32};
     (i16 , $v:expr) => {$v as f32};
@@ -800,6 +889,8 @@ macro_rules! as_f32 {
     (f64 , $v:expr) => {$v as f32};
 }
 
+/// Cast to `f64`
+#[macro_export]
 macro_rules! as_f64 {
     (i8  , $v:expr) => {$v as f64};
     (i16 , $v:expr) => {$v as f64};
@@ -817,6 +908,8 @@ macro_rules! as_f64 {
     (f64 , $v:expr) => {$v as f64};
 }
 
+/// Get the average value from a sample array.
+#[macro_export]
 macro_rules! average_arr {
     ($tp:tt, $longer:tt, $arr:expr) => {
         {
@@ -832,10 +925,19 @@ macro_rules! average_arr {
 /// * The `to_*()` methods are for scaling the sample to the another format.
 /// * The `as_*()` methods are for casting the sample to the another format.
 pub trait SampleType: Numeric {
+    /// The longer type, e.g. for `i8`, the longer type is `i16`
     type Longer;
+
+    /// The shorter type, e.g. for `i16`, the shorter type is `i8`
     type Shorter;
+
+    /// The signed type, e.g. for `u32`, the signed type is `i32`.
     type Signed;
+
+    /// The Unsigned type, e.g. for `i32`, the unsigned type is `u32`.
     type Unsigned;
+
+    /// The middle number, e.g. for `u16`, the middle number is `32768`.
     const MIDNUM: Self;
 
     /// Create a new sample, the value is the middle value of the range of the format.
@@ -996,6 +1098,8 @@ impl SampleFrom for u128{#[inline(always)] fn to(s: impl SampleType) -> Self { s
 impl SampleFrom for f32 {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_f32() }}
 impl SampleFrom for f64 {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_f64() }}
 
+/// * Implement `SampleType` for a specific numeric type.
+#[macro_export]
 macro_rules! impl_sample_type {
     ($tp:tt, $longer:tt) => {
         impl SampleType for $tp {
@@ -1126,4 +1230,3 @@ impl_sample_type!(u64 , u128);
 impl_sample_type!(u128, u128);
 impl_sample_type!(f32 , f64 );
 impl_sample_type!(f64 , f64 );
-
