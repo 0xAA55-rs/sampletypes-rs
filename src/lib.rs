@@ -647,13 +647,13 @@ macro_rules! to_type {
 macro_rules! as_i8 {
     (i8  , $v:expr) => {$v as i8};
     (i16 , $v:expr) => {$v as i8};
-    (i24 , $v:expr) => {$v.as_i8()};
+    (i24 , $v:expr) => {i24::as_i8($v)};
     (i32 , $v:expr) => {$v as i8};
     (i64 , $v:expr) => {$v as i8};
     (i128, $v:expr) => {$v as i8};
     (u8  , $v:expr) => {$v as i8};
     (u16 , $v:expr) => {$v as i8};
-    (u24 , $v:expr) => {$v.as_i8()};
+    (u24 , $v:expr) => {u24::as_i8($v)};
     (u32 , $v:expr) => {$v as i8};
     (u64 , $v:expr) => {$v as i8};
     (u128, $v:expr) => {$v as i8};
@@ -666,13 +666,13 @@ macro_rules! as_i8 {
 macro_rules! as_i16 {
     (i8  , $v:expr) => {$v as i16};
     (i16 , $v:expr) => {$v as i16};
-    (i24 , $v:expr) => {$v.as_i16()};
+    (i24 , $v:expr) => {i24::as_i16($v)};
     (i32 , $v:expr) => {$v as i16};
     (i64 , $v:expr) => {$v as i16};
     (i128, $v:expr) => {$v as i16};
     (u8  , $v:expr) => {$v as i16};
     (u16 , $v:expr) => {$v as i16};
-    (u24 , $v:expr) => {$v.as_i16()};
+    (u24 , $v:expr) => {u24::as_i16($v)};
     (u32 , $v:expr) => {$v as i16};
     (u64 , $v:expr) => {$v as i16};
     (u128, $v:expr) => {$v as i16};
@@ -704,13 +704,13 @@ macro_rules! as_i24 {
 macro_rules! as_i32 {
     (i8  , $v:expr) => {$v as i32};
     (i16 , $v:expr) => {$v as i32};
-    (i24 , $v:expr) => {$v.as_i32()};
+    (i24 , $v:expr) => {i24::as_i32($v)};
     (i32 , $v:expr) => {$v as i32};
     (i64 , $v:expr) => {$v as i32};
     (i128, $v:expr) => {$v as i32};
     (u8  , $v:expr) => {$v as i32};
     (u16 , $v:expr) => {$v as i32};
-    (u24 , $v:expr) => {$v.as_i32()};
+    (u24 , $v:expr) => {u24::as_i32($v)};
     (u32 , $v:expr) => {$v as i32};
     (u64 , $v:expr) => {$v as i32};
     (u128, $v:expr) => {$v as i32};
@@ -723,13 +723,13 @@ macro_rules! as_i32 {
 macro_rules! as_i64 {
     (i8  , $v:expr) => {$v as i64};
     (i16 , $v:expr) => {$v as i64};
-    (i24 , $v:expr) => {$v.as_i64()};
+    (i24 , $v:expr) => {i24::as_i64($v)};
     (i32 , $v:expr) => {$v as i64};
     (i64 , $v:expr) => {$v as i64};
     (i128, $v:expr) => {$v as i64};
     (u8  , $v:expr) => {$v as i64};
     (u16 , $v:expr) => {$v as i64};
-    (u24 , $v:expr) => {$v.as_i64()};
+    (u24 , $v:expr) => {u24::as_i64($v)};
     (u32 , $v:expr) => {$v as i64};
     (u64 , $v:expr) => {$v as i64};
     (u128, $v:expr) => {$v as i64};
@@ -742,13 +742,13 @@ macro_rules! as_i64 {
 macro_rules! as_i128 {
     (i8  , $v:expr) => {$v as i128};
     (i16 , $v:expr) => {$v as i128};
-    (i24 , $v:expr) => {$v.as_i128()};
+    (i24 , $v:expr) => {i24::as_i128($v)};
     (i32 , $v:expr) => {$v as i128};
     (i64 , $v:expr) => {$v as i128};
     (i128, $v:expr) => {$v as i128};
     (u8  , $v:expr) => {$v as i128};
     (u16 , $v:expr) => {$v as i128};
-    (u24 , $v:expr) => {$v.as_i128()};
+    (u24 , $v:expr) => {u24::as_i128($v)};
     (u32 , $v:expr) => {$v as i128};
     (u64 , $v:expr) => {$v as i128};
     (u128, $v:expr) => {$v as i128};
@@ -761,13 +761,13 @@ macro_rules! as_i128 {
 macro_rules! as_u8 {
     (i8  , $v:expr) => {$v as u8};
     (i16 , $v:expr) => {$v as u8};
-    (i24 , $v:expr) => {$v.as_u8()};
+    (i24 , $v:expr) => {i24::as_u8($v)};
     (i32 , $v:expr) => {$v as u8};
     (i64 , $v:expr) => {$v as u8};
     (i128, $v:expr) => {$v as u8};
     (u8  , $v:expr) => {$v as u8};
     (u16 , $v:expr) => {$v as u8};
-    (u24 , $v:expr) => {$v.as_u8()};
+    (u24 , $v:expr) => {u24::as_u8($v)};
     (u32 , $v:expr) => {$v as u8};
     (u64 , $v:expr) => {$v as u8};
     (u128, $v:expr) => {$v as u8};
@@ -780,13 +780,13 @@ macro_rules! as_u8 {
 macro_rules! as_u16 {
     (i8  , $v:expr) => {$v as u16};
     (i16 , $v:expr) => {$v as u16};
-    (i24 , $v:expr) => {$v.as_u16()};
+    (i24 , $v:expr) => {i24::as_u16($v)};
     (i32 , $v:expr) => {$v as u16};
     (i64 , $v:expr) => {$v as u16};
     (i128, $v:expr) => {$v as u16};
     (u8  , $v:expr) => {$v as u16};
     (u16 , $v:expr) => {$v as u16};
-    (u24 , $v:expr) => {$v.as_u16()};
+    (u24 , $v:expr) => {u24::as_u16($v)};
     (u32 , $v:expr) => {$v as u16};
     (u64 , $v:expr) => {$v as u16};
     (u128, $v:expr) => {$v as u16};
@@ -818,13 +818,13 @@ macro_rules! as_u24 {
 macro_rules! as_u32 {
     (i8  , $v:expr) => {$v as u32};
     (i16 , $v:expr) => {$v as u32};
-    (i24 , $v:expr) => {$v.as_u32()};
+    (i24 , $v:expr) => {i24::as_u32($v)};
     (i32 , $v:expr) => {$v as u32};
     (i64 , $v:expr) => {$v as u32};
     (i128, $v:expr) => {$v as u32};
     (u8  , $v:expr) => {$v as u32};
     (u16 , $v:expr) => {$v as u32};
-    (u24 , $v:expr) => {$v.as_u32()};
+    (u24 , $v:expr) => {u24::as_u32($v)};
     (u32 , $v:expr) => {$v as u32};
     (u64 , $v:expr) => {$v as u32};
     (u128, $v:expr) => {$v as u32};
@@ -837,13 +837,13 @@ macro_rules! as_u32 {
 macro_rules! as_u64 {
     (i8  , $v:expr) => {$v as u64};
     (i16 , $v:expr) => {$v as u64};
-    (i24 , $v:expr) => {$v.as_u64()};
+    (i24 , $v:expr) => {i24::as_u64($v)};
     (i32 , $v:expr) => {$v as u64};
     (i64 , $v:expr) => {$v as u64};
     (i128, $v:expr) => {$v as u64};
     (u8  , $v:expr) => {$v as u64};
     (u16 , $v:expr) => {$v as u64};
-    (u24 , $v:expr) => {$v.as_u64()};
+    (u24 , $v:expr) => {u24::as_u64($v)};
     (u32 , $v:expr) => {$v as u64};
     (u64 , $v:expr) => {$v as u64};
     (u128, $v:expr) => {$v as u64};
@@ -856,13 +856,13 @@ macro_rules! as_u64 {
 macro_rules! as_u128 {
     (i8  , $v:expr) => {$v as u128};
     (i16 , $v:expr) => {$v as u128};
-    (i24 , $v:expr) => {$v.as_u128()};
+    (i24 , $v:expr) => {i24::as_u128($v)};
     (i32 , $v:expr) => {$v as u128};
     (i64 , $v:expr) => {$v as u128};
     (i128, $v:expr) => {$v as u128};
     (u8  , $v:expr) => {$v as u128};
     (u16 , $v:expr) => {$v as u128};
-    (u24 , $v:expr) => {$v.as_u128()};
+    (u24 , $v:expr) => {u24::as_u128($v)};
     (u32 , $v:expr) => {$v as u128};
     (u64 , $v:expr) => {$v as u128};
     (u128, $v:expr) => {$v as u128};
@@ -875,13 +875,13 @@ macro_rules! as_u128 {
 macro_rules! as_f32 {
     (i8  , $v:expr) => {$v as f32};
     (i16 , $v:expr) => {$v as f32};
-    (i24 , $v:expr) => {$v.as_f32()};
+    (i24 , $v:expr) => {i24::as_f32($v)};
     (i32 , $v:expr) => {$v as f32};
     (i64 , $v:expr) => {$v as f32};
     (i128, $v:expr) => {$v as f32};
     (u8  , $v:expr) => {$v as f32};
     (u16 , $v:expr) => {$v as f32};
-    (u24 , $v:expr) => {$v.as_f32()};
+    (u24 , $v:expr) => {u24::as_f32($v)};
     (u32 , $v:expr) => {$v as f32};
     (u64 , $v:expr) => {$v as f32};
     (u128, $v:expr) => {$v as f32};
@@ -894,13 +894,13 @@ macro_rules! as_f32 {
 macro_rules! as_f64 {
     (i8  , $v:expr) => {$v as f64};
     (i16 , $v:expr) => {$v as f64};
-    (i24 , $v:expr) => {$v.as_f64()};
+    (i24 , $v:expr) => {i24::as_f64($v)};
     (i32 , $v:expr) => {$v as f64};
     (i64 , $v:expr) => {$v as f64};
     (i128, $v:expr) => {$v as f64};
     (u8  , $v:expr) => {$v as f64};
     (u16 , $v:expr) => {$v as f64};
-    (u24 , $v:expr) => {$v.as_f64()};
+    (u24 , $v:expr) => {u24::as_f64($v)};
     (u32 , $v:expr) => {$v as f64};
     (u64 , $v:expr) => {$v as f64};
     (u128, $v:expr) => {$v as f64};
