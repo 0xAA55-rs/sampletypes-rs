@@ -956,97 +956,97 @@ pub trait SampleType: Numeric {
     fn average_arr(arr: &[Self]) -> Self;
 
     /// Scale to `i8` range
-    fn to_i8 (&self) -> i8 ;
+    fn to_i8 (self) -> i8 ;
 
     /// Scale to `i16` range
-    fn to_i16(&self) -> i16;
+    fn to_i16(self) -> i16;
 
     /// Scale to `i24` range
-    fn to_i24(&self) -> i24;
+    fn to_i24(self) -> i24;
 
     /// Scale to `i32` range
-    fn to_i32(&self) -> i32;
+    fn to_i32(self) -> i32;
 
     /// Scale to `i64` range
-    fn to_i64(&self) -> i64;
+    fn to_i64(self) -> i64;
 
     /// Scale to `u8` range
-    fn to_u8 (&self) -> u8 ;
+    fn to_u8 (self) -> u8 ;
 
     /// Scale to `u16` range
-    fn to_u16(&self) -> u16;
+    fn to_u16(self) -> u16;
 
     /// Scale to `u24` range
-    fn to_u24(&self) -> u24;
+    fn to_u24(self) -> u24;
 
     /// Scale to `u32` range
-    fn to_u32(&self) -> u32;
+    fn to_u32(self) -> u32;
 
     /// Scale to `u64` range
-    fn to_u64(&self) -> u64;
+    fn to_u64(self) -> u64;
 
     /// Scale to `[-1.0, 1.0]` range
-    fn to_f32(&self) -> f32;
+    fn to_f32(self) -> f32;
 
     /// Scale to `[-1.0, 1.0]` range
-    fn to_f64(&self) -> f64;
+    fn to_f64(self) -> f64;
 
     /// Scale to `i128` range
-    fn to_i128(&self) -> i128;
+    fn to_i128(self) -> i128;
 
     /// Scale to `u128` range
-    fn to_u128(&self) -> u128;
+    fn to_u128(self) -> u128;
 
     /// Cast to `i8`
-    fn as_i8 (&self) -> i8 ;
+    fn as_i8 (self) -> i8 ;
 
     /// Cast to `i16`
-    fn as_i16(&self) -> i16;
+    fn as_i16(self) -> i16;
 
     /// Cast to `i24`
-    fn as_i24(&self) -> i24;
+    fn as_i24(self) -> i24;
 
     /// Cast to `i32`
-    fn as_i32(&self) -> i32;
+    fn as_i32(self) -> i32;
 
     /// Cast to `i64`
-    fn as_i64(&self) -> i64;
+    fn as_i64(self) -> i64;
 
     /// Cast to `u8`
-    fn as_u8 (&self) -> u8 ;
+    fn as_u8 (self) -> u8 ;
 
     /// Cast to `u16`
-    fn as_u16(&self) -> u16;
+    fn as_u16(self) -> u16;
 
     /// Cast to `u24`
-    fn as_u24(&self) -> u24;
+    fn as_u24(self) -> u24;
 
     /// Cast to `u32`
-    fn as_u32(&self) -> u32;
+    fn as_u32(self) -> u32;
 
     /// Cast to `u64`
-    fn as_u64(&self) -> u64;
+    fn as_u64(self) -> u64;
 
     /// Cast to `f32`
-    fn as_f32(&self) -> f32;
+    fn as_f32(self) -> f32;
 
     /// Cast to `f64`
-    fn as_f64(&self) -> f64;
+    fn as_f64(self) -> f64;
 
     /// Cast to `i128`
-    fn as_i128(&self) -> i128;
+    fn as_i128(self) -> i128;
 
     /// Cast to `u128`
-    fn as_u128(&self) -> u128;
+    fn as_u128(self) -> u128;
 
     /// Get the size of the sample in bytes
-    fn sizeof(&self) -> usize {size_of::<Self>()}
+    fn sizeof(self) -> usize {size_of::<Self>()}
 
     /// Scale to a longer type, the longest type is `i128` or `u128`
-    fn to_longer(&self) -> Self::Longer;
+    fn to_longer(self) -> Self::Longer;
 
     /// Scale to a shorter type, the shortest type is `i8` or `u8`
-    fn to_shorter(&self) -> Self::Shorter;
+    fn to_shorter(self) -> Self::Shorter;
 
     /// Is this type a signed type?
     fn is_signed() -> bool;
@@ -1061,10 +1061,10 @@ pub trait SampleType: Numeric {
     fn is_float() -> bool;
 
     /// Convert to a signed number type. No effects to `f32` and `f64`
-    fn to_signed(&self) -> Self::Signed;
+    fn to_signed(self) -> Self::Signed;
 
     /// Convert to an unsigned number type. No effects to `f32` and `f64`
-    fn to_unsigned(&self) -> Self::Unsigned;
+    fn to_unsigned(self) -> Self::Unsigned;
 
     /// Read from a reader by little-endian
     fn read_le<T>(r: &mut T) -> Result<Self, Error> where T: Read + ?Sized;
@@ -1073,10 +1073,10 @@ pub trait SampleType: Numeric {
     fn read_be<T>(r: &mut T) -> Result<Self, Error> where T: Read + ?Sized;
 
     /// Write to a writer by little-endian
-    fn write_le<T>(&self, w: &mut T) -> Result<(), Error> where T: Write + ?Sized;
+    fn write_le<T>(self, w: &mut T) -> Result<(), Error> where T: Write + ?Sized;
 
     /// Write to a writer by big-endian
-    fn write_be<T>(&self, w: &mut T) -> Result<(), Error> where T: Write + ?Sized;
+    fn write_be<T>(self, w: &mut T) -> Result<(), Error> where T: Write + ?Sized;
 }
 
 /// * The `SampleFrom` as a utility for `SampleType` to use the overloading `to()` method.
@@ -1128,41 +1128,41 @@ macro_rules! impl_sample_type {
             fn average_arr(arr: &[Self]) -> Self {
                 average_arr!($tp, $longer, arr)
             }
-            #[inline(always)]fn to_i8 (&self) -> i8  {to_i8! ($tp, *self)}
-            #[inline(always)]fn to_i16(&self) -> i16 {to_i16!($tp, *self)}
-            #[inline(always)]fn to_i24(&self) -> i24 {to_i24!($tp, *self)}
-            #[inline(always)]fn to_i32(&self) -> i32 {to_i32!($tp, *self)}
-            #[inline(always)]fn to_i64(&self) -> i64 {to_i64!($tp, *self)}
-            #[inline(always)]fn to_u8 (&self) -> u8  {to_u8! ($tp, *self)}
-            #[inline(always)]fn to_u16(&self) -> u16 {to_u16!($tp, *self)}
-            #[inline(always)]fn to_u24(&self) -> u24 {to_u24!($tp, *self)}
-            #[inline(always)]fn to_u32(&self) -> u32 {to_u32!($tp, *self)}
-            #[inline(always)]fn to_u64(&self) -> u64 {to_u64!($tp, *self)}
-            #[inline(always)]fn to_f32(&self) -> f32 {to_f32!($tp, *self)}
-            #[inline(always)]fn to_f64(&self) -> f64 {to_f64!($tp, *self)}
-            #[inline(always)]fn to_i128(&self) -> i128 {to_i128!($tp, *self)}
-            #[inline(always)]fn to_u128(&self) -> u128 {to_u128!($tp, *self)}
-            #[inline(always)]fn as_i8 (&self) -> i8  {as_i8! ($tp, *self)}
-            #[inline(always)]fn as_i16(&self) -> i16 {as_i16!($tp, *self)}
-            #[inline(always)]fn as_i24(&self) -> i24 {as_i24!($tp, *self)}
-            #[inline(always)]fn as_i32(&self) -> i32 {as_i32!($tp, *self)}
-            #[inline(always)]fn as_i64(&self) -> i64 {as_i64!($tp, *self)}
-            #[inline(always)]fn as_u8 (&self) -> u8  {as_u8! ($tp, *self)}
-            #[inline(always)]fn as_u16(&self) -> u16 {as_u16!($tp, *self)}
-            #[inline(always)]fn as_u24(&self) -> u24 {as_u24!($tp, *self)}
-            #[inline(always)]fn as_u32(&self) -> u32 {as_u32!($tp, *self)}
-            #[inline(always)]fn as_u64(&self) -> u64 {as_u64!($tp, *self)}
-            #[inline(always)]fn as_f32(&self) -> f32 {as_f32!($tp, *self)}
-            #[inline(always)]fn as_f64(&self) -> f64 {as_f64!($tp, *self)}
-            #[inline(always)]fn as_i128(&self) -> i128 {as_i128!($tp, *self)}
-            #[inline(always)]fn as_u128(&self) -> u128 {as_u128!($tp, *self)}
+            #[inline(always)]fn to_i8 (self) -> i8  {to_i8! ($tp, self)}
+            #[inline(always)]fn to_i16(self) -> i16 {to_i16!($tp, self)}
+            #[inline(always)]fn to_i24(self) -> i24 {to_i24!($tp, self)}
+            #[inline(always)]fn to_i32(self) -> i32 {to_i32!($tp, self)}
+            #[inline(always)]fn to_i64(self) -> i64 {to_i64!($tp, self)}
+            #[inline(always)]fn to_u8 (self) -> u8  {to_u8! ($tp, self)}
+            #[inline(always)]fn to_u16(self) -> u16 {to_u16!($tp, self)}
+            #[inline(always)]fn to_u24(self) -> u24 {to_u24!($tp, self)}
+            #[inline(always)]fn to_u32(self) -> u32 {to_u32!($tp, self)}
+            #[inline(always)]fn to_u64(self) -> u64 {to_u64!($tp, self)}
+            #[inline(always)]fn to_f32(self) -> f32 {to_f32!($tp, self)}
+            #[inline(always)]fn to_f64(self) -> f64 {to_f64!($tp, self)}
+            #[inline(always)]fn to_i128(self) -> i128 {to_i128!($tp, self)}
+            #[inline(always)]fn to_u128(self) -> u128 {to_u128!($tp, self)}
+            #[inline(always)]fn as_i8 (self) -> i8  {as_i8! ($tp, self)}
+            #[inline(always)]fn as_i16(self) -> i16 {as_i16!($tp, self)}
+            #[inline(always)]fn as_i24(self) -> i24 {as_i24!($tp, self)}
+            #[inline(always)]fn as_i32(self) -> i32 {as_i32!($tp, self)}
+            #[inline(always)]fn as_i64(self) -> i64 {as_i64!($tp, self)}
+            #[inline(always)]fn as_u8 (self) -> u8  {as_u8! ($tp, self)}
+            #[inline(always)]fn as_u16(self) -> u16 {as_u16!($tp, self)}
+            #[inline(always)]fn as_u24(self) -> u24 {as_u24!($tp, self)}
+            #[inline(always)]fn as_u32(self) -> u32 {as_u32!($tp, self)}
+            #[inline(always)]fn as_u64(self) -> u64 {as_u64!($tp, self)}
+            #[inline(always)]fn as_f32(self) -> f32 {as_f32!($tp, self)}
+            #[inline(always)]fn as_f64(self) -> f64 {as_f64!($tp, self)}
+            #[inline(always)]fn as_i128(self) -> i128 {as_i128!($tp, self)}
+            #[inline(always)]fn as_u128(self) -> u128 {as_u128!($tp, self)}
             #[inline(always)]
-            fn to_longer(&self) -> Self::Longer {
-                to_longer!($tp, *self)
+            fn to_longer(self) -> Self::Longer {
+                to_longer!($tp, self)
             }
             #[inline(always)]
-            fn to_shorter(&self) -> Self::Shorter {
-                to_shorter!($tp, *self)
+            fn to_shorter(self) -> Self::Shorter {
+                to_shorter!($tp, self)
             }
             #[inline(always)]
             fn is_signed() -> bool {
@@ -1181,12 +1181,13 @@ macro_rules! impl_sample_type {
                 is_float!($tp)
             }
             #[inline(always)]
-            fn to_signed(&self) -> Self::Signed {
-                to_signed!($tp, *self)
+            fn to_signed(self) -> Self::Signed {
+                to_signed!($tp, self)
             }
             #[inline(always)]
-            fn to_unsigned(&self) -> Self::Unsigned {
-                to_unsigned!($tp, *self)
+            fn to_unsigned(self) -> Self::Unsigned {
+                to_unsigned!($tp, self)
+            }
             }
             #[inline(always)]
             fn read_le<T>(r: &mut T) -> Result<Self, Error>
@@ -1203,12 +1204,12 @@ macro_rules! impl_sample_type {
                 Ok(Self::from_be_bytes(buf))
             }
             #[inline(always)]
-            fn write_le<T>(&self, w: &mut T) -> Result<(), Error>
+            fn write_le<T>(self, w: &mut T) -> Result<(), Error>
             where T: Write + ?Sized {
                 w.write_all(&self.to_le_bytes())
             }
             #[inline(always)]
-            fn write_be<T>(&self, w: &mut T) -> Result<(), Error>
+            fn write_be<T>(self, w: &mut T) -> Result<(), Error>
             where T: Write + ?Sized {
                 w.write_all(&self.to_be_bytes())
             }
