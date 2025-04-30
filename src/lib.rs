@@ -927,6 +927,25 @@ macro_rules! as_type {
     ($st:tt, f64 , $v:expr) => {as_f64!($st, $v)};
 }
 
+/// * Get the suitable float type for the source type to perform losslessly conversion
+#[macro_export]
+macro_rules! get_suitable_float {
+    (i8  ) => {f32};
+    (i16 ) => {f32};
+    (i24 ) => {f32};
+    (i32 ) => {f64};
+    (i64 ) => {f64};
+    (i128) => {f64};
+    (u8  ) => {f32};
+    (u16 ) => {f32};
+    (u24 ) => {f32};
+    (u32 ) => {f64};
+    (u64 ) => {f64};
+    (u128) => {f64};
+    (f32 ) => {$v};
+    (f64 ) => {$v};
+}
+
 /// Get the average value from a sample array.
 #[macro_export]
 macro_rules! average_arr {
