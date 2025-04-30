@@ -897,13 +897,6 @@ impl SampleFrom for u128{#[inline(always)] fn to(s: impl SampleType) -> Self { s
 impl SampleFrom for f32 {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_f32() }}
 impl SampleFrom for f64 {#[inline(always)] fn to(s: impl SampleType) -> Self { s.to_f64() }}
 
-fn conv<S, T>(v: S) -> T
-where
-    S: SampleType,
-    T: SampleType {
-    T::from(v)
-}
-
 macro_rules! impl_sample_type {
     ($tp:tt, $longer:tt) => {
         impl SampleType for $tp {
