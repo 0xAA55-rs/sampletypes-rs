@@ -974,7 +974,7 @@ macro_rules! average_arr {
             type Longer = $longer;
             let mut sum: Longer = Longer::zero();
             $arr.iter().for_each(|x|{sum += to_longer!($tp, *x);});
-            to_type!($longer, $tp, sum / to_type!(u64, $longer, $arr.len() as u64))
+            as_type!($longer, $tp, sum / as_type!(u64, $longer, $arr.len() as u64))
         }
     };
 }
