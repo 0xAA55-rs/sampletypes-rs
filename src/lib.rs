@@ -56,6 +56,7 @@ Rem<Output = Self> +
 RemAssign +
 Not<Output = Self> {}
 
+/// Signed integers can do `-x`
 pub trait SampleTypeIntegerSigned: SampleTypeInteger + Neg {}
 impl<T> SampleTypeIntegerSigned for T where T: SampleTypeInteger + Neg {}
 
