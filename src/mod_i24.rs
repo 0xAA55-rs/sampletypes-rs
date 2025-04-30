@@ -31,16 +31,23 @@ impl i24{
         [self.2, self.1, self.0]
     }
     #[inline(always)]
+    pub fn is_minus(&self) -> bool {
+        (self.2 & 0x80) != 0
+    }
+    #[inline(always)]
     pub fn as_i128(&self) -> i128 {
-        i128::from_le_bytes([self.0, self.1, self.2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+        let sign = if self.is_minus() {0xFF} else {0};
+        i128::from_le_bytes([self.0, self.1, self.2, sign, sign, sign, sign, sign, sign, sign, sign, sign, sign, sign, sign, sign])
     }
     #[inline(always)]
     pub fn as_i64(&self) -> i64 {
-        i64::from_le_bytes([self.0, self.1, self.2, 0, 0, 0, 0, 0])
+        let sign = if self.is_minus() {0xFF} else {0};
+        i64::from_le_bytes([self.0, self.1, self.2, sign, sign, sign, sign, sign])
     }
     #[inline(always)]
     pub fn as_i32(&self) -> i32 {
-        i32::from_le_bytes([self.0, self.1, self.2, 0])
+        let sign = if self.is_minus() {0xFF} else {0};
+        i32::from_le_bytes([self.0, self.1, self.2, sign])
     }
     #[inline(always)]
     pub fn as_i16(&self) -> i16 {
