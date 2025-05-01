@@ -1197,6 +1197,12 @@ pub trait SampleType: SampleFrom {
     /// Scale to a shorter type, the shortest type is `i8` or `u8`
     fn to_shorter(self) -> Self::Shorter;
 
+    /// Cast to a longer type, the longest type is `i128` or `u128`
+    fn as_longer(self) -> Self::Longer;
+
+    /// Cast to a shorter type, the shortest type is `i8` or `u8`
+    fn as_shorter(self) -> Self::Shorter;
+
     /// Is this type a signed type?
     fn is_signed() -> bool;
 
@@ -1401,6 +1407,13 @@ macro_rules! impl_sample_type {
             #[inline(always)]
             fn to_shorter(self) -> Self::Shorter {
                 to_shorter!($tp, self)
+            }
+            fn as_longer(self) -> Self::Longer {
+                as_longer!($tp, self)
+            }
+            #[inline(always)]
+            fn as_shorter(self) -> Self::Shorter {
+                as_shorter!($tp, self)
             }
             #[inline(always)]
             fn is_signed() -> bool {
