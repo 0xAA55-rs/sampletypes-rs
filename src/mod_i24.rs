@@ -16,6 +16,8 @@ use crate::mod_u24::u24;
 pub struct i24(pub u8, pub u8, pub u8);
 
 impl i24{
+    pub const MAX: i24 = i24(0xFF, 0xFF, 0x7F);
+    pub const MIN: i24 = i24(0x00, 0x00, 0x80);
     #[inline(always)]
     pub fn from_le_bytes(bytes: [u8; 3]) -> Self {
         Self(bytes[0], bytes[1], bytes[2])

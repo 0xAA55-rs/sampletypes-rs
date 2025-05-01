@@ -12,9 +12,11 @@ use crate::mod_i24::i24;
 #[derive(Debug, Clone, Copy)]
 #[allow(non_camel_case_types)]
 #[repr(C)]
-pub struct u24(pub u8, pub u8, pub u8); // 低中高
+pub struct u24(pub u8, pub u8, pub u8);
 
 impl u24{
+    pub const MAX: u24 = u24(0xFF, 0xFF, 0xFF);
+    pub const MIN: u24 = u24(0x00, 0x00, 0x00);
     #[inline(always)]
     pub fn from_le_bytes(bytes: [u8; 3]) -> Self {
         Self(bytes[0], bytes[1], bytes[2])
