@@ -927,6 +927,44 @@ macro_rules! as_type {
     ($st:tt, f64 , $v:expr) => {as_f64!($st, $v)};
 }
 
+/// * Let known type of `SampleType` instance to call `to_Xxx()`
+#[macro_export]
+macro_rules! call_to_type {
+    (i8  , $v:expr) => {$v.to_i8  ()};
+    (i16 , $v:expr) => {$v.to_i16 ()};
+    (i24 , $v:expr) => {$v.to_i24 ()};
+    (i32 , $v:expr) => {$v.to_i32 ()};
+    (i64 , $v:expr) => {$v.to_i64 ()};
+    (i128, $v:expr) => {$v.to_i128()};
+    (u8  , $v:expr) => {$v.to_u8  ()};
+    (u16 , $v:expr) => {$v.to_u16 ()};
+    (u24 , $v:expr) => {$v.to_u24 ()};
+    (u32 , $v:expr) => {$v.to_u32 ()};
+    (u64 , $v:expr) => {$v.to_u64 ()};
+    (u128, $v:expr) => {$v.to_u128()};
+    (f32 , $v:expr) => {$v.to_f32 ()};
+    (f64 , $v:expr) => {$v.to_f64 ()};
+}
+
+/// * Let known type of `SampleType` instance to call `as_Xxx()`
+#[macro_export]
+macro_rules! call_as_type {
+    (i8  , $v:expr) => {$v.as_i8  ()};
+    (i16 , $v:expr) => {$v.as_i16 ()};
+    (i24 , $v:expr) => {$v.as_i24 ()};
+    (i32 , $v:expr) => {$v.as_i32 ()};
+    (i64 , $v:expr) => {$v.as_i64 ()};
+    (i128, $v:expr) => {$v.as_i128()};
+    (u8  , $v:expr) => {$v.as_u8  ()};
+    (u16 , $v:expr) => {$v.as_u16 ()};
+    (u24 , $v:expr) => {$v.as_u24 ()};
+    (u32 , $v:expr) => {$v.as_u32 ()};
+    (u64 , $v:expr) => {$v.as_u64 ()};
+    (u128, $v:expr) => {$v.as_u128()};
+    (f32 , $v:expr) => {$v.as_f32 ()};
+    (f64 , $v:expr) => {$v.as_f64 ()};
+}
+
 /// * Get the suitable float type for the source type to perform losslessly conversion
 #[macro_export]
 macro_rules! get_suitable_float {
@@ -1200,44 +1238,6 @@ pub trait SampleType: SampleFrom {
 
     /// Write to a writer by big-endian
     fn write_be<T>(self, w: &mut T) -> Result<(), Error> where T: Write + ?Sized;
-}
-
-/// * Let known type of `SampleType` instance to call `to_Xxx()`
-#[macro_export]
-macro_rules! call_to_type {
-    (i8  , $v:expr) => {$v.to_i8  ()};
-    (i16 , $v:expr) => {$v.to_i16 ()};
-    (i24 , $v:expr) => {$v.to_i24 ()};
-    (i32 , $v:expr) => {$v.to_i32 ()};
-    (i64 , $v:expr) => {$v.to_i64 ()};
-    (i128, $v:expr) => {$v.to_i128()};
-    (u8  , $v:expr) => {$v.to_u8  ()};
-    (u16 , $v:expr) => {$v.to_u16 ()};
-    (u24 , $v:expr) => {$v.to_u24 ()};
-    (u32 , $v:expr) => {$v.to_u32 ()};
-    (u64 , $v:expr) => {$v.to_u64 ()};
-    (u128, $v:expr) => {$v.to_u128()};
-    (f32 , $v:expr) => {$v.to_f32 ()};
-    (f64 , $v:expr) => {$v.to_f64 ()};
-}
-
-/// * Let known type of `SampleType` instance to call `as_Xxx()`
-#[macro_export]
-macro_rules! call_as_type {
-    (i8  , $v:expr) => {$v.as_i8  ()};
-    (i16 , $v:expr) => {$v.as_i16 ()};
-    (i24 , $v:expr) => {$v.as_i24 ()};
-    (i32 , $v:expr) => {$v.as_i32 ()};
-    (i64 , $v:expr) => {$v.as_i64 ()};
-    (i128, $v:expr) => {$v.as_i128()};
-    (u8  , $v:expr) => {$v.as_u8  ()};
-    (u16 , $v:expr) => {$v.as_u16 ()};
-    (u24 , $v:expr) => {$v.as_u24 ()};
-    (u32 , $v:expr) => {$v.as_u32 ()};
-    (u64 , $v:expr) => {$v.as_u64 ()};
-    (u128, $v:expr) => {$v.as_u128()};
-    (f32 , $v:expr) => {$v.as_f32 ()};
-    (f64 , $v:expr) => {$v.as_f64 ()};
 }
 
 /// * The `SampleFrom` as a utility for `SampleType` to handle function overloading
