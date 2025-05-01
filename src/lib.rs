@@ -1281,6 +1281,7 @@ macro_rules! impl_sample_from {
             #[inline(always)]fn to<S>(s: S) -> Self where S: SampleType {call_to_type!($tp, s)}
             #[inline(always)]fn as_<S>(s: S) -> Self where S: SampleType {call_as_type!($tp, s)}
 
+            #[inline(always)]
             fn sin<S>(s: S) -> Self where S: SampleType {
                 match S::TYPE_NAME {
                     "i8"   => sin!(i8  , s.as_i8  (), $tp),
@@ -1301,6 +1302,7 @@ macro_rules! impl_sample_from {
                 }
             }
 
+            #[inline(always)]
             fn cos<S>(s: S) -> Self where S: SampleType {
                 match S::TYPE_NAME {
                     "i8"   => cos!(i8  , s.as_i8  (), $tp),
@@ -1466,12 +1468,15 @@ macro_rules! impl_sample_type {
             where T: Write + ?Sized {
                 w.write_all(&self.to_be_bytes())
             }
+            #[inline(always)]
             fn sin<S>(self) -> S where S: SampleType {
                 <S as SampleFrom>::sin(self)
             }
+            #[inline(always)]
             fn cos<S>(self) -> S where S: SampleType {
                 <S as SampleFrom>::cos(self)
             }
+            #[inline(always)]
             fn interpolate(self, target: Self, s: f64) -> Self {
                 let a = self.as_f64();
                 let b = target.as_f64();
