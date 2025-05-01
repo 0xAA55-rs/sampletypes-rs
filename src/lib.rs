@@ -1233,6 +1233,9 @@ pub trait SampleType: SampleFrom {
     /// * e.g. The type is `u8`, the value is 0, then you will get cos(-PI) too.
     fn cos<S>(self) -> S where S: SampleType;
 
+    /// interpolate between `self` to `target` by `s`
+    fn interpolate(self, target: Self, s: f64) -> Self;
+
     /// Read from a reader by little-endian
     fn read_le<T>(r: &mut T) -> Result<Self, Error> where T: Read + ?Sized;
 
@@ -1469,6 +1472,11 @@ macro_rules! impl_sample_type {
             fn cos<S>(self) -> S where S: SampleType {
                 <S as SampleFrom>::cos(self)
             }
+            fn interpolate(self, target: Self, s: f64) -> Self {
+                let a = self.as_f64();
+                let b = target.as_f64();
+                as_type!(f64, $tp, a + (b - a) * s)
+            }
         }
     }
 }
@@ -1531,6 +1539,10 @@ where
     let test4: Vec<D> = test1.iter().map(|v|{v.cos::<D>()}).collect();
     f.write_all(b"======== TEST4 ========\n").unwrap();
     test4.iter().for_each(|v|{f.write_all(&format!("{v}\n").into_bytes()).unwrap()});
+
+    let test5: Vec<S> = test1.iter().map(|v|{v.interpolate(S::cast_from(0), 0.5)}).collect();
+    f.write_all(b"======== TEST5 ========\n").unwrap();
+    test5.iter().for_each(|v|{f.write_all(&format!("{v}\n").into_bytes()).unwrap()});
 }
 
 #[allow(unused_macros)]
