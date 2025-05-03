@@ -1473,6 +1473,48 @@ pub trait SampleType: SampleFrom {
     /// Cast to `u128`
     fn as_u128(self) -> u128;
 
+    /// Clamp to `i8`
+    fn clamp_to_i8 (self) -> i8;
+
+    /// Clamp to `i16`
+    fn clamp_to_i16(self) -> i16;
+
+    /// Clamp to `i24`
+    fn clamp_to_i24(self) -> i24;
+
+    /// Clamp to `i32`
+    fn clamp_to_i32(self) -> i32;
+
+    /// Clamp to `i64`
+    fn clamp_to_i64(self) -> i64;
+
+    /// Clamp to `u8`
+    fn clamp_to_u8 (self) -> u8;
+
+    /// Clamp to `u16`
+    fn clamp_to_u16(self) -> u16;
+
+    /// Clamp to `u24`
+    fn clamp_to_u24(self) -> u24;
+
+    /// Clamp to `u32`
+    fn clamp_to_u32(self) -> u32;
+
+    /// Clamp to `u64`
+    fn clamp_to_u64(self) -> u64;
+
+    /// Clamp to `f32`
+    fn clamp_to_f32(self) -> f32;
+
+    /// Clamp to `f64`
+    fn clamp_to_f64(self) -> f64;
+
+    /// Clamp to `i128`
+    fn clamp_to_i128(self) -> i128;
+
+    /// Clamp to `u128`
+    fn clamp_to_u128(self) -> u128;
+
     /// Get the size of the sample in bytes
     fn sizeof(self) -> usize {size_of::<Self>()}
 
@@ -1690,6 +1732,20 @@ macro_rules! impl_sample_type {
             #[inline(always)]fn as_f64(self) -> f64 {as_f64!($tp, self)}
             #[inline(always)]fn as_i128(self) -> i128 {as_i128!($tp, self)}
             #[inline(always)]fn as_u128(self) -> u128 {as_u128!($tp, self)}
+            #[inline(always)]fn clamp_to_i8 (self) -> i8  {clamp_to_i8! ($tp, self)}
+            #[inline(always)]fn clamp_to_i16(self) -> i16 {clamp_to_i16!($tp, self)}
+            #[inline(always)]fn clamp_to_i24(self) -> i24 {clamp_to_i24!($tp, self)}
+            #[inline(always)]fn clamp_to_i32(self) -> i32 {clamp_to_i32!($tp, self)}
+            #[inline(always)]fn clamp_to_i64(self) -> i64 {clamp_to_i64!($tp, self)}
+            #[inline(always)]fn clamp_to_u8 (self) -> u8  {clamp_to_u8! ($tp, self)}
+            #[inline(always)]fn clamp_to_u16(self) -> u16 {clamp_to_u16!($tp, self)}
+            #[inline(always)]fn clamp_to_u24(self) -> u24 {clamp_to_u24!($tp, self)}
+            #[inline(always)]fn clamp_to_u32(self) -> u32 {clamp_to_u32!($tp, self)}
+            #[inline(always)]fn clamp_to_u64(self) -> u64 {clamp_to_u64!($tp, self)}
+            #[inline(always)]fn clamp_to_f32(self) -> f32 {clamp_to_f32!($tp, self)}
+            #[inline(always)]fn clamp_to_f64(self) -> f64 {clamp_to_f64!($tp, self)}
+            #[inline(always)]fn clamp_to_i128(self) -> i128 {clamp_to_i128!($tp, self)}
+            #[inline(always)]fn clamp_to_u128(self) -> u128 {clamp_to_u128!($tp, self)}
             #[inline(always)]
             fn to_longer(self) -> Self::Longer {
                 to_longer!($tp, self)
