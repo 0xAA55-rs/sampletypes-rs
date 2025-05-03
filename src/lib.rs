@@ -1432,7 +1432,7 @@ pub trait SampleType: SampleFrom {
     fn to_u128(self) -> u128;
 
     /// Cast to `i8`
-    fn as_i8 (self) -> i8 ;
+    fn as_i8 (self) -> i8;
 
     /// Cast to `i16`
     fn as_i16(self) -> i16;
@@ -1447,7 +1447,7 @@ pub trait SampleType: SampleFrom {
     fn as_i64(self) -> i64;
 
     /// Cast to `u8`
-    fn as_u8 (self) -> u8 ;
+    fn as_u8 (self) -> u8;
 
     /// Cast to `u16`
     fn as_u16(self) -> u16;
