@@ -911,20 +911,22 @@ macro_rules! as_f64 {
 /// Cast to a specific type number
 #[macro_export]
 macro_rules! as_type {
-    ($st:tt, i8  , $v:expr) => {as_i8!($st, $v)};
-    ($st:tt, i16 , $v:expr) => {as_i16!($st, $v)};
-    ($st:tt, i24 , $v:expr) => {as_i24!($st, $v)};
-    ($st:tt, i32 , $v:expr) => {as_i32!($st, $v)};
-    ($st:tt, i64 , $v:expr) => {as_i64!($st, $v)};
+    ($st:tt, i8  , $v:expr) => {as_i8!  ($st, $v)};
+    ($st:tt, i16 , $v:expr) => {as_i16! ($st, $v)};
+    ($st:tt, i24 , $v:expr) => {as_i24! ($st, $v)};
+    ($st:tt, i32 , $v:expr) => {as_i32! ($st, $v)};
+    ($st:tt, i64 , $v:expr) => {as_i64! ($st, $v)};
     ($st:tt, i128, $v:expr) => {as_i128!($st, $v)};
-    ($st:tt, u8  , $v:expr) => {as_u8!($st, $v)};
-    ($st:tt, u16 , $v:expr) => {as_u16!($st, $v)};
-    ($st:tt, u24 , $v:expr) => {as_u24!($st, $v)};
-    ($st:tt, u32 , $v:expr) => {as_u32!($st, $v)};
-    ($st:tt, u64 , $v:expr) => {as_u64!($st, $v)};
+    ($st:tt, u8  , $v:expr) => {as_u8!  ($st, $v)};
+    ($st:tt, u16 , $v:expr) => {as_u16! ($st, $v)};
+    ($st:tt, u24 , $v:expr) => {as_u24! ($st, $v)};
+    ($st:tt, u32 , $v:expr) => {as_u32! ($st, $v)};
+    ($st:tt, u64 , $v:expr) => {as_u64! ($st, $v)};
     ($st:tt, u128, $v:expr) => {as_u128!($st, $v)};
-    ($st:tt, f32 , $v:expr) => {as_f32!($st, $v)};
-    ($st:tt, f64 , $v:expr) => {as_f64!($st, $v)};
+    ($st:tt, f32 , $v:expr) => {as_f32! ($st, $v)};
+    ($st:tt, f64 , $v:expr) => {as_f64! ($st, $v)};
+}
+
 }
 
 /// * Let known type of `SampleType` instance to call `to_Xxx()`
