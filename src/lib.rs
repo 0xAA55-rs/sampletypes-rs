@@ -927,6 +927,25 @@ macro_rules! as_type {
     ($st:tt, f64 , $v:expr) => {as_f64! ($st, $v)};
 }
 
+/// Clamp to `i8`
+#[macro_export]
+macro_rules! clamp_to_i8 {
+    (i8  , $v:expr) => {$v};
+    (i16 , $v:expr) => {as_i8!(i16 , $v.clamp(i8::MIN.into(), i8::MAX.into()))};
+    (i24 , $v:expr) => {as_i8!(i24 , $v.clamp(i8::MIN.into(), i8::MAX.into()))};
+    (i32 , $v:expr) => {as_i8!(i32 , $v.clamp(i8::MIN.into(), i8::MAX.into()))};
+    (i64 , $v:expr) => {as_i8!(i64 , $v.clamp(i8::MIN.into(), i8::MAX.into()))};
+    (i128, $v:expr) => {as_i8!(i128, $v.clamp(i8::MIN.into(), i8::MAX.into()))};
+    (u8  , $v:expr) => {as_i8!(u8  , $v.clamp(0, as_u8!  (i8, i8::MAX)))};
+    (u16 , $v:expr) => {as_i8!(u16 , $v.clamp(0, as_u16! (i8, i8::MAX)))};
+    (u24 , $v:expr) => {as_i8!(u24 , $v.clamp(0.into(), as_u24! (i8, i8::MAX)))};
+    (u32 , $v:expr) => {as_i8!(u32 , $v.clamp(0, as_u32! (i8, i8::MAX)))};
+    (u64 , $v:expr) => {as_i8!(u64 , $v.clamp(0, as_u64! (i8, i8::MAX)))};
+    (u128, $v:expr) => {as_i8!(u128, $v.clamp(0, as_u128!(i8, i8::MAX)))};
+    (f32 , $v:expr) => {as_i8!(f32 , $v.clamp(i8::MIN.into(), i8::MAX.into()))};
+    (f64 , $v:expr) => {as_i8!(f64 , $v.clamp(i8::MIN.into(), i8::MAX.into()))};
+}
+
 }
 
 /// * Let known type of `SampleType` instance to call `to_Xxx()`
