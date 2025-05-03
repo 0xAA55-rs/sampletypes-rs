@@ -1155,6 +1155,25 @@ macro_rules! clamp_to_u128 {
     (f64 , $v:expr) => {as_u128!(f64 , $v.clamp(u128::MIN.as_f64(), u128::MAX.as_f64()))};
 }
 
+/// Clamp to `f32`
+#[macro_export]
+macro_rules! clamp_to_f32 {
+    (i8  , $v:expr) => {as_f32!(i8  , $v)};
+    (i16 , $v:expr) => {as_f32!(i16 , $v)};
+    (i24 , $v:expr) => {as_f32!(i24 , $v)};
+    (i32 , $v:expr) => {as_f32!(i32 , $v)};
+    (i64 , $v:expr) => {as_f32!(i64 , $v)};
+    (i128, $v:expr) => {as_f32!(i128, $v)};
+    (u8  , $v:expr) => {as_f32!(u8  , $v)};
+    (u16 , $v:expr) => {as_f32!(u16 , $v)};
+    (u24 , $v:expr) => {as_f32!(u24 , $v)};
+    (u32 , $v:expr) => {as_f32!(u32 , $v)};
+    (u64 , $v:expr) => {as_f32!(u64 , $v)};
+    (u128, $v:expr) => {as_f32!(u128, $v)};
+    (f32 , $v:expr) => {as_f32!(f32 , $v)};
+    (f64 , $v:expr) => {as_f32!(f64 , $v)};
+}
+
 }
 
 /// * Let known type of `SampleType` instance to call `to_Xxx()`
