@@ -104,7 +104,7 @@ pub trait SampleType: SampleFrom {
     fn to_u128(self) -> u128;
 
     /// Cast to `i8`
-    fn as_i8 (self) -> i8 ;
+    fn as_i8 (self) -> i8;
 
     /// Cast to `i16`
     fn as_i16(self) -> i16;
@@ -119,7 +119,7 @@ pub trait SampleType: SampleFrom {
     fn as_i64(self) -> i64;
 
     /// Cast to `u8`
-    fn as_u8 (self) -> u8 ;
+    fn as_u8 (self) -> u8;
 
     /// Cast to `u16`
     fn as_u16(self) -> u16;
@@ -144,6 +144,48 @@ pub trait SampleType: SampleFrom {
 
     /// Cast to `u128`
     fn as_u128(self) -> u128;
+
+    /// Clamp to `i8`
+    fn clamp_to_i8 (self) -> i8;
+
+    /// Clamp to `i16`
+    fn clamp_to_i16(self) -> i16;
+
+    /// Clamp to `i24`
+    fn clamp_to_i24(self) -> i24;
+
+    /// Clamp to `i32`
+    fn clamp_to_i32(self) -> i32;
+
+    /// Clamp to `i64`
+    fn clamp_to_i64(self) -> i64;
+
+    /// Clamp to `u8`
+    fn clamp_to_u8 (self) -> u8;
+
+    /// Clamp to `u16`
+    fn clamp_to_u16(self) -> u16;
+
+    /// Clamp to `u24`
+    fn clamp_to_u24(self) -> u24;
+
+    /// Clamp to `u32`
+    fn clamp_to_u32(self) -> u32;
+
+    /// Clamp to `u64`
+    fn clamp_to_u64(self) -> u64;
+
+    /// Clamp to `f32`
+    fn clamp_to_f32(self) -> f32;
+
+    /// Clamp to `f64`
+    fn clamp_to_f64(self) -> f64;
+
+    /// Clamp to `i128`
+    fn clamp_to_i128(self) -> i128;
+
+    /// Clamp to `u128`
+    fn clamp_to_u128(self) -> u128;
 
     /// Get the size of the sample in bytes
     fn sizeof(self) -> usize {size_of::<Self>()}
