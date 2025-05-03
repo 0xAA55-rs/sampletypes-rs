@@ -4,6 +4,9 @@ use std::ops::{Add, Sub, Mul, Div, AddAssign, SubAssign, MulAssign, DivAssign};
 use std::ops::{BitAnd, BitOr, BitXor, Shl, Shr, BitAndAssign, BitOrAssign, BitXorAssign, ShlAssign, ShrAssign, Not};
 use std::ops::{Rem, RemAssign};
 
+
+use std::cmp::Ordering;
+
 use std::fmt::{self, Display, Formatter};
 
 use crate::mod_i24::i24;
@@ -80,6 +83,29 @@ impl u24{
     #[inline(always)]
     pub fn as_f64(self) -> f64 {
         self.as_u32() as f64
+    }
+    #[inline(always)]
+    pub fn clamp(self, min: Self, max: Self) -> Self {
+        assert!(min <= max);
+        if self < min {
+            min
+        } else if self > max {
+            max
+        } else {
+            self
+        }
+    }
+}
+
+impl PartialOrd for u24 {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.as_u32().cmp(&other.as_u32()))
+    }
+}
+
+impl Ord for u24 {
+    fn cmp(&self, other: &Self) -> Ordering {
+        self.as_u32().cmp(&other.as_u32())
     }
 }
 
