@@ -1214,7 +1214,7 @@ macro_rules! clamp_to {
 
 /// * Let known type of `SampleType` instance to call `to_Xxx()`
 #[macro_export]
-macro_rules! call_to_type {
+macro_rules! call_to {
     (i8  , $v:expr) => {$v.to_i8  ()};
     (i16 , $v:expr) => {$v.to_i16 ()};
     (i24 , $v:expr) => {$v.to_i24 ()};
@@ -1233,7 +1233,7 @@ macro_rules! call_to_type {
 
 /// * Let known type of `SampleType` instance to call `as_Xxx()`
 #[macro_export]
-macro_rules! call_as_type {
+macro_rules! call_as {
     (i8  , $v:expr) => {$v.as_i8  ()};
     (i16 , $v:expr) => {$v.as_i16 ()};
     (i24 , $v:expr) => {$v.as_i24 ()};
@@ -1563,8 +1563,8 @@ macro_rules! impl_sample_from {
     ($tp:tt) => {
         impl SampleFrom for $tp {
             type ImplFor = $tp;
-            #[inline(always)]fn to<S>(s: S) -> Self where S: SampleType {call_to_type!($tp, s)}
-            #[inline(always)]fn as_<S>(s: S) -> Self where S: SampleType {call_as_type!($tp, s)}
+            #[inline(always)]fn to<S>(s: S) -> Self where S: SampleType {call_to!($tp, s)}
+            #[inline(always)]fn as_<S>(s: S) -> Self where S: SampleType {call_as!($tp, s)}
 
             #[inline(always)]
             fn sin<S>(s: S) -> Self where S: SampleType {
