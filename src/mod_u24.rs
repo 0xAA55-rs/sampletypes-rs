@@ -9,7 +9,7 @@ use std::fmt::{self, Display, Formatter};
 use crate::mod_i24::i24;
 
 /// * The tuple struct is little-endian
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq)]
 #[allow(non_camel_case_types)]
 #[repr(C)]
 pub struct u24(pub u8, pub u8, pub u8);
