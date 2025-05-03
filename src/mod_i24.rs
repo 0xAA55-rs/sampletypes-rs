@@ -196,6 +196,78 @@ impl From<f64> for i24 {
         Self::from(v as i32)
     }
 }
+impl Into<i8> for i24 {
+    #[inline(always)]
+    fn into(self) -> i8 {
+        self.as_i8()
+    }
+}
+impl Into<i16> for i24 {
+    #[inline(always)]
+    fn into(self) -> i16 {
+        self.as_i16()
+    }
+}
+impl Into<i32> for i24 {
+    #[inline(always)]
+    fn into(self) -> i32 {
+        self.as_i32()
+    }
+}
+impl Into<i64> for i24 {
+    #[inline(always)]
+    fn into(self) -> i64 {
+        self.as_i64()
+    }
+}
+impl Into<i128> for i24 {
+    #[inline(always)]
+    fn into(self) -> i128 {
+        self.as_i128()
+    }
+}
+impl Into<u8> for i24 {
+    #[inline(always)]
+    fn into(self) -> u8 {
+        self.as_u8()
+    }
+}
+impl Into<u16> for i24 {
+    #[inline(always)]
+    fn into(self) -> u16 {
+        self.as_u16()
+    }
+}
+impl Into<u32> for i24 {
+    #[inline(always)]
+    fn into(self) -> u32 {
+        self.as_u32()
+    }
+}
+impl Into<u64> for i24 {
+    #[inline(always)]
+    fn into(self) -> u64 {
+        self.as_u64()
+    }
+}
+impl Into<u128> for i24 {
+    #[inline(always)]
+    fn into(self) -> u128 {
+        self.as_u128()
+    }
+}
+impl Into<f32> for i24 {
+    #[inline(always)]
+    fn into(self) -> f32 {
+        self.as_f32()
+    }
+}
+impl Into<f64> for i24 {
+    #[inline(always)]
+    fn into(self) -> f64 {
+        self.as_f64()
+    }
+}
 
 impl Add for i24 {
     type Output = Self;
