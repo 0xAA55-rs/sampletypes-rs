@@ -1,12 +1,15 @@
 [package]
 name = "sampletypes"
-version = "0.1.4"
+version = "0.1.5"
 edition = "2024"
 authors = ["0xAA55 <838816058@qq.com>"]
 license-file = "LICENSE"
 description = "A library for audio processing, specifically for sample format conversion (e.g. `i16` scale up to `i32`, `i16` to `f32`, implementation of `i24`, etc.)"
 repository = "https://github.com/0xAA55-rs/sampletypes-rs"
 keywords = ["audio", "sample", "lossless"]
+
+[profile.release]
+lto = "fat"
 
 [lib]
 name = "sampletypes"
