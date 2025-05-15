@@ -8,11 +8,6 @@ description = "A library for audio processing, specifically for sample format co
 repository = "https://github.com/0xAA55-rs/sampletypes-rs"
 keywords = ["audio", "sample", "lossless"]
 
-[dependencies]
-
-[profile.release]
-lto = "fat"
-
 [lib]
 name = "sampletypes"
 path = "src/lib.rs"
